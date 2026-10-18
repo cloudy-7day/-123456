@@ -12,7 +12,7 @@ const confirmed={...analysis,review:{status:'confirmed'},gate:{status:'ready_for
 const output={customer_insight:'测试需求摘要',strategy:'测试表达策略',content:{title:'测试校园文案',body:'合成测试正文[S1]',call_to_action:'到店体验'},image_plan:[],sales_plan:{quote:'测试不报价',demo_script:'0—30秒：店员说：请确认阅读任务。\n店员做：打开脱敏网页。'},follow_up:[],source_refs:['S1'],pending_confirmation:[]};
 const saved={complete:true,errors:[],results:[{platform:'小红书',result:{input:{platform:'小红书'},output,sources:[{ref:'S1',kind:'text',title:'明确标注的测试资料',text:'仅供UI测试'}],meta:{retrieval:{mode:'local',archive_name:'合成测试资料'},duration_ms:1},checks:{note:'合成测试'},delivery:{status:'draft',reasons:[]}}}]};
 await page.route('**/api/health',r=>r.fulfill({json:{configured:true,retrievalMode:'local'}}));
-await page.route('**/api/products',r=>r.fulfill({json:{products:[{id:'test-product',name:'MateBook 14 酷睿 Ultra（Windows 系列）',model:'MateBook 14 酷睿 Ultra',system:'Windows'}]}}));
+await page.route('**/api/products',r=>r.fulfill({json:{products:[{id:'test-product',name:'MateBook 14 酷睿 Ultra（Windows 系列）',model:'MateBook 14 酷睿 Ultra',system:'Windows',features:[{id:'screen',label:'屏幕资料',evidence:'合成测试屏幕说明',source_path:'测试产品/产品事实.md'}]},{id:'other-product',name:'HUAWEI MateBook 14（鸿蒙版）',model:'HUAWEI MateBook 14',system:'HarmonyOS',features:[]}]}}));
 const analysisRequests=[];let submitted;let release;const deferred=new Promise(resolve=>release=resolve);
 const selected=saved.results.find(x=>x.platform==='小红书');
 await page.route('**/api/analyze',route=>{const input=route.request().postDataJSON();analysisRequests.push(input);analysis.input.sources=input.sources;return route.fulfill({contentType:'application/json',body:JSON.stringify(analysis)});});
@@ -57,5 +57,16 @@ try {
  assert.equal(submitted,null,'typing a partial model must never start generation');assert.equal(await modelInput.isVisible(),true);
  await modelInput.fill('MateBook 14 酷睿 Ultra（Windows 系列）');await page.getByRole('button',{name:'按当前候选生成',exact:true}).click();await page.getByRole('heading',{name:'店员演示脚本',exact:true}).waitFor();
  assert.equal(submitted.productOrigin,'salesperson_selection');
+ // A judge/operator may specify a product before generation. It overrides a candidate, not the source text.
+ await page.goto((process.env.LOCAL_APP_URL||'http://127.0.0.1:8791')+'/scenario/');
+ await page.getByRole('button',{name:'指定产品',exact:true}).click();
+ await page.getByLabel('本轮指定产品',{exact:true}).selectOption('HUAWEI MateBook 14（鸿蒙版）');
+ await page.locator('#scenario').fill('为准备上学的同学写一篇图文。');
+ submitted=null;await page.getByRole('button',{name:'生成文案与店员脚本',exact:true}).click();
+ await page.getByRole('heading',{name:'店员演示脚本',exact:true}).waitFor();
+ assert.equal(submitted.product,'HUAWEI MateBook 14（鸿蒙版）');assert.equal(submitted.productOrigin,'salesperson_selection');
+ assert(!analysisRequests.at(-1).sources[0].text.includes('MateBook'),'operator choice must not masquerade as customer speech');
+ await page.getByRole('button',{name:'按需求推荐',exact:true}).click();assert.equal(await page.locator('.focused-generation').count(),0,'mode change clears obsolete generation');
+ assert.equal(await page.evaluate(()=>document.documentElement.scrollWidth>innerWidth),false);
  console.log('PASS focused UI: single input/selection, collapsed summary, auto-reanalysis, no confirmation checkboxes, candidate selection, single-platform request, lock, two deliverables, copy/export, stale input, mobile');
 } finally {release();await browser.close();}

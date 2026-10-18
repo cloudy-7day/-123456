@@ -2,6 +2,7 @@ import fs from 'node:fs/promises';
 import path from 'node:path';
 import { createHash, randomUUID } from 'node:crypto';
 import { ROOT } from './config.mjs';
+import { productFeatures } from './product-profile.mjs';
 
 const defaultDir = path.join(ROOT, 'knowledge');
 const hash = bytes => createHash('sha256').update(bytes).digest('hex');
@@ -49,7 +50,35 @@ export async function loadLocalKnowledge(directory=defaultDir) {
 const provenance = data => ({mode:'local',archive_name:data.archive_name,archive_version:data.archive_version,archive_sha256:data.archive_sha256});
 export async function localCatalog(directory=defaultDir) {
   const data=await loadLocalKnowledge(directory);
-  return {knowledge_base:data.knowledge_base,retrieval:provenance(data),products:data.products.map(({id,name,model,category,system})=>({id,name,model,category,system}))};
+  const client=new LocalKnowledge({knowledgeDir:directory});
+  const products=await Promise.all(data.products.map(async product=>{
+    const {id,name,model,category,system}=product;
+    let features=[];
+    try{
+      const document=product.documents.find(d=>d.title==='产品事实.md');
+      if(document){const bytes=await client.read(document,product);features=productFeatures(new TextDecoder('utf-8',{fatal:true}).decode(bytes),document.path);}
+    }catch{/* Unverified facts cannot support a recommendation. */}
+    const image=await selectPreview(product,client);
+    return {id,name,model,category,system,features,preview:image?{url:`/api/product-image/${id}`,title:image.asset.title,path:image.asset.path}:null};
+  }));
+  return {knowledge_base:data.knowledge_base,retrieval:provenance(data),products};
+}
+async function selectPreview(product,client){
+  const candidates=(product.images||[]).map((asset,order)=>({asset,order,
+    blurred:/blur|模糊/i.test(`${asset.title} ${asset.description} ${asset.source_url}`),
+    visual:/外观|配色|主视觉|整机|颜色/.test(`${asset.title} ${asset.description}`)}))
+    .filter(x=>!x.blurred).sort((a,b)=>Number(b.visual)-Number(a.visual)||a.order-b.order);
+  for(const {asset} of candidates){
+    try{const bytes=await client.read(asset,product),extension=imageExtension(bytes);
+      if(extension&&extension===asset.extension)return {asset,bytes,extension};
+    }catch{/* A corrupt image must not break the catalog or other product images. */}
+  }
+  return null;
+}
+export async function productPreview(id,directory=defaultDir){
+  if(!/^pc-[a-f0-9]{16}$/.test(id))return null;
+  const data=await loadLocalKnowledge(directory),product=data.products.find(p=>p.id===id);
+  return product?selectPreview(product,new LocalKnowledge({knowledgeDir:directory})):null;
 }
 export class LocalKnowledge {
   constructor({knowledgeDir=defaultDir,localOutputRoot=ROOT}={}) {this.directory=knowledgeDir;this.outputRoot=localOutputRoot;}

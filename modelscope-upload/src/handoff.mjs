@@ -23,7 +23,8 @@ export function buildHandoff(analysis, request) {
   raw.conflicts = raw.conflicts.map(strip); raw.product = strip(raw.product);
   const understanding = validateUnderstanding(raw, analysis.input.sources);
   const gate = deriveGate(understanding, { reviewed: true });
-  if (gate.status !== 'ready_for_ima') throw Error('关键条件尚未确认：' + gate.reasons.join('；'));
+  const unresolved = gate.reasons.filter(reason => !(reason === '产品意向存在歧义' && options.productOrigin === 'salesperson_selection'));
+  if (unresolved.length) throw Error('关键条件尚未确认：' + unresolved.join('；'));
   // Keep original customer intent separate from an automatically prepared retrieval candidate.
   const scenario = analysis.input.sources.filter(s => s.type !== 'product')
     .map(s => `${s.type === 'revision' ? '客户后续更正（优先于旧记录）' : '客户输入'}：${s.text}`).join('\n\n');

@@ -5,7 +5,7 @@ import { confirmAnalysis } from '../modules/scenario/server/review.mjs';
 import { buildHandoff } from './handoff.mjs';
 import { runShadowBatch } from './shadow-batch.mjs';
 import { ROOT, safeError } from './config.mjs';
-import { localCatalog } from './local-knowledge.mjs';
+import { localCatalog, productPreview } from './local-knowledge.mjs';
 import { knowledgeMode } from './evidence-cache.mjs';
 
 async function body(req) {
@@ -19,6 +19,14 @@ export function createScenarioService(settings, {analyze=understand, batch=runSh
   const cache=new Map(); let busy=false;
   const get=id=>{const a=cache.get(id); if(!a || Date.now()-a.time>3600000)throw Object.assign(Error('分析已过期，请重新理解。'),{status:410});return a;};
   return async function handle(req,res,route,reply){
+    if(req.method==='GET' && route.startsWith('/api/product-image/')){
+      try{
+        const image=await productPreview(route.slice('/api/product-image/'.length),settings.knowledgeDir);
+        if(!image){reply(404,{error:'未找到可用产品图片'});return true;}
+        res.writeHead(200,{'Content-Type':`image/${image.extension==='jpg'?'jpeg':image.extension}`,'Content-Length':image.bytes.length,'X-Content-Type-Options':'nosniff','Cache-Control':'no-cache'});
+        res.end(image.bytes);
+      }catch{reply(404,{error:'未找到可用产品图片'});}return true;
+    }
     if(req.method==='GET' && route==='/api/products'){
       try {reply(200,await localCatalog(settings.knowledgeDir));}
       catch(error){reply(503,{error:safeError(error)});}return true;

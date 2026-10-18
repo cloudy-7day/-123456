@@ -20,3 +20,13 @@ test('unreviewed and conflicting source statements remain blocked',()=>{
  assert.equal(deriveGate(raw).status,'paused');
  assert.equal(deriveGate({...raw,conflicts:[{resolutionQuestion:'预算以哪条为准？'}]},{reviewed:true}).status,'paused');
 });
+
+test('operator can resolve only product ambiguity while original intent and other conflicts remain',()=>{
+ const understanding=validateUnderstanding({...raw,product:{status:'ambiguous',name:null,evidence:[]}},sources);
+ const analysis={analysisId:'00000000-0000-4000-8000-000000000001',input:{sources},understanding,review:{status:'confirmed'}};
+ const request={analysisId:analysis.analysisId,product:'指定测试型号',productConfirmed:true,productOrigin:'salesperson_selection',platforms:['小红书']};
+ assert.equal(buildHandoff(analysis,request).customer_context.product_selection.original_intent.status,'ambiguous');
+ assert.throws(()=>buildHandoff(analysis,{...request,productOrigin:'system_candidate'}),/歧义/);
+ const conflicting={...analysis,understanding:{...understanding,conflicts:[{description:'任务有冲突',resolutionQuestion:'请确认任务',evidence:[{sourceId:'scenario',quote:'我要写代码'},{sourceId:'scenario',quote:'学一点AI'}]}]}};
+ assert.throws(()=>buildHandoff(conflicting,request),/请确认任务/);
+});

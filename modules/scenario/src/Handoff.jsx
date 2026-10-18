@@ -2,19 +2,24 @@ import React,{useState,useEffect,useRef} from 'react';
 import {api,downloadJson} from './api';
 import {suggestProduct} from '../shared/product-suggestion.mjs';
 import {ResultView} from './ResultView';
+import {ProductCard} from './ProductCard';
 
-export function Handoff({analysis,sceneLabel='校园学习',platform='小红书',autoStart=false,onGeneratingChange=()=>{}}){
- const [product,setProduct]=useState(analysis.understanding.product.name||'');
+export function Handoff({analysis,sceneLabel='校园学习',platform='小红书',autoStart=false,preferredProduct='',onGeneratingChange=()=>{}}){
+ const [product,setProduct]=useState(preferredProduct||analysis.understanding.product.name||'');
+ const [recommendation,setRecommendation]=useState({candidates:[],limitations:[]});
  const [catalogReady,setCatalogReady]=useState(false),[suggestion,setSuggestion]=useState(''),[optionsOpen,setOptionsOpen]=useState(false);const inFlight=useRef(false);const autoStarted=useRef(false),productEdited=useRef(false);
  const platforms=[platform];const [products,setProducts]=useState([]);
- useEffect(()=>{let cancelled=false;fetch('/api/products').then(r=>{if(!r.ok)throw Error('资料目录读取失败，请重试。');return r.json();}).then(d=>{if(cancelled)return;setProducts(d.products||[]);if(!productEdited.current){const candidate=suggestProduct(analysis,d.products||[]);setProduct(candidate.name);setSuggestion(candidate.reason);setOptionsOpen(!candidate.name);}setCatalogReady(true);}).catch(e=>{if(!cancelled){setError(e.message);setCatalogReady(true);}});return()=>{cancelled=true;};},[analysis]);
+ useEffect(()=>{let cancelled=false;fetch('/api/products').then(r=>{if(!r.ok)throw Error('资料目录读取失败，请重试。');return r.json();}).then(d=>{if(cancelled)return;setProducts(d.products||[]);if(!productEdited.current){const candidate=suggestProduct(analysis,d.products||[]);setRecommendation(candidate);setProduct(preferredProduct||candidate.name);setSuggestion(preferredProduct?'已使用你指定的型号，原始客户意向仍单独保留。':candidate.reason);setOptionsOpen(!preferredProduct&&!candidate.name);}setCatalogReady(true);}).catch(e=>{if(!cancelled){setError(e.message);setCatalogReady(true);}});return()=>{cancelled=true;};},[analysis,preferredProduct]);
 
  const [busy,setBusy]=useState(false);
  const [error,setError]=useState('');const [progress,setProgress]=useState('');
  const [result,setResult]=useState(null);const [selected,setSelected]=useState('');
  const [connection,setConnection]=useState(null);
- const request=()=>({analysisId:analysis.analysisId,product,productConfirmed:true,productOrigin:productEdited.current?'salesperson_selection':analysis.understanding.product.name?'input_match':'system_candidate',platforms,goal:`面向${sceneLabel}场景，在${platform}发布完整文案并给出店员演示脚本，引导咨询和到店体验。场景标签仅是发布方向，不能冒充客户原话或新增事实。`});
- const blocked=analysis.gate.status!=='ready_for_ima';
+ const isManual=productEdited.current||Boolean(preferredProduct);
+ const request=()=>({analysisId:analysis.analysisId,product,productConfirmed:true,productOrigin:isManual?'salesperson_selection':analysis.understanding.product.name?'input_match':'system_candidate',platforms,goal:`面向${sceneLabel}场景，在${platform}发布完整文案并给出店员演示脚本，引导咨询和到店体验。场景标签仅是发布方向，不能冒充客户原话或新增事实。`});
+ const unresolved=analysis.gate.reasons.filter(r=>!(r==='产品意向存在歧义'&&isManual&&products.some(p=>p.name===product)));
+ const blocked=unresolved.length>0;
+ function chooseProduct(name){productEdited.current=true;autoStarted.current=true;setProduct(name);setResult(null);setProgress('');setError('');setSuggestion('已更换本轮产品，请点击生成以使用新型号的资料与图片。');}
  async function check(){setBusy(true);try{const r=await fetch('/api/status');setConnection(await r.json());}catch{setError('连接检查失败，请检查本机服务。');}finally{setBusy(false);}}
  async function exportTasks(){setError('');try{const data=await api('/api/handoff',request());downloadJson(data,'handoff-'+analysis.analysisId+'.json');}catch(e){setError(e.message);}}
  async function generate(){
@@ -23,6 +28,7 @@ export function Handoff({analysis,sceneLabel='校园学习',platform='小红书'
   autoStarted.current=true;
   if(blocked){setError('请先处理原文中的冲突：'+analysis.gate.reasons.join('；'));return;}
   if(!product.trim()){setError('请从产品目录选择一个具体型号。其他未知信息无需补齐。');return;}
+  if(!products.some(p=>p.name===product)){setError('请选择资料目录中的完整型号与系统版本。');return;}
   inFlight.current=true;setBusy(true);onGeneratingChange(true);setError('');setResult(null);setSelected('');setProgress('正在查找产品资料与图片…');let terminal=false;
   try{
    const response=await fetch('/api/run-scenario',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify(request())});
@@ -46,10 +52,15 @@ export function Handoff({analysis,sceneLabel='校园学习',platform='小红书'
  useEffect(()=>{if(autoStart&&catalogReady&&!blocked&&!productEdited.current&&product.trim()&&!autoStarted.current){autoStarted.current=true;void generate();}},[autoStart,catalogReady,blocked,product]);
  const active=result?.results.find(r=>r.platform===selected)?.result;
  const knowledge=connection?.knowledge||connection?.ima;
+ const selectedProduct=products.find(p=>p.name===product);
+ const ranked=(recommendation.candidates||[]).slice(0,3);
+ const reasons=ranked.find(p=>p.name===product)?.reasons||[];
  return <section className="integration focused-generation"><div className="panel-title"><h2>{sceneLabel} · {platform}</h2><span>文案 + 店员演示脚本</span></div>
  {blocked?<div className="warning">关键条件尚未确认：{analysis.gate.reasons.join('；')}。请先补充并重新理解。</div>:null}
- <p className="fine">当前检索候选：{product||'正在准备'}。{suggestion}</p><details className="generation-options" open={optionsOpen} onToggle={e=>setOptionsOpen(e.currentTarget.open)}><summary>查看或更换检索产品</summary>
- <label>从资料库选择具体型号<input list="knowledge-products" value={product} maxLength={120} disabled={busy} placeholder="输入型号，或从列表中选择" onChange={e=>{productEdited.current=true;autoStarted.current=true;setProduct(e.target.value);setResult(null);}}/></label>
+ <div className="selection-summary"><div><span className="eyebrow">{isManual?'本轮指定':analysis.understanding.product.name?'来自原文':'需求匹配候选'}</span><h3>{product||'请选择本轮产品'}</h3><p>{suggestion}</p>{!isManual?(recommendation.limitations||[]).map((s,i)=><p className="fine" key={i}>{s}</p>):null}</div>{selectedProduct?<ProductCard product={selectedProduct} reasons={reasons}/>:null}</div>
+ <details className="generation-options" open={optionsOpen} onToggle={e=>setOptionsOpen(e.currentTarget.open)}><summary>查看或更换检索产品</summary>
+ {ranked.length>1?<><p className="fine">其他候选 · 点击选择后，重新生成本轮内容</p><div className="candidate-grid">{ranked.map(c=>{const p=products.find(x=>x.name===c.name);return p?<ProductCard key={p.id} product={p} reasons={c.reasons} selected={product===p.name} disabled={busy} onSelect={chooseProduct}/>:null;})}</div></>:null}
+ <label>从资料库选择具体型号<input list="knowledge-products" value={product} maxLength={120} disabled={busy} placeholder="输入型号，或从列表中选择" onChange={e=>chooseProduct(e.target.value)}/></label>
  <datalist id="knowledge-products">{products.map(p=><option key={p.id} value={p.name}/>)}</datalist>
  <p className="fine">这是本轮检索对象，产品事实与图片来自你提供的资料包。型号和系统版本需一致。</p>
 
