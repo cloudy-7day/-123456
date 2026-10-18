@@ -34,6 +34,6 @@ export function buildHandoff(analysis, request) {
   }));
   for (const task of tasks) validate(task, readJson('contracts/input.schema.json'));
   return { schema_version: 'handoff.1', analysis_id: analysis.analysisId, tasks,
-    customer_context: { understanding, provenance: analysis.provenance, review: analysis.review,
+    customer_context: { understanding, understanding_standard: analysis.understandingStandard, provenance: analysis.provenance, review: analysis.review,
       original_sources: analysis.input.sources, product_selection: { name: options.product, confirmed: true, origin: 'salesperson_selection', original_intent: understanding.product } } };
 }

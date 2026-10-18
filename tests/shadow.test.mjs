@@ -50,3 +50,20 @@ test('same-origin service enforces server confirmation, serves both UIs and emit
   assert.equal((await fetch(base+'/.env.local')).status,404);
  }finally{server.closeAllConnections();await new Promise(resolve=>server.close(resolve));}
 });
+
+test('expanded task load and collaboration survive evidence validation and legacy handoff',()=>{
+ const a=sampleAnalysis();a.input.sources[0].text='同时开20个网页。五万行表格。用平板作扩展屏。';
+ a.understanding=validateUnderstanding({observations:[
+  {id:'load',category:'performance',kind:'fact',value:'五万行表格',evidence:[{sourceId:'scenario',quote:'五万行表格'}],rationale:'负载陈述，不推算硬件档位',critical:false},
+  {id:'sync',category:'collaboration',kind:'fact',value:'用平板作扩展屏',evidence:[{sourceId:'scenario',quote:'用平板作扩展屏'}],rationale:'目标动作，支持情况待资料核验',critical:false}
+ ],questions:[],conflicts:[],product:{status:'unspecified',name:null,evidence:[]}},a.input.sources);
+ a.understandingStandard={version:'0.2',dimensionIds:['performance','collaboration'],researchSourceCount:12};
+ const h=buildHandoff(a,opts(a));assert.equal(h.customer_context.understanding.observations.find(o=>o.category==='performance').value,'五万行表格');
+ assert.equal(h.customer_context.understanding.observations.find(o=>o.category==='collaboration').evidence[0].quote,'用平板作扩展屏');
+ for(const key of ['mobility','storage','experience','lifecycle'])assert.equal(h.customer_context.understanding.observations.find(o=>o.category===key).value,null);
+ assert.equal(h.customer_context.understanding_standard.version,'0.2');assert.equal(h.tasks[0].platform,'小红书');
+});
+test('one round rejects more than three critical clarification questions',()=>{
+ const a=sampleAnalysis();const raw={observations:[{id:'o',category:'task',kind:'unknown',value:null,evidence:[],rationale:'未提供',critical:false}],questions:Array.from({length:4},(_,i)=>({id:'q'+i,topic:'task',priority:'blocking',question:'问题'+i,why:'用于核验',evidence:[]})),conflicts:[],product:{status:'unspecified',name:null,evidence:[]}};
+ assert.throws(()=>validateUnderstanding(raw,a.input.sources),/三项/);
+});

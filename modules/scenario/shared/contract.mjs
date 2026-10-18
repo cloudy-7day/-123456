@@ -27,11 +27,18 @@ export function validateUnderstanding(raw,sources){
   return {...o,evidence:o.evidence.map(locate)};
  });
  for(const category of Object.keys(categories)) if(!data.observations.some(o=>o.category===category)) data.observations.push({id:`unknown_${category}`,category,kind:'unknown',value:null,evidence:[],rationale:'输入未提供此项信息，保留未知。',critical:false});
+ if(data.questions.filter(q=>q.priority==='blocking').length>3) throw new ValidationError('关键问题超过三项，请合并同主题问题');
  data.questions=data.questions.map(q=>({...q,evidence:q.evidence.map(locate)}));
  data.conflicts=data.conflicts.map(c=>({...c,evidence:c.evidence.map(locate)}));
  data.product.evidence=data.product.evidence.map(locate);
  if(data.product.status==='specified' && (!data.product.name || !data.product.evidence.some(e=>e.quote.includes(data.product.name)))) throw new ValidationError('指定产品缺少原文依据');
  if(data.product.status==='unspecified' && data.product.name!==null) throw new ValidationError('未指定产品应为 null');
+ if(data.product.status==='specified'&&!data.observations.some(o=>o.category==='product'&&o.kind==='fact')){
+  const e=data.product.evidence.find(e=>e.quote.includes(data.product.name));
+  data.observations=data.observations.filter(o=>!(o.category==='product'&&o.kind==='unknown'));
+  let id='confirmed_product';while(data.observations.some(o=>o.id===id))id+='x';
+  data.observations.push({id,category:'product',kind:'fact',value:e.quote,evidence:[e],rationale:'输入中明确提及的候选产品，不代表已经决定购买或适配通过。',critical:false});
+ }
  return data;
 }
 export function deriveGate(data,{reviewed=false,revised=false}={}){

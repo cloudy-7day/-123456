@@ -14,33 +14,36 @@
     ".env.example"
   ],
   "added": [
-    "pnpm-lock.yaml",
-    "启动影子版本.command",
-    "pnpm-workspace.yaml",
-    "tests/shadow.test.mjs",
-    "docs/upstream-README.md",
+    "docs/RESEARCH.md",
+    "docs/UNDERSTANDING-STANDARD.md",
     "docs/shadow-base.json",
-    "src/scenario-service.mjs",
-    "src/handoff.mjs",
-    "src/shadow-batch.mjs",
-    "modules/scenario/index.html",
-    "modules/scenario/README.md",
+    "docs/upstream-README.md",
     "modules/scenario/.gitignore",
+    "modules/scenario/README.md",
+    "modules/scenario/index.html",
     "modules/scenario/package.json",
-    "modules/scenario/tests/live.mjs",
-    "modules/scenario/tests/contract.test.mjs",
-    "modules/scenario/server/understand.mjs",
+    "modules/scenario/server/config.mjs",
     "modules/scenario/server/index.mjs",
     "modules/scenario/server/prompt.mjs",
     "modules/scenario/server/review.mjs",
-    "modules/scenario/server/config.mjs",
-    "modules/scenario/shared/samples.mjs",
+    "modules/scenario/server/understand.mjs",
     "modules/scenario/shared/categories.mjs",
     "modules/scenario/shared/contract.mjs",
+    "modules/scenario/shared/samples.mjs",
+    "modules/scenario/shared/standards.mjs",
     "modules/scenario/src/Handoff.jsx",
+    "modules/scenario/src/api.js",
     "modules/scenario/src/main.jsx",
     "modules/scenario/src/style.css",
-    "modules/scenario/src/api.js"
+    "modules/scenario/tests/contract.test.mjs",
+    "modules/scenario/tests/live.mjs",
+    "pnpm-lock.yaml",
+    "pnpm-workspace.yaml",
+    "src/handoff.mjs",
+    "src/scenario-service.mjs",
+    "src/shadow-batch.mjs",
+    "tests/shadow.test.mjs",
+    "启动影子版本.command"
   ],
   "credential_scan": "no known keys in deliverable",
   "legacy_contracts_unchanged": true,
@@ -48,5 +51,11 @@
   "omitted_unused_assets": [
     "modules/scenario/public/assets/matebook14.png",
     "modules/scenario/public/assets/huawei-logo.svg"
-  ]
+  ],
+  "understanding_standard": {
+    "version": "0.2",
+    "research_sources": 12,
+    "dimensions": 12,
+    "page": "dimension-based input and review; samples optional"
+  }
 }
