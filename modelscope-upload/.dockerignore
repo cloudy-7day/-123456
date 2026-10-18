@@ -1,0 +1,21 @@
+# Only runtime sources may enter the build context.
+**
+!Dockerfile
+!package.json
+!server.mjs
+!cli.mjs
+!src/
+!src/*.mjs
+!public/
+!public/index.html
+!contracts/
+!contracts/*.json
+!prompts/
+!prompts/system.txt
+!examples/
+!examples/task.json
+!vendor/
+!vendor/ima-skills-1.1.10/
+!vendor/ima-skills-1.1.10/ima-skill/
+!vendor/ima-skills-1.1.10/ima-skill/ima_api.cjs
+!vendor/ima-skills-1.1.10/ima-skill/meta.json

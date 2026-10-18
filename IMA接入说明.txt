@@ -1,0 +1,41 @@
+本项目 ima 接入
+
+官方 Skill：vendor/ima-skills-1.1.10/ima-skill/
+来源：https://app-dl.ima.qq.com/skills/ima-skills-1.1.10.zip
+下载包 SHA256：7e0d07cae0f98145dc5147e84b77bcc557e2fc4b256b08907922637952c20a7b
+依赖：Node.js 18 或以上；本机已验证 Node.js 24。
+
+本机凭证位于 .ima-local/credentials.json，已被 .gitignore 排除。
+不要上传、分享或截图展示该文件；所有 .ima-local 内容均仅供本机使用。
+配置仅作用于当前项目，未修改系统环境变量或其他项目的配置。
+
+检查连接（在项目目录执行）：
+  node scripts/ima-check.cjs
+
+检查程序会验证凭证、精确匹配“任德耀新建华为PC知识库”、读取首批目录。
+成功后将知识库标识保存在 .ima-local/connection.json，不在终端显示。
+这条检查命令验证连接与目录访问，不会遍历全部资料或修改线上知识库。
+
+后端接入示例（示例文件放在项目根目录）：
+  const fs = require('node:fs');
+  const path = require('node:path');
+  const { callIma, localDir } = require('./scripts/ima-client.cjs');
+  const connection = JSON.parse(fs.readFileSync(path.join(localDir, 'connection.json'), 'utf8'));
+  const data = await callIma('search_knowledge', {
+    knowledge_base_id: connection.knowledge_base_id,
+    query: 'MateBook',
+    cursor: ''
+  });
+
+上述 await 应放在 async 函数内。callIma 返回成功响应的 data，业务失败会抛出错误。
+ima-client.cjs 只能在 Node.js 后端使用，不要打包进入浏览器端。
+客户端固定连接 https://ima.qq.com；每日版本检查记录也保存在 .ima-local 下。
+
+读取资料流程：search_knowledge / get_knowledge_list -> get_media_info。
+搜索结果可能包含文件夹；media_type=99 时用 media_id 作为 folder_id 浏览下层。
+没有搜索结果时回退到目录浏览。列表按 is_end、next_cursor 翻页。
+get_media_info 返回 url_info 时，用 url 及其返回的 headers 读取原文。
+原始 ima Client ID 和 API Key 只用于 ima 官方接口，不传给原文或图片下载地址。
+如果条目为笔记类型，按官方 Skill 的 notes 模块读取正文。
+
+本次验证摘要见 .ima-local/verification.json，其中不含 API 密钥或签名下载链接。

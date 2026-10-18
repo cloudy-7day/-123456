@@ -1,0 +1,7 @@
+.env*
+.ima-local/
+.config/
+node_modules/
+tmp/
+output/
+*.log

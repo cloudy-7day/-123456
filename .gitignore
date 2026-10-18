@@ -1,0 +1,12 @@
+node_modules/
+.env*
+!.env.example
+.ima-local/
+tmp/
+output/
+*.log
+
+__MACOSX/
+.DS_Store
+._*
+.history/
