@@ -1,0 +1,304 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "type": "object",
+  "properties": {
+    "observations": {
+      "minItems": 1,
+      "maxItems": 40,
+      "type": "array",
+      "items": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string",
+            "pattern": "^[a-z0-9_-]{1,50}$"
+          },
+          "category": {
+            "type": "string",
+            "enum": [
+              "situation",
+              "task",
+              "pain",
+              "constraint",
+              "preference",
+              "concern",
+              "motivation",
+              "devices",
+              "software",
+              "os",
+              "performance",
+              "collaboration",
+              "mobility",
+              "experience",
+              "connectivity",
+              "storage",
+              "lifecycle",
+              "budget",
+              "product"
+            ]
+          },
+          "kind": {
+            "type": "string",
+            "enum": [
+              "fact",
+              "inference",
+              "unknown"
+            ]
+          },
+          "value": {
+            "anyOf": [
+              {
+                "type": "string",
+                "minLength": 1,
+                "maxLength": 1000
+              },
+              {
+                "type": "null"
+              }
+            ]
+          },
+          "evidence": {
+            "maxItems": 5,
+            "type": "array",
+            "items": {
+              "type": "object",
+              "properties": {
+                "sourceId": {
+                  "type": "string",
+                  "minLength": 1,
+                  "maxLength": 1000
+                },
+                "quote": {
+                  "type": "string",
+                  "minLength": 1,
+                  "maxLength": 1000
+                }
+              },
+              "required": [
+                "sourceId",
+                "quote"
+              ],
+              "additionalProperties": false
+            }
+          },
+          "rationale": {
+            "type": "string",
+            "maxLength": 1000
+          },
+          "critical": {
+            "type": "boolean"
+          }
+        },
+        "required": [
+          "id",
+          "category",
+          "kind",
+          "value",
+          "evidence",
+          "rationale",
+          "critical"
+        ],
+        "additionalProperties": false
+      }
+    },
+    "questions": {
+      "maxItems": 4,
+      "type": "array",
+      "items": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string",
+            "pattern": "^[a-z0-9_-]{1,50}$"
+          },
+          "topic": {
+            "type": "string",
+            "enum": [
+              "situation",
+              "task",
+              "pain",
+              "constraint",
+              "preference",
+              "concern",
+              "motivation",
+              "devices",
+              "software",
+              "os",
+              "performance",
+              "collaboration",
+              "mobility",
+              "experience",
+              "connectivity",
+              "storage",
+              "lifecycle",
+              "budget",
+              "product"
+            ]
+          },
+          "question": {
+            "type": "string",
+            "minLength": 1,
+            "maxLength": 1000
+          },
+          "why": {
+            "type": "string",
+            "minLength": 1,
+            "maxLength": 1000
+          },
+          "priority": {
+            "type": "string",
+            "enum": [
+              "blocking",
+              "optional"
+            ]
+          },
+          "evidence": {
+            "maxItems": 5,
+            "type": "array",
+            "items": {
+              "type": "object",
+              "properties": {
+                "sourceId": {
+                  "type": "string",
+                  "minLength": 1,
+                  "maxLength": 1000
+                },
+                "quote": {
+                  "type": "string",
+                  "minLength": 1,
+                  "maxLength": 1000
+                }
+              },
+              "required": [
+                "sourceId",
+                "quote"
+              ],
+              "additionalProperties": false
+            }
+          }
+        },
+        "required": [
+          "id",
+          "topic",
+          "question",
+          "why",
+          "priority",
+          "evidence"
+        ],
+        "additionalProperties": false
+      }
+    },
+    "conflicts": {
+      "maxItems": 8,
+      "type": "array",
+      "items": {
+        "type": "object",
+        "properties": {
+          "description": {
+            "type": "string",
+            "minLength": 1,
+            "maxLength": 1000
+          },
+          "evidence": {
+            "minItems": 2,
+            "maxItems": 5,
+            "type": "array",
+            "items": {
+              "type": "object",
+              "properties": {
+                "sourceId": {
+                  "type": "string",
+                  "minLength": 1,
+                  "maxLength": 1000
+                },
+                "quote": {
+                  "type": "string",
+                  "minLength": 1,
+                  "maxLength": 1000
+                }
+              },
+              "required": [
+                "sourceId",
+                "quote"
+              ],
+              "additionalProperties": false
+            }
+          },
+          "resolutionQuestion": {
+            "type": "string",
+            "minLength": 1,
+            "maxLength": 1000
+          }
+        },
+        "required": [
+          "description",
+          "evidence",
+          "resolutionQuestion"
+        ],
+        "additionalProperties": false
+      }
+    },
+    "product": {
+      "type": "object",
+      "properties": {
+        "status": {
+          "type": "string",
+          "enum": [
+            "specified",
+            "unspecified",
+            "ambiguous"
+          ]
+        },
+        "name": {
+          "anyOf": [
+            {
+              "type": "string",
+              "minLength": 1,
+              "maxLength": 1000
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "evidence": {
+          "maxItems": 5,
+          "type": "array",
+          "items": {
+            "type": "object",
+            "properties": {
+              "sourceId": {
+                "type": "string",
+                "minLength": 1,
+                "maxLength": 1000
+              },
+              "quote": {
+                "type": "string",
+                "minLength": 1,
+                "maxLength": 1000
+              }
+            },
+            "required": [
+              "sourceId",
+              "quote"
+            ],
+            "additionalProperties": false
+          }
+        }
+      },
+      "required": [
+        "status",
+        "name",
+        "evidence"
+      ],
+      "additionalProperties": false
+    }
+  },
+  "required": [
+    "observations",
+    "questions",
+    "conflicts",
+    "product"
+  ],
+  "additionalProperties": false
+}

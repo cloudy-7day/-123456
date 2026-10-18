@@ -1,0 +1,10 @@
+import test from 'node:test';
+import assert from 'node:assert/strict';
+import {productIdentity,resolveProduct,retrieveImages} from '../server/retrieval.mjs';
+const url='https://consumer.huawei.com/cn/harmonyos-computer/matebook-14-harmonyos-version/';
+const identity=()=>productIdentity({name:'HUAWEI MateBook 14',images:[]},`# HUAWEI MateBook 14（鸿蒙版） - 产品事实\n- 产品页：${url}`);
+const img=(id,extra={})=>({id,product:'HUAWEI MateBook 14（鸿蒙版）',sourceUrl:url,width:1000,height:800,caption:'整机外观',originalUrl:'https://example.test/key-vision-blur.jpg',sha256:id,...extra});
+test('目录别名和原文正式型号解析到同一记录，保留版本限制',()=>{const p=identity();assert.equal(resolveProduct([p],'MateBook 14'),p);assert.equal(resolveProduct([p],'华为 MateBook 14 (鸿蒙版)'),p);assert.equal(resolveProduct([p],'MateBook 14 酷睿 Ultra'),null);assert.equal(resolveProduct([p],'MateBook 14 2025'),null);assert.equal(resolveProduct([p,p],'MateBook 14'),null);});
+test('同目录图片必须同时匹配原文型号与产品页，不能串版',()=>{const p={...identity(),images:[img('ok'),img('windows',{product:'MateBook 14 酷睿 Ultra'}),img('wrong-url',{sourceUrl:'https://example.test/other'})]};const r=retrieveImages(p);assert.deepEqual(r.selected.map(i=>i.id),['ok']);assert.equal(r.trace.matchedCount,1);});
+test('保留实际有效的 blur 命名素材，按整机优先去重排序',()=>{const p={...identity(),images:[img('accessory',{caption:'手写笔创作场景'}),img('hero'),img('duplicate',{sha256:'hero'}),img('invalid',{width:0})]};assert.deepEqual(retrieveImages(p).selected.map(i=>i.id),['hero','accessory']);});
+test('确实没有可用配图时返回可展示原因',()=>{const r=retrieveImages(identity());assert.equal(r.selected.length,0);assert.match(r.trace.missingReason,/补充素材/);});

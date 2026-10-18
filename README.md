@@ -96,3 +96,9 @@ node cli.mjs run --input examples/task.json --output output/my-result.json
 
 - ima：仓库中官方 `vendor/ima-skills-1.1.10/ima-skill/` 及其接口文档。
 - DeepSeek：[官方 Chat Completions 文档](https://api-docs.deepseek.com/api/create-chat-completion/)。
+
+## 小红书场景工作台参考实现
+
+[队友参照说明](handoffs/scenario-workbench/docs/TEAM-HANDOFF.md) · [独立工作台](handoffs/scenario-workbench/README.md)
+
+提供客户洞察、硬条件筛选、ima 本地导出包检索、图文及店员演示脚本、PNG/ZIP 导出的独立实现。未替换根目录在线 ima 链路，接口转换及待补齐项见参照说明。凭证和私有知识库需在本机配置。
