@@ -10,3 +10,6 @@ __MACOSX/
 .DS_Store
 ._*
 .history/
+
+public/scenario/
+.shadow-local/

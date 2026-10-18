@@ -5,9 +5,11 @@ import { pathToFileURL } from 'node:url';
 import { config, ROOT, readJson, safeError } from './src/config.mjs';
 import { validate } from './src/pipeline.mjs';
 import { execute, doctor } from './src/runtime.mjs';
+import { createScenarioService } from './src/scenario-service.mjs';
 
-export function createApp({ settings = config(), run, check } = {}) {
+export function createApp({ settings = config(), run, check, scenarioDependencies } = {}) {
   let busy = false;
+  const scenario = createScenarioService(settings, scenarioDependencies);
   const server = http.createServer(async (req, res) => {
     const port = server.address()?.port;
     const allowedHosts = [`127.0.0.1:${port}`, `localhost:${port}`];
@@ -19,6 +21,7 @@ export function createApp({ settings = config(), run, check } = {}) {
     if (req.headers.origin && !allowedHosts.some(host => req.headers.origin === `http://${host}`)) return reply(403, { error: '只允许本地同源请求' });
     try {
       const route = new URL(req.url, `http://${req.headers.host}`).pathname;
+      if(await scenario(req,res,route,reply)) return;
       if (req.method === 'GET' && route === '/') {
         res.writeHead(200, { 'Content-Type': 'text/html; charset=utf-8' });
         return res.end(await fs.readFile(path.join(ROOT, 'public/index.html')));

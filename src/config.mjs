@@ -4,6 +4,7 @@ import { fileURLToPath } from 'node:url';
 export const ROOT = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '..');
 
 export function config() {
+  if (process.env.SHADOW_ENV_FILE) process.loadEnvFile(process.env.SHADOW_ENV_FILE);
   for (const name of ['.env.local', '.env']) {
     const file = path.join(ROOT, name);
     if (fs.existsSync(file)) process.loadEnvFile(file);
@@ -14,7 +15,7 @@ export function config() {
     model: process.env.DEEPSEEK_MODEL || 'deepseek-flash',
     apiKey: process.env.DEEPSEEK_API_KEY || '',
     baseUrl: process.env.DEEPSEEK_BASE_URL || 'https://api.deepseek.com',
-    port: Number(process.env.PORT || 8787),
+    port: Number(process.env.PORT || 8790),
   };
 }
 
