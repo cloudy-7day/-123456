@@ -38,7 +38,8 @@ export async function runPipeline(input, { retrieve, generate, progress = () => 
   const sources = evidence.sources || [];
   if (!sources.some(s => s.kind === 'text' && s.text?.trim())) throw Error('没有取得可读的产品原文，停止生成。请核对型号及当前知识库中的产品原文。');
   progress('正在根据原文生成销售内容');
-  const system = ['system.txt', 'image-rules.txt'].map(file => fs.readFileSync(path.join(ROOT, 'prompts', file), 'utf8')).join('\n\n');
+  const promptFiles = ['system.txt', 'image-rules.txt', ...(input.platform === '小红书' ? ['xiaohongshu.txt'] : [])];
+  const system = promptFiles.map(file => fs.readFileSync(path.join(ROOT, 'prompts', file), 'utf8')).join('\n\n');
   const output = await generate({ input, sources, outputSchema, system: system + (evidence.retrieval?.mode==='cached' ? `\n本轮使用此前真实检索保存的缓存原文，保存时间：${evidence.retrieval.source_created_at}。不得宣称实时检索或当期信息已核验；可能过时的内容应列入待确认。` : '') });
   const contentFields = ['title', 'body', 'call_to_action'];
   const blocked = contentFields.every(key => typeof output?.content?.[key] === 'string' && !output.content[key].trim());

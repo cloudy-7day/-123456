@@ -83,7 +83,7 @@
     },
     {
       "file": "src/pipeline.mjs",
-      "sha256": "f4342f6976b58857a126388874613d0634ab2fcd305d76f5051c3daab2069c3b"
+      "sha256": "b1cd22530e32923640dabf515189c150fb6a42e600f10c541f028fb85cc66272"
     },
     {
       "file": "src/runtime.mjs",
@@ -112,6 +112,10 @@
     {
       "file": "prompts/system.txt",
       "sha256": "191a965f01082ca93ab256328ac95adcc88c84fd6900063af200875dabbdbf84"
+    },
+    {
+      "file": "prompts/xiaohongshu.txt",
+      "sha256": "c85b9eb0f45d876ad3f689b3b5bbf0648c338c6f5f1ba84034647c882cdceaa0"
     },
     {
       "file": "modules/scenario/src/api.js",

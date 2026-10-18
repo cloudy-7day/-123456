@@ -8,6 +8,13 @@ const sources = [{ ref: 'S1', title: '产品事实.md', text: '这是测试原�
 const draft = { customer_insight: '需要课堂笔记', strategy: '围绕课堂', content: { title: '课堂笔记', body: '到店验证笔记工作流 [S1]', call_to_action: '带常用文件体验' }, image_plan: [], sales_plan: { quote: '待确认价格规则', demo_script: '验证工作流' }, follow_up: [1,3,7].map(day=>({day,message:"测试跟进草稿"})), source_refs: ['S1'], pending_confirmation: ['软件兼容性'] };
 
 test('pipeline module exists', () => assert.ok(api?.runPipeline));
+test('Xiaohongshu writing guidance is injected only for the selected platform', async () => {
+  for (const platform of ['小红书','公众号']) {
+    let prompt;
+    await api.runPipeline({...input,platform},{retrieve:async()=>({sources}),generate:async({system})=>{prompt=system;return draft;}});
+    assert.equal(prompt.includes('小红书成稿专项规则'),platform==='小红书');
+  }
+});
 test('missing input fails before connecting services', async () => {
   assert.ok(api);
   await assert.rejects(api.runPipeline({ ...input, product: '' }, { retrieve: () => assert.fail('must not retrieve') }), /product|产品/);
