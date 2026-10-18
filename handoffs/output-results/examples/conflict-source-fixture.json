@@ -1,0 +1,22 @@
+{
+  "fixture_only": true,
+  "provenance": "人工构造的资料冲突测试，不是ima运行记录，S2不是官方产品事实。",
+  "sources": [
+    {
+      "id": "S1",
+      "type": "text",
+      "product": "HUAWEI MateBook 14（鸿蒙版）",
+      "title": "HUAWEI MateBook 14（鸿蒙版）—产品事实（本地摘录）",
+      "file": "fixtures/product-excerpt.md",
+      "original_relative_path": "P1-产品参数库/01-鸿蒙电脑/HUAWEI MateBook 14/产品事实.md",
+      "text": "重量：约1.33 kg（圆键盘含电池）；约1.32 kg（方键盘含电池）。实际机身重量根据配置、制造工艺、测量方法的不同可能有所差异。屏幕比例3:2。操作系统HarmonyOS 6。本摘录没有具体第三方软件兼容性、价格、优惠、续航时长或性能测试结果。"
+    },
+    {
+      "id": "S2",
+      "type": "text",
+      "product": "HUAWEI MateBook 14（鸿蒙版）",
+      "title": "人为构造的冲突测试资料",
+      "text": "仅供异常测试：假设同一圆键盘含电池重量约1.53 kg。此数值故意与S1冲突，不是真实规格。"
+    }
+  ]
+}

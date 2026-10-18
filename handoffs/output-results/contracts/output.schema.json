@@ -1,0 +1,169 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "title": "营销图文生成结果",
+  "description": "模型结果本体，仅保留现有八个顶层字段。字段格式通过不代表事实、配图或营销内容已经核验。",
+  "type": "object",
+  "required": [
+    "customer_insight",
+    "strategy",
+    "content",
+    "image_plan",
+    "sales_plan",
+    "follow_up",
+    "source_refs",
+    "pending_confirmation"
+  ],
+  "properties": {
+    "customer_insight": {
+      "type": "string",
+      "title": "需求画像",
+      "description": "按已知、优先级、待确认分项写入同一字符串；评分和排序仅来自输入，不捏造预算、身份、购买意愿或匹配度。",
+      "maxLength": 1800
+    },
+    "strategy": {
+      "type": "string",
+      "title": "内容策略与表达依据",
+      "description": "说明人群任务、主次卖点、平台结构、配图理由；使用生活化换算时写明输入数值、来源、公式、单位、近似和边界；不得宣称已完成自动事实审核。",
+      "maxLength": 3000
+    },
+    "content": {
+      "type": "object",
+      "title": "面向顾客的营销图文",
+      "required": [
+        "title",
+        "body",
+        "call_to_action"
+      ],
+      "properties": {
+        "title": {
+          "type": "string",
+          "title": "标题",
+          "description": "适配平台，避免伪造体验和绝对化宣传；资料冲突或无适用证据时留空。",
+          "maxLength": 120
+        },
+        "body": {
+          "type": "string",
+          "title": "正文",
+          "description": "纯文本，使用换行分段；产品事实逐处附本次来源编号。平台标签写在正文末尾。无适用证据或事实冲突时留空，不把内部审核报告当营销正文。",
+          "maxLength": 6000
+        },
+        "call_to_action": {
+          "type": "string",
+          "title": "行动引导",
+          "description": "具体、低门槛、与目标和顾虑一致；不承诺未经确认的价格、优惠、库存、试用条件或兼容性。",
+          "maxLength": 500
+        }
+      }
+    },
+    "image_plan": {
+      "type": "array",
+      "title": "配图计划",
+      "description": "按出场顺序排列；仅使用本次实际可用且匹配型号配置的图片编号。无图返回空数组；数量不足写入待确认，不凑造编号。",
+      "minItems": 0,
+      "items": {
+        "type": "object",
+        "required": [
+          "source_ref",
+          "position",
+          "caption"
+        ],
+        "properties": {
+          "source_ref": {
+            "type": "string",
+            "title": "图片来源编号",
+            "description": "来自本次资料中的真实图片标识，如 I1；不填文件路径、URL或自造编号。",
+            "maxLength": 120
+          },
+          "position": {
+            "type": "string",
+            "title": "插入位置",
+            "description": "可定位的位置，如首图、正文第二段之后，并说明用途。",
+            "maxLength": 400
+          },
+          "caption": {
+            "type": "string",
+            "title": "图片说明",
+            "description": "明确图片名称或可识别画面、型号配置及必要限制。图片标题不能自动作为参数证据。",
+            "maxLength": 700
+          }
+        }
+      }
+    },
+    "sales_plan": {
+      "type": "object",
+      "title": "店员执行建议",
+      "required": [
+        "quote",
+        "demo_script"
+      ],
+      "properties": {
+        "quote": {
+          "type": "string",
+          "title": "报价说明",
+          "description": "当前未接通报价计算。缺少当期具体SKU和有效价格规则时不报价；预算不等于产品价格，不自动叠加优惠。",
+          "maxLength": 1000
+        },
+        "demo_script": {
+          "type": "string",
+          "title": "约3分钟到店演示",
+          "description": "按0—30、30—90、90—150、150—180秒四段写动作、观察点和条件不足时的处理；不宣称试用已经完成。",
+          "maxLength": 2200
+        }
+      }
+    },
+    "follow_up": {
+      "type": "array",
+      "title": "跟进话术草稿",
+      "description": "仅供店员在获得联系许可后选择使用，不会自动发送。第1、3、7天各一项；唯一性和数量上限由语义检查负责。",
+      "minItems": 3,
+      "items": {
+        "type": "object",
+        "required": [
+          "day",
+          "message"
+        ],
+        "properties": {
+          "day": {
+            "type": "integer",
+            "title": "第几天",
+            "enum": [
+              1,
+              3,
+              7
+            ]
+          },
+          "message": {
+            "type": "string",
+            "title": "消息草稿",
+            "description": "第1天补需求，第3天跟进验证或邀约，第7天确认计划并允许暂停；不编造已经完成的互动。",
+            "maxLength": 500
+          }
+        }
+      }
+    },
+    "source_refs": {
+      "type": "array",
+      "title": "实际使用的来源编号",
+      "description": "收齐所有字符串内引用及image_plan来源，不包含未使用的编号。至少一项；完全无来源应由上游终止正常生成，而非编造编号。",
+      "minItems": 1,
+      "items": {
+        "type": "string",
+        "title": "来源编号",
+        "description": "必须存在于本次提供的来源中，不假定S1固定对应某文件。",
+        "maxLength": 120
+      }
+    },
+    "pending_confirmation": {
+      "type": "array",
+      "title": "待确认与待核验",
+      "description": "列出具体事项、原因与下一步；如无图、图片不足、软件版本未知、引用冲突。没有事项时空数组。不是已通过审核的标志。",
+      "minItems": 0,
+      "items": {
+        "type": "string",
+        "title": "待确认事项",
+        "description": "具体、可执行，区分已知缺口和未知事实。",
+        "maxLength": 900
+      }
+    }
+  }
+}
