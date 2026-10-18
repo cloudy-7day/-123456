@@ -30,15 +30,16 @@ export function Handoff({analysis}){
   }catch(e){setError(e.message);setProgress('');}finally{setBusy(false);}
  }
  const active=result?.results.find(r=>r.platform===selected)?.result;
- return <section className="integration"><div className="panel-title"><span className="step-num">03</span><h2>接入产品资料与营销生成</h2></div>
- <p className="fine">本地影子版本 · 沿用队友的 ima 检索和输出协议。<a href="/" target="_blank" rel="noreferrer">打开原链路页面</a></p>
+ return <section className="integration"><div className="panel-title"><h2>生成营销方案</h2></div>
+ <p className="fine">选择本轮要核验的产品，检索资料后生成内容与到店体验建议。</p>
  {blocked?<div className="warning">已保存洞察，但关键条件仍未确认：{analysis.gate.reasons.join('；')}。请先补充并重新理解。</div>:null}
  <label>本轮检索的完整型号<input value={product} maxLength={120} disabled={busy} placeholder="例如：MateBook 14 酷睿 Ultra" onChange={e=>{setProduct(e.target.value);setProductConfirmed(false);setResult(null);}}/></label>
  <p className="fine">保留客户原始意向；这里是销售选择的检索对象，不能代表已满足软件、系统或预算要求。未选型号时先停在此处。</p>
  <label className="checkbox"><input type="checkbox" checked={productConfirmed} disabled={busy} onChange={e=>setProductConfirmed(e.target.checked)}/>已确认型号与系统版本，用于资料检索</label>
  <label>客户身份补充（可留空，留空保持未知）<input value={audience} maxLength={500} disabled={busy} onChange={e=>{setAudience(e.target.value);setResult(null);}}/></label>
  <fieldset><legend>生成平台</legend>{['小红书','公众号','朋友圈','门店海报'].map(p=><label className="checkbox" key={p}><input type="checkbox" checked={platforms.includes(p)} disabled={busy} onChange={e=>{setPlatforms(old=>e.target.checked?[...old,p]:old.filter(x=>x!==p));setResult(null);}}/>{p}</label>)}</fieldset>
- <div className="integration-actions"><button disabled={busy} onClick={check}>检查接口连接</button><button disabled={busy||blocked||!productConfirmed||!product.trim()||!platforms.length} onClick={exportTasks}>导出兼容任务包</button><button className="primary" disabled={busy||blocked||!productConfirmed||!product.trim()||!platforms.length} onClick={generate}>{busy?'处理中…':'检索并生成所选平台'}</button></div>
+ <div className="integration-actions"><button disabled={busy} onClick={check}>检查接口连接</button><button className="primary" disabled={busy||blocked||!productConfirmed||!product.trim()||!platforms.length} onClick={generate}>{busy?'处理中…':'生成所选平台内容'}</button></div>
+ <details className="integration-tools"><summary>联调工具</summary><div className="integration-actions"><button disabled={busy||blocked||!productConfirmed||!product.trim()||!platforms.length} onClick={exportTasks}>导出兼容任务包</button><a href="/" target="_blank" rel="noreferrer">原链路页面</a></div></details>
  {connection?<div className="connection-result">ima：{connection.ima?.ok?'已验证连接':connection.ima?.error||'连接未确认'}<br/>DeepSeek：{connection.deepseek?.ok?'已验证连接':connection.deepseek?.error||'连接未确认'}</div>:null}
  <div role="status" aria-live="polite">{progress}</div>{error?<div role="alert" className="error">{error}</div>:null}
  {result?<div className="generation-results">{result.errors.map(e=><p className="error" key={e.platform}>{e.platform}：{e.message}</p>)}<div className="filters">{result.results.map(r=><button key={r.platform} className={selected===r.platform?'selected':''} onClick={()=>setSelected(r.platform)}>{r.platform}</button>)}</div>

@@ -10,4 +10,4 @@
 
 集成入口为根目录 `src/scenario-service.mjs`；完整接口和验证边界见根目录 README。此处保留的独立服务器源码用于参考，不作为集成版启动入口。
 
-理解标准 v0.2：12 篇帖子归纳出 12 个维度，由 `shared/standards.mjs` 同时供模型提示词与页面使用；输出字段由 `shared/categories.mjs` 和 `shared/contract.mjs` 校验。普通未知不阻塞保存，关键问题每轮最多三项。新增维度及标准版本保留在交接给后续链路的客户理解上下文中。
+理解标准 v0.2：12 篇帖子归纳出 12 个维度，由 `shared/standards.mjs` 供后端模型提示词使用；输出字段由 `shared/categories.mjs` 和 `shared/contract.mjs` 校验。主界面不展示维度清单；完整观察只在按需打开的核对面板中可见。普通未知不阻塞保存，关键问题每轮最多三项。新增维度及标准版本保留在交接给后续链路的客户理解上下文中。

@@ -56,6 +56,6 @@
     "version": "0.2",
     "research_sources": 12,
     "dimensions": 12,
-    "page": "dimension-based input and review; samples optional"
+    "page": "backend standard; console shows input, brief summary and necessary questions; full review on demand"
   }
 }
