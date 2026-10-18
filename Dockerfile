@@ -14,11 +14,12 @@ RUN pnpm build
 
 FROM node:24-bookworm-slim AS runtime
 WORKDIR /app
-ENV NODE_ENV=production HOST=0.0.0.0 PORT=7860
+ENV NODE_ENV=production HOST=0.0.0.0 PORT=7860 KNOWLEDGE_SOURCE=local
 COPY --chown=node:node --from=production-deps /app/node_modules ./node_modules
 COPY --chown=node:node package.json server.mjs cli.mjs ./
 COPY --chown=node:node src/ ./src/
 COPY --chown=node:node contracts/ ./contracts/
+COPY --chown=node:node knowledge/ ./knowledge/
 COPY --chown=node:node prompts/ ./prompts/
 COPY --chown=node:node examples/task.json ./examples/task.json
 COPY --chown=node:node public/index.html ./public/index.html

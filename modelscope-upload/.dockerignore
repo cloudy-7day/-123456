@@ -30,3 +30,8 @@
 !vendor/ima-skills-1.1.10/ima-skill/
 !vendor/ima-skills-1.1.10/ima-skill/ima_api.cjs
 !vendor/ima-skills-1.1.10/ima-skill/meta.json
+
+!knowledge/
+!knowledge/catalog.json
+!knowledge/assets/
+!knowledge/assets/**

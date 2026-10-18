@@ -6,7 +6,9 @@
 
 入口：http://127.0.0.1:8791/scenario/ 。点击“查看上次生成方案”可直接查看已生成的三平台结果；新任务按“填写场景 → 理解 → 核对确认 → 选择产品 → 生成”操作。原服务仍在 8787，独立运行。
 
-**当前运行的是显式缓存资料模式。** 本次实时 ima 检索返回 `220021: 资料获取次数已达上限，请明天再尝试`。本地已使用此前真实取得的知识库原文和图片，配合真实 DeepSeek，完成三平台生成。页面和 JSON 均标注资料原始日期，不将缓存冒充本次检索。缓存仅适用于资料对应的同一产品。
+**当前默认直接读取本地资料包 `华为PC知识库(2).zip`，不调用 ima。** 已导入 10 个产品、68 张有产品索引的图片；保留原始目录和内容哈希。校园学习 + 小红书的真实 DeepSeek 联调已通过，最终交付完整文案（含图片）与约 3 分钟店员脚本。
+
+用户只需提供一段完整场景，需求维度由系统提取；理解与确认可折叠，关键冲突会展开提示。客户需求与产品选择分别确认，避免自动补造事实。发布场景和渠道为单选，本轮仅开放校园学习、小红书。
 
 ## 安装和启动
 
@@ -18,19 +20,15 @@ pnpm build
 pnpm test
 ```
 
-本机复用已有外部配置与资料的启动命令（8791 已运行时无需重复启动）：
-
-```powershell
-.\scripts\start-local.ps1 -EnvFile ..\.env.local -EvidenceFile ..\output\latest.json
-```
-
-额度恢复后，省略 `-EvidenceFile` 即使用实时检索：
+本机启动命令（8791 已运行时无需重复启动）：
 
 ```powershell
 .\scripts\start-local.ps1 -EnvFile ..\.env.local
 ```
 
-换机器时，将 `.env.example` 复制为本机 `.env.local`，填写 ima 和 DeepSeek 凭证，再运行 `scripts/start-local.ps1 -EnvFile .env.local`。本机 DeepSeek 密钥来自用户环境变量；不用复制密钥到代码。缓存文件和原图片必须配套，只有 JSON 不足以恢复图片。不要上传凭证、`output/`、`tmp/` 或本地依赖。
+默认 `KNOWLEDGE_SOURCE=local`，读取项目 `knowledge/`。本机 DeepSeek 密钥来自用户环境变量；换机器时将 `.env.example` 复制为 `.env.local`，仅需配置 `DEEPSEEK_API_KEY`，再运行 `scripts/start-local.ps1 -EnvFile .env.local`。不要上传密钥、历史输出或本地依赖。
+
+本地知识库更新：`python scripts/import-local-knowledge.py "新资料包.zip"`。导入工具需要 Python/Pillow；应用运行和 Docker 不需要 Python。保留完整图片索引，导入后运行测试和 `pnpm package:modelscope`。素材缺失或完整型号不明确时提示补充，不从其他型号借图。
 
 ## 三人协作和合并规则
 
@@ -54,14 +52,18 @@ pnpm test
 
 运行 `pnpm package:modelscope` 从源码白名单重建 `modelscope-upload/`。这是生成目录，不手改其中副本；只上传其内部文件，Dockerfile 位于魔搭仓库根目录。Node.js 24、多阶段构建 React、监听 `0.0.0.0:7860`。
 
-魔搭私密环境变量：`DEEPSEEK_API_KEY`、`IMA_OPENAPI_CLIENTID`、`IMA_OPENAPI_APIKEY`。建议显式填写 `IMA_KB_NAME=任德耀新建华为PC知识库` 和 `DEEPSEEK_MODEL=deepseek-flash`。线上不设置本机的 `SHADOW_ENV_FILE` 或 `IMA_EVIDENCE_CACHE_FILE` 路径。
+魔搭必填私密环境变量：`DEEPSEEK_API_KEY`。建议显式填写 `DEEPSEEK_MODEL=deepseek-flash`，Docker 已设置 `KNOWLEDGE_SOURCE=local`、`HOST=0.0.0.0`、`PORT=7860`。上传目录包含知识库文本和图片，不需要 ima 凭证。线上不设置本机的配置或缓存文件路径。
 
-本次只准备部署包，没有上传。Docker 引擎未运行，尚未验证镜像构建。线上同步应在实时 ima 全链路补验后进行。
+本次只准备部署包，没有上传。Docker 引擎未运行，镜像构建尚未验证。
 
 ## 验证与边界
 
-46 项测试、前端构建通过；真实 DeepSeek 已完成分析与三平台生成，浏览器验证复制、下载、图片、历史恢复与移动端布局。生成时锁定上游输入，避免结果因中途编辑丢失。详细证据见 `docs/local-integration-verification.md`。
+53 项后端测试及前端构建通过；真实 DeepSeek 完成单段校园输入理解、人工确认、小红书文案和店员脚本生成，使用本地资料包 4 张图片。复制、文本导出、图片加载与手机布局通过。生成时锁定上游输入，替换完整输入时清除旧补充，避免客户之间的信息残留。
 
-尚未完成实时 ima 重新取数全链路、Docker 镜像构建、逐句事实审核、自动选型和四级报价计算。没有自动发消息。本次小红书结果仅选出两张图，界面标注需补一张；文案品质与长度仍可由输出同学优化。
+可复现的界面回归在 `tests/browser/focused-flow.mjs`，使用合成 API 响应，不调用模型。运行需要 Playwright（或用 `PLAYWRIGHT_MODULE` 指定其模块路径）、可选 `CHROME_PATH` 指定浏览器，`LOCAL_APP_URL` 默认为 `http://127.0.0.1:8791`。执行 `node tests/browser/focused-flow.mjs`。
 
-这是团队演示服务，无多用户隔离；分析确认记录存在内存，重启后需重新理解。历史结果只恢复展示，不恢复确认权限。
+后续添加场景/渠道，先编辑 `modules/scenario/shared/experience.mjs` 的目录并启用选项；对应文案规则在 `prompts/system.txt`，输入确认适配在 `src/handoff.mjs`。后台保留原八字段契约与多平台能力，当前页面每次只请求所选一个渠道。
+
+最新验证见 `docs/focused-local-verification.md`。此前的缓存模式验证记录仅用于历史追溯，不代表当前运行来源。
+
+尚未实现逐句自动事实审核、自动产品推荐或四级报价计算。没有自动发消息。团队演示版无多用户隔离；分析确认记录存在内存，重启后需重新理解。历史结果只恢复展示，不恢复确认权限。

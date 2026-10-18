@@ -2,6 +2,13 @@ import fs from 'node:fs/promises';
 import path from 'node:path';
 import { randomUUID } from 'node:crypto';
 import { ROOT } from './config.mjs';
+import { LocalKnowledge } from './local-knowledge.mjs';
+
+export function knowledgeMode(settings) {
+  const source=settings.knowledgeSource || (settings.evidenceCacheFile?'cached':'ima');
+  if(!['local','cached','ima'].includes(source))throw Error('KNOWLEDGE_SOURCE 必须为 local、cached 或 ima。');
+  return source;
+}
 
 export async function readEvidenceSnapshot(file, kbName) {
   const snapshot=JSON.parse((await fs.readFile(file,'utf8')).replace(/^\uFEFF/,''));
@@ -14,11 +21,14 @@ export async function readEvidenceSnapshot(file, kbName) {
   return snapshot;
 }
 
-export async function retrieveEvidence(ima, input, settings, progress) {
-  if(!settings.evidenceCacheFile){
+export async function retrieveEvidence(ima, input, settings, progress=()=>{}) {
+  const mode=knowledgeMode(settings);
+  if(mode==='local')return new LocalKnowledge(settings).retrieve(input,progress);
+  if(mode==='ima'){
     const evidence=await ima.retrieve(input,progress);
     return {...evidence,retrieval:{mode:'live',source_created_at:new Date().toISOString()}};
   }
+  if(!settings.evidenceCacheFile)throw Error('缓存模式需要配置 IMA_EVIDENCE_CACHE_FILE。');
   const snapshot=await readEvidenceSnapshot(settings.evidenceCacheFile,settings.kbName);
   if(snapshot.input.product!==input.product) throw Error('缓存型号与选择的完整型号不一致；请使用实时检索或对应型号的缓存。');
   const sourceTime=snapshot.meta.retrieval.source_created_at;

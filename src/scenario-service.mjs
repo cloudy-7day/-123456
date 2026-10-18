@@ -5,6 +5,8 @@ import { confirmAnalysis } from '../modules/scenario/server/review.mjs';
 import { buildHandoff } from './handoff.mjs';
 import { runShadowBatch } from './shadow-batch.mjs';
 import { ROOT, safeError } from './config.mjs';
+import { localCatalog } from './local-knowledge.mjs';
+import { knowledgeMode } from './evidence-cache.mjs';
 
 async function body(req) {
   if (!req.headers['content-type']?.startsWith('application/json')) throw Object.assign(Error('需要 JSON 输入'), {status:415});
@@ -17,13 +19,21 @@ export function createScenarioService(settings, {analyze=understand, batch=runSh
   const cache=new Map(); let busy=false;
   const get=id=>{const a=cache.get(id); if(!a || Date.now()-a.time>3600000)throw Object.assign(Error('分析已过期，请重新理解。'),{status:410});return a;};
   return async function handle(req,res,route,reply){
+    if(req.method==='GET' && route==='/api/products'){
+      try {reply(200,await localCatalog(settings.knowledgeDir));}
+      catch(error){reply(503,{error:safeError(error)});}return true;
+    }
     if(req.method==='GET' && route==='/api/scenario-latest'){
       try {reply(200,await loadLatest());}
       catch(error){reply(error.code==='ENOENT'?404:500,{error:error.code==='ENOENT'?'还没有保存的多平台结果。':safeError(error)});}
       return true;
     }
     if(req.method==='GET' && route==='/api/health') {
-      reply(200,{configured:Boolean(settings.apiKey),provider:'deepseek',model:settings.model,imaConnected:false,imaStatus:'not_checked',retrievalMode:settings.evidenceCacheFile?'cached':'live'});return true;
+      const mode=knowledgeMode(settings);
+      let knowledge;
+      try {if(mode==='local'){const catalog=await localCatalog(settings.knowledgeDir);knowledge={ok:true,name:catalog.knowledge_base,productCount:catalog.products.length,...catalog.retrieval};}}
+      catch(error){knowledge={ok:false,error:safeError(error)};}
+      reply(200,{configured:Boolean(settings.apiKey),provider:'deepseek',model:settings.model,imaConnected:false,imaStatus:mode==='local'?'not_required':'not_checked',retrievalMode:mode==='ima'?'live':mode,...(knowledge?{knowledge}:{})});return true;
     }
     if(req.method==='GET' && (route==='/scenario' || route.startsWith('/scenario/'))){
       const relative=route.replace(/^\/scenario\/?/,'')||'index.html';

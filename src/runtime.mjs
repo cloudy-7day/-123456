@@ -2,7 +2,8 @@ import { config, safeError } from './config.mjs';
 import { ImaClient } from './ima.mjs';
 import { DeepSeekClient } from './deepseek.mjs';
 import { runPipeline } from './pipeline.mjs';
-import { readEvidenceSnapshot, retrieveEvidence } from './evidence-cache.mjs';
+import { knowledgeMode, readEvidenceSnapshot, retrieveEvidence } from './evidence-cache.mjs';
+import { localCatalog } from './local-knowledge.mjs';
 
 export async function execute(input, progress, settings = config()) {
   const ima = new ImaClient(settings);
@@ -16,8 +17,11 @@ export async function execute(input, progress, settings = config()) {
 }
 
 export async function doctor(settings = config()) {
+  const mode=knowledgeMode(settings);
   const services = [
-    ['ima', () => settings.evidenceCacheFile
+    [mode==='local'?'knowledge':'ima', () => mode==='local'
+      ? localCatalog(settings.knowledgeDir).then(x=>({...x.retrieval,knowledge_base:x.knowledge_base,product_count:x.products.length}))
+      : mode==='cached'
       ? readEvidenceSnapshot(settings.evidenceCacheFile,settings.kbName).then(x=>({mode:'cached',knowledge_base:x.meta.knowledge_base,source_created_at:x.meta.retrieval.source_created_at}))
       : new ImaClient(settings).resolveBase().then(x => ({ mode:'live', knowledge_base: x.name }))],
     ['deepseek', () => new DeepSeekClient(settings).doctor()],

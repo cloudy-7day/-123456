@@ -10,6 +10,8 @@ export function config() {
     if (fs.existsSync(file)) process.loadEnvFile(file);
   }
   return {
+    knowledgeSource: process.env.KNOWLEDGE_SOURCE || 'local',
+    knowledgeDir: process.env.LOCAL_KNOWLEDGE_DIR ? path.resolve(process.env.LOCAL_KNOWLEDGE_DIR) : path.join(ROOT, 'knowledge'),
     kbName: process.env.IMA_KB_NAME || '任德耀新建华为PC知识库',
     evidenceCacheFile: process.env.IMA_EVIDENCE_CACHE_FILE ? path.resolve(process.env.IMA_EVIDENCE_CACHE_FILE) : undefined,
     skillPath: path.join(ROOT, 'vendor/ima-skills-1.1.10/ima-skill/ima_api.cjs'),

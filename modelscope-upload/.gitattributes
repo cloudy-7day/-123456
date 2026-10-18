@@ -1,0 +1,3 @@
+# Knowledge files are content-addressed: preserve exact archive bytes on checkout.
+knowledge/** -text -whitespace
+modelscope-upload/knowledge/** -text -whitespace
