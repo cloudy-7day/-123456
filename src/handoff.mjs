@@ -32,7 +32,7 @@ export function buildHandoff(analysis, request) {
   const audience = options.audience || '以客户原话和已确认洞察中的身份为准；不推断未提供的背景';
   const tasks = [...new Set(options.platforms)].map(platform => ({
     product: options.product, audience, scenario, platform, goal: options.goal,
-    notes: '信息不完整时先生成有依据的有限草稿：不承诺未知的课程软件、本地AI算力、预算适配；相关核验作为到店演示检查点或条件说明。未验证的软件兼容、价格与优惠不得承诺。客户洞察中的推断不得升级为事实。',
+    notes: '信息不完整时先生成有依据的有限草稿：不承诺未知的课程软件、本地AI算力、预算适配；相关缺口作为必要的简短条件说明或待确认事项，不生成演示脚本。未验证的软件兼容、价格与优惠不得承诺。客户洞察中的推断不得升级为事实。',
   }));
   for (const task of tasks) validate(task, readJson('contracts/input.schema.json'));
   return { schema_version: 'handoff.1', analysis_id: analysis.analysisId, tasks,

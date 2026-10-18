@@ -1,15 +1,13 @@
 {
   "$schema": "http://json-schema.org/draft-07/schema#",
   "title": "营销图文生成结果",
-  "description": "模型结果本体，仅保留现有八个顶层字段。字段格式通过不代表事实、配图或营销内容已经核验。",
+  "description": "完整营销文案与配图结果，六个顶层字段。画像和表达依据仅供内部核对，不作为最终文案方向报告展示。",
   "type": "object",
   "required": [
     "customer_insight",
     "strategy",
     "content",
     "image_plan",
-    "sales_plan",
-    "follow_up",
     "source_refs",
     "pending_confirmation"
   ],
@@ -23,7 +21,7 @@
     "strategy": {
       "type": "string",
       "title": "内容策略与表达依据",
-      "description": "说明人群任务、主次卖点、平台结构、配图理由；使用生活化换算时写明输入数值、来源、公式、单位、近似和边界；不得宣称已完成自动事实审核。",
+      "description": "内部可核对的表达依据摘要：职业/身份及其依据、2—3个生活场景、各场景任务与有来源的华为特点及适用条件。区分明确输入和假设，不输出建议方向报告。",
       "maxLength": 3000
     },
     "content": {
@@ -44,13 +42,13 @@
         "body": {
           "type": "string",
           "title": "正文",
-          "description": "纯文本，使用换行分段；产品事实逐处附本次来源编号。平台标签写在正文末尾。无适用证据或事实冲突时留空，不把内部审核报告当营销正文。",
+          "description": "生活化完整成稿，用同一项任务串联所选场景：具体麻烦、对应功能与动作。产品事实就近引用。不要参数清单、建议方向、兼容性/续航/核验说明；使用条件完整写入 pending_confirmation，不放大产品能力。",
           "maxLength": 6000
         },
         "call_to_action": {
           "type": "string",
           "title": "行动引导",
-          "description": "具体、低门槛、与目标和顾虑一致；不承诺未经确认的价格、优惠、库存、试用条件或兼容性。",
+          "description": "围绕本次生活任务的一句自然互动，不重复追问已知信息，不出现到店核验、兼容性或续航说明。",
           "maxLength": 500
         }
       }
@@ -89,58 +87,6 @@
         }
       }
     },
-    "sales_plan": {
-      "type": "object",
-      "title": "店员执行建议",
-      "required": [
-        "quote",
-        "demo_script"
-      ],
-      "properties": {
-        "quote": {
-          "type": "string",
-          "title": "报价说明",
-          "description": "当前未接通报价计算。缺少当期具体SKU和有效价格规则时不报价；预算不等于产品价格，不自动叠加优惠。",
-          "maxLength": 1000
-        },
-        "demo_script": {
-          "type": "string",
-          "title": "约3分钟到店演示",
-          "description": "按0—30、30—90、90—150、150—180秒四段写动作、观察点和条件不足时的处理；不宣称试用已经完成。",
-          "maxLength": 2200
-        }
-      }
-    },
-    "follow_up": {
-      "type": "array",
-      "title": "跟进话术草稿",
-      "description": "仅供店员在获得联系许可后选择使用，不会自动发送。第1、3、7天各一项；唯一性和数量上限由语义检查负责。",
-      "minItems": 3,
-      "items": {
-        "type": "object",
-        "required": [
-          "day",
-          "message"
-        ],
-        "properties": {
-          "day": {
-            "type": "integer",
-            "title": "第几天",
-            "enum": [
-              1,
-              3,
-              7
-            ]
-          },
-          "message": {
-            "type": "string",
-            "title": "消息草稿",
-            "description": "第1天补需求，第3天跟进验证或邀约，第7天确认计划并允许暂停；不编造已经完成的互动。",
-            "maxLength": 500
-          }
-        }
-      }
-    },
     "source_refs": {
       "type": "array",
       "title": "实际使用的来源编号",
@@ -156,7 +102,7 @@
     "pending_confirmation": {
       "type": "array",
       "title": "待确认与待核验",
-      "description": "列出具体事项、原因与下一步；如无图、图片不足、软件版本未知、引用冲突。没有事项时空数组。不是已通过审核的标志。",
+      "description": "页面默认折叠的使用条件与核验依据。完整记录所用功能的设备/账号/系统/应用限制、未知兼容性、配置、图片等；不要将这些说明复制到营销正文。没有事项时空数组。",
       "minItems": 0,
       "items": {
         "type": "string",

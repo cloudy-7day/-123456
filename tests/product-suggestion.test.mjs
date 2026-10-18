@@ -62,3 +62,12 @@ test('flexible or uncertain system mentions do not become hard restrictions',()=
   }
  }
 });
+
+// Professional identities alone are not product requirements; explicit work tasks are.
+test('professional task wording matches evidence without inferring needs from occupation',()=>{
+ for(const text of ['我会读公开医学文献','对照不同版本的合同','审阅合同']){
+  const r=suggest(analysis(text),products);assert.equal(r.name,products[0].name);assert.equal(r.candidates[0].reasons[0].label,'screen');
+ }
+ for(const text of ['带电脑记录报告要点','差旅途中整理资料'])assert.equal(suggest(analysis(text),products).candidates[0]?.reasons[0].label,'portable');
+ for(const text of ['我是一名医生','我是一名律师','不需要带电脑','不用读文献','是否要审阅合同','不同意带电脑'])assert.equal(suggest(analysis(text),products).name,'');
+});

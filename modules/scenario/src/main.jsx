@@ -1,7 +1,7 @@
 import React,{useState,useEffect,useRef} from 'react';
 import {createRoot} from 'react-dom/client';
 import {categories} from '../shared/categories.mjs';
-import {samples} from '../shared/samples.mjs';
+import {ExamplePicker} from './ExamplePicker';
 import {api} from './api';
 import {sceneOptions,channelOptions} from '../shared/experience.mjs';
 import './style.css';
@@ -25,7 +25,7 @@ function App(){
  async function loadCatalog(){setCatalogError('');try{const r=await fetch('/api/products');const d=await r.json();if(!r.ok)throw Error('产品资料暂时未能读取');setCatalog(d.products||[]);}catch(e){setCatalogError(e.message);}}
  useEffect(()=>{void loadCatalog();},[]);
  const [generating,setGenerating]=useState(false);const [generationIntent,setGenerationIntent]=useState(0);
- const [scene,setScene]=useState('campus');const [channel,setChannel]=useState('xiaohongshu');const [text,setText]=useState('');const [sample,setSample]=useState(null);const [supplements,setSupplements]=useState([]);
+ const [scene,setScene]=useState('auto');const [channel,setChannel]=useState('xiaohongshu');const [text,setText]=useState('');const [sample,setSample]=useState(null);const [supplements,setSupplements]=useState([]);
  const [analysis,setAnalysis]=useState(null);const [confirmed,setConfirmed]=useState(null);const [edits,setEdits]=useState({});const [answers,setAnswers]=useState({});const [filter,setFilter]=useState('all');const [busy,setBusy]=useState(false);const [saving,setSaving]=useState(false);const [error,setError]=useState('');const [notice,setNotice]=useState('');const [health,setHealth]=useState(null);const [seconds,setSeconds]=useState(0);const [located,setLocated]=useState(null);const [reviewed,setReviewed]=useState(false);
  const controller=useRef(null);const inputRef=useRef(null);const sourceRef=useRef(null);
  useEffect(()=>{fetch('/api/health').then(r=>r.json()).then(setHealth).catch(()=>setHealth({configured:false}));return()=>controller.current?.abort();},[]);
@@ -33,7 +33,7 @@ function App(){
  const inputSources=[{id:'scenario',type:'scenario',text:text.trim()},...supplements];
  const stale=Boolean(analysis)&&JSON.stringify(analysis.input.sources)!==JSON.stringify(inputSources);
  const dirty=Object.keys(edits).length>0||Object.values(answers).some(v=>v.trim());
- function selectSample(s){setConfirmed(null);setSelectionMode('auto');setManualProduct('');setText(s.text+(s.product&&!s.text.includes(s.product)?'\n关注产品：'+s.product:''));setSample(s);setSupplements([]);setAnalysis(null);setEdits({});setAnswers({});setError('');setNotice('');setReviewed(false);}
+ function selectSample(s){setScene('auto');setConfirmed(null);setSelectionMode('auto');setManualProduct('');setText(s.text+(s.product&&!s.text.includes(s.product)?'\n关注产品：'+s.product:''));setSample(s);setSupplements([]);setAnalysis(null);setEdits({});setAnswers({});setError('');setNotice('');setReviewed(false);}
  function locate(e){setLocated(e);sourceRef.current?.scrollIntoView({behavior:'smooth',block:'center'});if(e.sourceId==='scenario'){inputRef.current?.focus();inputRef.current?.setSelectionRange(e.start,e.end);}}
  async function analyze(){
   setConfirmed(null);
@@ -64,19 +64,19 @@ function App(){
  const chosenProduct=catalog.find(p=>p.name===manualProduct);
  const showcase=catalog.find(p=>p.system==='Windows'&&p.preview)||catalog.find(p=>p.preview);
  return <><header className="store-header"><div className="brand"><span className="brand-wordmark">HUAWEI<span>PC</span></span><span className="brand-divider"/><div>门店增长助手<small>华为产业赛道 · 参赛作品</small></div></div><span className="connection"><i className={health?.configured?'connected':''}/>{health?.configured?'服务已就绪':'检查模型配置'}</span></header>
- <main className="focused-main"><div className="intro store-intro"><div><span className="eyebrow">懂客户 · 有依据 · 会表达</span><h1>把产品亮点，<br/><span>讲进客户的生活。</span></h1><p>从一段需求，到一篇小红书文案。<br/>再把亮点，变成店员能演示的体验。</p></div><div className="intro-art"><ProductVisual product={showcase}/>{showcase?<p>{showcase.model} <span>· 知识库产品展示</span></p>:<p>HUAWEI MateBook · 场景营销工作台</p>}</div></div>
- <ol className="journey" aria-label="工作流程"><li className="active"><span>01</span>描述客户场景</li><li className={confirmed?'active':''}><span>02</span>匹配或指定产品</li><li className={generating?'active':''}><span>03</span>交付文案与脚本</li></ol>
+ <main className="focused-main"><div className="intro store-intro"><div><span className="eyebrow">懂客户 · 有依据 · 会表达</span><h1>把产品亮点，<br/><span>讲进客户的生活。</span></h1><p>从客户的职业与生活，找到真实场景。<br/>把选择华为的理由，写成一篇完整小红书文案。</p></div><div className="intro-art"><ProductVisual product={showcase}/>{showcase?<p>{showcase.model} <span>· 知识库产品展示</span></p>:<p>HUAWEI MateBook · 场景营销工作台</p>}</div></div>
+ <ol className="journey" aria-label="工作流程"><li className="active"><span>01</span>描述客户场景</li><li className={confirmed?'active':''}><span>02</span>匹配或指定产品</li><li className={generating?'active':''}><span>03</span>交付文案与配图</li></ol>
  {health?.retrievalMode==='cached'?<div className="warning">当前使用此前保存的资料，未执行新检索。</div>:null}
  <fieldset className="scenario-inputs" disabled={generating||busy||saving} aria-label="场景输入与确认">
  <section className="input-panel complete-input" ref={sourceRef}>
  <div className="input-editor"><div className="section-heading"><span className="eyebrow">从这里开始</span><h2>今天，想打动哪位客户？</h2></div>
  <div className="selection-row"><div><h2>客户场景</h2><div className="choice-tabs" role="tablist" aria-label="客户场景">{sceneOptions.map(s=><button role="tab" key={s.id} aria-selected={scene===s.id} disabled={!s.enabled} title={s.enabled?s.label:'后续开放'} onClick={()=>setScene(s.id)}>{s.label}{!s.enabled?<small>待开放</small>:null}</button>)}</div></div><div><h2>发布渠道</h2><div className="choice-tabs" role="tablist" aria-label="发布渠道">{channelOptions.map(c=><button role="tab" key={c.id} aria-selected={channel===c.id} disabled={!c.enabled} title={c.enabled?c.label:'后续开放'} onClick={()=>setChannel(c.id)}>{c.label}{!c.enabled?<small>待开放</small>:null}</button>)}</div></div></div>
- <label htmlFor="scenario">完整场景描述</label><textarea ref={inputRef} id="scenario" className="scenario" maxLength={1800} value={text} onChange={e=>{setText(e.target.value);setSupplements([]);setEdits({});setAnswers({});setConfirmed(null);setReviewed(false);}} placeholder="例如：准备上大学学计算机，平时写代码、查资料，经常背电脑去图书馆。希望轻便，预算还在考虑，暂时没定型号。"/>
+ <label htmlFor="scenario">完整场景描述</label><textarea ref={inputRef} id="scenario" className="scenario" maxLength={1800} value={text} onChange={e=>{setText(e.target.value);setSupplements([]);setEdits({});setAnswers({});setConfirmed(null);setReviewed(false);}} placeholder="例如：我是一名律师，经常带电脑外出开会，在律所比对合同、出差途中整理公开资料、回办公室准备沟通材料。希望文案讲清这些场景为什么考虑华为电脑。也可以描述学生、医生或其他身份，不清楚的信息可先不填。"/>
  <div className="input-bottom"><span>只需一段完整描述，无需逐项填写维度</span><span>{text.length} / 1800</span></div>
- <details className="provenance"><summary>需要输入示例？</summary><button className="text-button" onClick={()=>selectSample(samples[0])}>填入校园学习模拟场景</button><p>示例仅用于试用，填入后可直接修改。</p>{sample?<p>{sample.label}；{sample.fiction}</p>:null}</details>
+ <details className="provenance"><summary>需要输入示例？</summary><ExamplePicker onApply={selectSample}/>{sample?<p>{sample.label}；{sample.fiction}</p>:null}</details>
  {supplements.length?<details className="provenance"><summary>已纳入 {supplements.length} 次补充</summary>{supplements.map(s=><p key={s.id}>{s.text}</p>)}</details>:null}
  {located?<p className="fine">已定位原文：“{located.quote}”</p>:null}
- <div className="analyze-actions"><button className="primary" disabled={!text.trim()||!health?.configured} onClick={confirm}>{busy?`正在整理需求 · ${seconds}s`:'生成文案与店员脚本'}</button><button className="text-button" disabled={!text.trim()||!health?.configured} onClick={analyze}>仅查看理解</button></div>
+ <div className="analyze-actions"><button className="primary" disabled={!text.trim()||!health?.configured} onClick={confirm}>{busy?`正在整理需求 · ${seconds}s`:'生成小红书文案'}</button><button className="text-button" disabled={!text.trim()||!health?.configured} onClick={analyze}>仅查看理解</button></div>
  <p className="privacy">场景将发送给 DeepSeek，请省略无关个人信息。场景标签用于组织内容，不会据此补造客户事实。</p>
  </div><aside className="product-entry"><span className="eyebrow">本轮产品</span><h2>有目标，也有选择。</h2><p className="entry-description">已知型号可直接指定。没有型号，就让需求带路。</p>
  <div className="selection-mode" role="group" aria-label="产品选择方式"><button aria-pressed={selectionMode==='auto'} onClick={()=>{setSelectionMode('auto');setConfirmed(null);}}>按需求推荐</button><button aria-pressed={selectionMode==='manual'} onClick={()=>{setSelectionMode('manual');setConfirmed(null);}}>指定产品</button></div>

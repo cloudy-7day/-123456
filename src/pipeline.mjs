@@ -38,14 +38,13 @@ export async function runPipeline(input, { retrieve, generate, progress = () => 
   const sources = evidence.sources || [];
   if (!sources.some(s => s.kind === 'text' && s.text?.trim())) throw Error('没有取得可读的产品原文，停止生成。请核对型号及当前知识库中的产品原文。');
   progress('正在根据原文生成销售内容');
-  const promptFiles = ['system.txt', 'image-rules.txt', ...(input.platform === '小红书' ? ['xiaohongshu.txt'] : [])];
+  const promptFiles = ['system.txt', 'image-rules.txt', 'occupation-scenes.txt', ...(input.platform === '小红书' ? ['xiaohongshu.txt'] : [])];
   const system = promptFiles.map(file => fs.readFileSync(path.join(ROOT, 'prompts', file), 'utf8')).join('\n\n');
   const output = await generate({ input, sources, outputSchema, system: system + (evidence.retrieval?.mode==='cached' ? `\n本轮使用此前真实检索保存的缓存原文，保存时间：${evidence.retrieval.source_created_at}。不得宣称实时检索或当期信息已核验；可能过时的内容应列入待确认。` : '') });
   const contentFields = ['title', 'body', 'call_to_action'];
   const blocked = contentFields.every(key => typeof output?.content?.[key] === 'string' && !output.content[key].trim());
   validate(output, outputSchema, 'output', blocked ? new Set(contentFields.map(key => `output.content.${key}`)) : new Set());
   if (blocked && (!output.pending_confirmation.some(x => x.trim()) || output.image_plan.length)) throw Error('暂停成稿必须说明待确认原因，并停止配图。');
-  if (JSON.stringify(output.follow_up.map(x => x.day)) !== '[1,3,7]') throw Error('跟进必须按第1、3、7天各提供一项。');
   const allowed = new Set(sources.map(s => s.ref));
   const mentioned = [...JSON.stringify(output).matchAll(/\[(S\d+|I\d+)\]/g)].map(x => x[1]);
   const refs = [...output.source_refs, ...mentioned, ...output.image_plan.map(x => x.source_ref)];

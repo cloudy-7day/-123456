@@ -1,8 +1,9 @@
 // Extend these catalogs as new scenarios and publishing channels are enabled.
 export const sceneOptions = [
+  {id:'auto',label:'按身份与任务展开',enabled:true},
   {id:'campus',label:'校园学习',enabled:true},
-  {id:'mobile',label:'移动办公',enabled:false},
-  {id:'other',label:'其他场景',enabled:false},
+  {id:'mobile',label:'职业办公',enabled:true},
+  {id:'other',label:'日常生活',enabled:true},
 ];
 export const channelOptions = [
   {id:'xiaohongshu',label:'小红书',enabled:true},

@@ -1,73 +1,58 @@
-# 门店增长智能体 · 本地整合版
+# 华为 PC · 门店增长助手
 
-本地分支 `codex/local-integration` 合并输入理解模块与输出交付包，保留 ima → DeepSeek 主链路。未推送 GitHub，未更新魔搭。上游试用说明保存在 `docs/scenario-trial-README.md`，其中旧验证结论不代表本版本。
+唯一维护源码位于本仓库根目录。网页入口为 `/scenario/`，`/` 自动转入同一工作台。原始接口 `/api/run` 保留兼容，不再维护第二套表单界面。
 
-## 本机打开
+输入一段完整需求，系统提取身份与任务，按知识库提出可更换的产品候选，生成完整小红书文案与同型号配图。理解摘要可折叠；未知预算、软件和已有设备不阻止有限草稿，已知冲突必须处理。最终输出不包含建议方向、分时店员脚本或跟进日程。
 
-入口：http://127.0.0.1:8791/scenario/ 。点击“查看上次生成方案”可直接查看已生成的三平台结果；新任务填写完整场景后，直接点击“生成文案与店员脚本”；系统自动理解、合并补充并准备可更换的检索候选。原服务仍在 8787，独立运行。
+学生、医生、律师可在示例选择器中组合场景；所有示例均为虚构输入，不证明产品能力。职业和场景只用于组织表达，产品功能必须有本轮知识库依据。
 
-**当前默认直接读取本地资料包 `华为PC知识库(2).zip`，不调用 ima。** 已导入 10 个产品、68 张有产品索引的图片；保留原始目录和内容哈希。校园学习 + 小红书的真实 DeepSeek 联调已通过，最终交付完整文案（含图片）与约 3 分钟店员脚本。
+## 本地运行
 
-用户只需提供一段完整场景，需求维度由系统提取；理解与确认可折叠，关键冲突会展开提示。软件、预算、已有设备等未知信息不阻止有限草稿；点击生成会自动处理尚未纳入的修订，不要求额外勾选确认。系统候选明确标注为未验证的检索对象，不冒充客户原始意向。发布场景和渠道为单选，本轮仅开放校园学习、小红书。
-
-## 安装和启动
-
-需要 Node.js 24、pnpm 11.25.0。在本目录执行：
+要求 Node.js 24、pnpm。根目录执行：
 
 ```powershell
 pnpm install --frozen-lockfile
 pnpm build
 pnpm test
-```
-
-本机启动命令（8791 已运行时无需重复启动）：
-
-```powershell
 .\scripts\start-local.ps1 -EnvFile ..\.env.local
 ```
 
-默认 `KNOWLEDGE_SOURCE=local`，读取项目 `knowledge/`。本机 DeepSeek 密钥来自用户环境变量；换机器时将 `.env.example` 复制为 `.env.local`，仅需配置 `DEEPSEEK_API_KEY`，再运行 `scripts/start-local.ps1 -EnvFile .env.local`。不要上传密钥、历史输出或本地依赖。
+默认地址 `http://127.0.0.1:8791/scenario/`。换机器时可从 `.env.example` 创建本机环境文件，通过 `-EnvFile` 指定；仅需配置 `DEEPSEEK_API_KEY`。不要提交凭证。现有 8787 原始服务不由本仓库清理脚本管理。
 
-本地知识库更新：`python scripts/import-local-knowledge.py "新资料包.zip"`。导入工具需要 Python/Pillow；应用运行和 Docker 不需要 Python。保留完整图片索引，导入后运行测试和 `pnpm package:modelscope`。素材缺失或完整型号不明确时提示补充，不从其他型号借图。
+默认 `KNOWLEDGE_SOURCE=local`，使用 `knowledge/` 的原文、索引和图片，不调用 ima。知识库更新命令：`python scripts/import-local-knowledge.py "新资料包.zip"`（导入需要 Python/Pillow；应用运行不需要）。
 
-## 三人协作和合并规则
+## 团队对接
 
-| 负责人 | 主要文件 | 对接约定 |
-| --- | --- | --- |
-| 输入卡同学 | `modules/scenario/src/` 中输入、洞察和审核组件；`modules/scenario/server/`；`modules/scenario/shared/` | 负责场景结构、原文依据、事实/推断/未知与确认门槛。修改共享结构时同时更新服务端校验和测试。 |
-| 输出结果同学 | `prompts/system.txt`、`contracts/output.schema.json`；结果展示 `ResultView.jsx` | 模型输出保留下面的八个字段；新增要求先补样例和校验。不要改 ima/DeepSeek 凭证、接口和检索逻辑。 |
-| 链路集成负责人 | `src/handoff.mjs`、`src/pipeline.mjs`、`src/shadow-batch.mjs`、`src/scenario-service.mjs`、`server.mjs`，以及 `Handoff.jsx`、`RecentResults.jsx`、部署脚本 | 负责两端适配、流式状态、来源验证、错误处理和部署。公共入口 `main.jsx`、共享 CSS、依赖与锁文件由集成者统一合并。 |
+| 范围 | 维护文件 | 约定 |
+|---|---|---|
+| 输入与理解 | `modules/scenario/server/`、`shared/`、`src/main.jsx`、`src/ExamplePicker.jsx` | 事实必须保留逐字原话；推断与未知独立；修订必须重新理解。 |
+| 文案与展示 | `prompts/`、`contracts/output.schema.json`、`modules/scenario/src/ResultView.jsx` | 交付完整文章和配图；分析留在内部字段，不输出建议方向。 |
+| 集成与部署 | `src/`、`server.mjs`、`modules/scenario/src/Handoff.jsx`、`scripts/` | 统一处理型号限制、来源、流式终态、错误和构建。 |
 
-输入卡通过 `src/handoff.mjs` 转为兼容任务：`product/audience/scenario/platform` 必填字符串，`goal/notes` 可选。已确认的结构化洞察作为独立 `customer_context` 传入，不能把推断当成客户原话。
+输出契约保留六个字段：`customer_insight`、`strategy`、`content`、`image_plan`、`source_refs`、`pending_confirmation`。最终复制与文本导出只含完整文案，旧结果中的 `sales_plan`、`follow_up` 不恢复展示。
 
-模型输出固定八个字段：`customer_insight`、`strategy`、`content`、`image_plan`、`sales_plan`、`follow_up`、`source_refs`、`pending_confirmation`。具体类型以根目录 `contracts/output.schema.json` 为准。来源编号必须确实存在，正文及图片使用的来源必须与声明一致，跟进天数固定为 1/3/7。
+`/api/run-scenario` 使用 NDJSON；HTTP 200 只表示开始，必须检查最终事件。手动选型与自动候选共用系统限制，服务端也校验，不能绕过。产品候选不等于软件兼容、预算或购买建议已核实。
 
-`delivery` 和检索模式属于服务端结果外层，不让模型伪造：`draft` 表示草稿生成，`needs_images` 表示需补图，`blocked` 表示内容不能交付。草稿不等于事实或合规已逐句审核。全平台包继续使用 `schema_version=shadow.1`；原 `/api/run` 保持可用。
+队友原交付包已移出运行源码；必要样例在 `tests/fixtures/output-results/`，仅用于测试旧输出兼容。新的修改直接提交现行源码，不复制第二套项目。对比与取舍见 `docs/upstream-comparison.md`。
 
-`/api/run-scenario` 返回 NDJSON，HTTP 200 只代表开始。前端接收 `platform_result` 逐项展示，最后检查 `result.complete`、`errors` 和 `blocked`；总体检索失败会返回 `error`。不能把“接口返回 200”当成三平台成功。
+## 验证
 
-每人独立分支提交，经集成分支统一构建和测试；不按文件时间覆盖，也不整包替换另一人的目录。`handoffs/output-results/` 保留队友交付记录，运行时读取根目录提示词与 schema。更新交付记录不会自动生效，应由集成者审查后同步。
+```powershell
+pnpm test
+pnpm build
+node tests/browser/focused-flow.mjs
+```
 
-## 魔搭部署包
+浏览器测试需要 Playwright，可通过 `PLAYWRIGHT_MODULE` 指定其模块地址、`CHROME_PATH` 指定 Chrome、`LOCAL_APP_URL` 指定地址。使用合成接口响应，不消耗模型额度。真实 DeepSeek 验证和 Docker 构建需单独注明，不能用离线测试代替。
 
-运行 `pnpm package:modelscope` 从源码白名单重建 `modelscope-upload/`。这是生成目录，不手改其中副本；只上传其内部文件，Dockerfile 位于魔搭仓库根目录。Node.js 24、多阶段构建 React、监听 `0.0.0.0:7860`。
+## 魔搭
 
-魔搭必填私密环境变量：`DEEPSEEK_API_KEY`。建议显式填写 `DEEPSEEK_MODEL=deepseek-flash`，Docker 已设置 `KNOWLEDGE_SOURCE=local`、`HOST=0.0.0.0`、`PORT=7860`。上传目录包含知识库文本和图片，不需要 ima 凭证。线上不设置本机的配置或缓存文件路径。
+`pnpm package:modelscope` 从现行源码生成 `modelscope-upload/`；该目录被 Git 忽略，不手动修改其中副本。上传其内部文件，Dockerfile 位于创空间仓库根目录。Node.js 24，监听 `0.0.0.0:7860`，构建时编译 React。
 
-本次只准备部署包，没有上传。Docker 引擎未运行，镜像构建尚未验证。
+必填私密环境变量：`DEEPSEEK_API_KEY`。建议设置 `DEEPSEEK_MODEL=deepseek-flash`；Docker 默认 `KNOWLEDGE_SOURCE=local`，无需 ima 凭证。包内包含知识库，排除环境文件、依赖、测试输出与缓存。
 
-## 验证与边界
+## 当前边界
 
-60 项后端测试及前端构建通过；真实 DeepSeek 完成单段校园输入理解、人工确认、小红书文案和店员脚本生成，使用本地资料包 4 张图片。复制、文本导出、图片加载与手机布局通过。生成时锁定上游输入，替换完整输入时清除旧补充，避免客户之间的信息残留。
+应用检查结构、引用编号、图片所属型号与文件完整性；没有逐句语义事实认证。没有有效配置报价和软件实机兼容测试。图卡编辑、PNG/ZIP 导出尚未接入；目前支持文案复制、文本导出及知识库配图展示。模型每次输出仍需人工复核。
 
-可复现的界面回归在 `tests/browser/focused-flow.mjs`，使用合成 API 响应，不调用模型。运行需要 Playwright（或用 `PLAYWRIGHT_MODULE` 指定其模块路径）、可选 `CHROME_PATH` 指定浏览器，`LOCAL_APP_URL` 默认为 `http://127.0.0.1:8791`。执行 `node tests/browser/focused-flow.mjs`。
-
-后续添加场景/渠道，先编辑 `modules/scenario/shared/experience.mjs` 的目录并启用选项；对应文案规则在 `prompts/system.txt`，输入确认适配在 `src/handoff.mjs`。后台保留原八字段契约与多平台能力，当前页面每次只请求所选一个渠道。
-
-最新验证见 `docs/focused-local-verification.md`。此前的缓存模式验证记录仅用于历史追溯，不代表当前运行来源。
-
-尚未实现逐句自动事实审核、完整购机决策或四级报价计算；当前候选匹配仅依据有限产品特征，不能替代适配核验。没有自动发消息。团队演示版无多用户隔离；分析确认记录存在内存，重启后需重新理解。历史结果只恢复展示，不恢复确认权限。
-
-2026-10-18 交互修复：截图中的原始计算机新生示例（软件、学校算力、型号未定）已通过真实一键生成，得到 3 张本地配图和店员脚本。详见 `docs/assisted-generation-verification.md`。
-
-2026-10-18 产品选择与界面：新增按需求推荐/指定产品，候选保留资料依据，系统排除条件生效，使用知识库产品原图。70项后端测试、前端构建与浏览器回归通过。赛题依据、边界与接口见 `docs/product-selection.md`。
+团队演示版未实现多用户隔离。理解与确认保存在内存，重启后需重新理解；历史结果仅恢复展示。没有自动发布或向客户发消息。

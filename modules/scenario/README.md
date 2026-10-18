@@ -1,11 +1,5 @@
-# 场景理解模块（集成副本）
+# 场景模块
 
-本目录由独立场景理解模块复制并接入根目录服务。协作试用请遵循仓库根目录 README，在根目录安装、构建、启动，打开 `/scenario/`。不要在本目录单独启动服务。
+本模块属于根目录的唯一应用，不再独立启动另一套后端。请在仓库根目录运行 `pnpm build`、`pnpm test` 和 `scripts/start-local.ps1`。
 
-- `src/`：输入、洞察核对、澄清、确认和后续任务交接。
-- `server/understand.mjs`：真实 DeepSeek 理解、超时和结构校验。
-- `server/review.mjs`：人工核对与修订记录。
-- `shared/`：输入协议、证据校验及明确标记的模拟场景。
-- `tests/`：确定性测试，以及可选的真实模型回归（会调用收费接口）。
-
-集成入口为根目录 `src/scenario-service.mjs`；完整接口和验证边界见根目录 README。此处保留的独立服务器源码用于参考，不作为集成版启动入口。
+`src/` 是 React 页面，`shared/` 是两端共享契约和筛选规则，`server/` 提供理解与确认逻辑，由根目录 `src/scenario-service.mjs` 接入。独立参考版的旧入口已退役。

@@ -7,6 +7,7 @@ import { runShadowBatch } from './shadow-batch.mjs';
 import { ROOT, safeError } from './config.mjs';
 import { localCatalog, productPreview } from './local-knowledge.mjs';
 import { knowledgeMode } from './evidence-cache.mjs';
+import { restrictSystems } from '../modules/scenario/shared/product-suggestion.mjs';
 
 async function body(req) {
   if (!req.headers['content-type']?.startsWith('application/json')) throw Object.assign(Error('需要 JSON 输入'), {status:415});
@@ -67,6 +68,14 @@ export function createScenarioService(settings, {analyze=understand, batch=runSh
         const item=get(input.analysisId);item.analysis=confirmAnalysis(item.analysis,input);reply(200,item.analysis);return true;
       }
       const handoff=buildHandoff(get(input.analysisId).analysis,input);
+      if(knowledgeMode(settings)==='local'){
+        const {products}=await localCatalog(settings.knowledgeDir);
+        const normalize=value=>String(value).normalize('NFKC').toLowerCase().replace(/^(huawei|华为)\s*/,'').replace(/\s+/g,'');
+        const requested=normalize(handoff.tasks[0].product);
+        const matches=products.filter(p=>normalize(p.name)===requested||normalize(p.model)===requested);
+        if(matches.length!==1)throw Error('请选择知识库中的完整型号与系统版本。');
+        if(!restrictSystems(handoff.customer_context.understanding.observations,matches).length)throw Error('所选产品与客户明确的系统要求冲突，请更换型号或修订原始需求后重新理解。');
+      }
       if(route==='/api/handoff'){reply(200,handoff);return true;}
       if(busy)throw Object.assign(Error('已有任务运行中，请稍后重试。'),{status:409});
       busy=true;

@@ -1,10 +1,10 @@
 import React,{useState,useEffect,useRef} from 'react';
 import {api,downloadJson} from './api';
-import {suggestProduct} from '../shared/product-suggestion.mjs';
+import {suggestProduct,restrictSystems} from '../shared/product-suggestion.mjs';
 import {ResultView} from './ResultView';
 import {ProductCard} from './ProductCard';
 
-export function Handoff({analysis,sceneLabel='校园学习',platform='小红书',autoStart=false,preferredProduct='',onGeneratingChange=()=>{}}){
+export function Handoff({analysis,sceneLabel='按身份与任务展开',platform='小红书',autoStart=false,preferredProduct='',onGeneratingChange=()=>{}}){
  const [product,setProduct]=useState(preferredProduct||analysis.understanding.product.name||'');
  const [recommendation,setRecommendation]=useState({candidates:[],limitations:[]});
  const [catalogReady,setCatalogReady]=useState(false),[suggestion,setSuggestion]=useState(''),[optionsOpen,setOptionsOpen]=useState(false);const inFlight=useRef(false);const autoStarted=useRef(false),productEdited=useRef(false);
@@ -16,7 +16,7 @@ export function Handoff({analysis,sceneLabel='校园学习',platform='小红书'
  const [result,setResult]=useState(null);const [selected,setSelected]=useState('');
  const [connection,setConnection]=useState(null);
  const isManual=productEdited.current||Boolean(preferredProduct);
- const request=()=>({analysisId:analysis.analysisId,product,productConfirmed:true,productOrigin:isManual?'salesperson_selection':analysis.understanding.product.name?'input_match':'system_candidate',platforms,goal:`面向${sceneLabel}场景，在${platform}发布完整文案并给出店员演示脚本，引导咨询和到店体验。场景标签仅是发布方向，不能冒充客户原话或新增事实。`});
+ const request=()=>({analysisId:analysis.analysisId,product,productConfirmed:true,productOrigin:isManual?'salesperson_selection':analysis.understanding.product.name?'input_match':'system_candidate',platforms,goal:`在${platform}输出一篇完整多场景文案与配图。界面场景偏好为“${sceneLabel}”，它不能覆盖输入中的身份与实际任务，也不能据此把客户改写为学生。先识别职业、角色或多重身份，再按本次任务展开2—3个具体工作/生活片段，说明问题、对应产品事实和选择华为的理由。职业只帮助提出相关情境，不自动推定专科、执业领域、设备、软件、预算或权限。输入不足时可用条件式场景完成草稿；同一职业不同任务也须写出不同内容。最终交付完整笔记，不输出建议方向、提纲或分时店员话术；产品和系统能力必须有当前型号的资料依据。`});
  const unresolved=analysis.gate.reasons.filter(r=>!(r==='产品意向存在歧义'&&isManual&&products.some(p=>p.name===product)));
  const blocked=unresolved.length>0;
  function chooseProduct(name){productEdited.current=true;autoStarted.current=true;setProduct(name);setResult(null);setProgress('');setError('');setSuggestion('已更换本轮产品，请点击生成以使用新型号的资料与图片。');}
@@ -29,6 +29,7 @@ export function Handoff({analysis,sceneLabel='校园学习',platform='小红书'
   if(blocked){setError('请先处理原文中的冲突：'+analysis.gate.reasons.join('；'));return;}
   if(!product.trim()){setError('请从产品目录选择一个具体型号。其他未知信息无需补齐。');return;}
   if(!products.some(p=>p.name===product)){setError('请选择资料目录中的完整型号与系统版本。');return;}
+  if(!restrictSystems(analysis.understanding.observations,products.filter(p=>p.name===product)).length){setError('所选产品与明确的系统要求冲突，请更换型号或修改原始需求后重新理解。');return;}
   inFlight.current=true;setBusy(true);onGeneratingChange(true);setError('');setResult(null);setSelected('');setProgress('正在查找产品资料与图片…');let terminal=false;
   try{
    const response=await fetch('/api/run-scenario',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify(request())});
@@ -43,7 +44,7 @@ export function Handoff({analysis,sceneLabel='校园学习',platform='小红书'
     }
     if(event.type==='platform_error')setResult(old=>({...old,complete:false,results:old?.results||[],errors:[...(old?.errors||[]),{platform:event.platform,message:event.message}]}));
     if(event.type==='error'){terminal=true;throw Error(event.message);}
-    if(event.type==='result'){terminal=true;setResult(event.result);setSelected(event.result.results[0]?.platform||'');setProgress(event.result.complete?'文案与店员脚本已生成。':'部分平台失败或暂停成稿；已保留所有返回的结果与原因。');}
+    if(event.type==='result'){terminal=true;setResult(event.result);setSelected(event.result.results[0]?.platform||'');setProgress(event.result.complete?'小红书文案与配图已生成。':'部分平台失败或暂停成稿；已保留所有返回的结果与原因。');}
    };
    try{while(true){const {done,value}=await reader.read();pending+=decoder.decode(value,{stream:!done});const lines=pending.split('\n');pending=lines.pop();for(const line of lines)consume(line);if(done){consume(pending);break;}}}finally{reader.releaseLock();}
    if(!terminal)throw Error('连接中断，未收到最终结果，不能认定生成成功。');
@@ -55,7 +56,7 @@ export function Handoff({analysis,sceneLabel='校园学习',platform='小红书'
  const selectedProduct=products.find(p=>p.name===product);
  const ranked=(recommendation.candidates||[]).slice(0,3);
  const reasons=ranked.find(p=>p.name===product)?.reasons||[];
- return <section className="integration focused-generation"><div className="panel-title"><h2>{sceneLabel} · {platform}</h2><span>文案 + 店员演示脚本</span></div>
+ return <section className="integration focused-generation"><div className="panel-title"><h2>{sceneLabel} · {platform}</h2><span>完整文案 + 配图</span></div>
  {blocked?<div className="warning">关键条件尚未确认：{analysis.gate.reasons.join('；')}。请先补充并重新理解。</div>:null}
  <div className="selection-summary"><div><span className="eyebrow">{isManual?'本轮指定':analysis.understanding.product.name?'来自原文':'需求匹配候选'}</span><h3>{product||'请选择本轮产品'}</h3><p>{suggestion}</p>{!isManual?(recommendation.limitations||[]).map((s,i)=><p className="fine" key={i}>{s}</p>):null}</div>{selectedProduct?<ProductCard product={selectedProduct} reasons={reasons}/>:null}</div>
  <details className="generation-options" open={optionsOpen} onToggle={e=>setOptionsOpen(e.currentTarget.open)}><summary>查看或更换检索产品</summary>

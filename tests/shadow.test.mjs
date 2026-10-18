@@ -33,7 +33,7 @@ test('batch retrieves once, preserves legacy output wrapper and reports partial 
 });
 test('modified sample never presents added details as the original post',async()=>{
  const sources=[{id:'scenario',type:'scenario',text:'仅阅读文档，这是修改后的输入。'}];const raw={observations:[{id:'o',category:'task',kind:'fact',value:'仅阅读文档',evidence:[{sourceId:'scenario',quote:'仅阅读文档'}],rationale:'原话',critical:false}],questions:[],conflicts:[],product:{status:'unspecified',name:null,evidence:[]}};
- const a=await understand({sources,sampleId:samples[0].id},{apiKey:'test',endpoint:'https://api.deepseek.com/chat/completions',model:'test'},{fetchImpl:async()=>({ok:true,json:async()=>({choices:[{finish_reason:'stop',message:{content:JSON.stringify(raw)}}]})})});assert.equal(a.provenance.modifiedFromSample,true);assert.match(a.provenance.modificationNotice,/新增内容不属于源帖/);
+ const a=await understand({sources,sampleId:samples.find(s=>s.id==='campus').id},{apiKey:'test',endpoint:'https://api.deepseek.com/chat/completions',model:'test'},{fetchImpl:async()=>({ok:true,json:async()=>({choices:[{finish_reason:'stop',message:{content:JSON.stringify(raw)}}]})})});assert.equal(a.provenance.modifiedFromSample,true);assert.match(a.provenance.modificationNotice,/新增内容不属于源帖/);
 });
 test('same-origin service enforces server confirmation, serves both UIs and emits final stream error after HTTP 200',async()=>{
  const a=sampleAnalysis();a.review.status='pending';const server=createApp({settings:{port:0,model:'test',baseUrl:'https://api.deepseek.com',apiKey:'test'},scenarioDependencies:{analyze:async()=>structuredClone(a),batch:async()=>{throw Error('ima 未配置测试');}}});server.listen(0,'127.0.0.1');await once(server,'listening');const base='http://127.0.0.1:'+server.address().port;

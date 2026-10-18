@@ -33,7 +33,7 @@ await fs.writeFile(path.join(target,'README.md'),`# 门店增长智能体 · 整
 由 scripts/package-modelscope.mjs 从当前源码生成，禁止在此目录手工维护第二套代码。
 上传本目录内的文件和子目录到魔搭 Docker 创空间根目录。Dockerfile 必须位于仓库根目录。
 使用 Node.js 24，监听 0.0.0.0:7860；构建时安装锁定依赖并编译 React。
-应用入口 /scenario/，单平台表单 /。
+唯一应用入口 /scenario/，根路径 / 自动跳转到同一工作台。
 
 必填私密环境变量：DEEPSEEK_API_KEY。默认 KNOWLEDGE_SOURCE=local，读取随包提供的 knowledge/，不调用 ima。
 建议明确填写 DEEPSEEK_MODEL=deepseek-flash。仅主动切回 KNOWLEDGE_SOURCE=ima 时才需要配置 ima 凭证。

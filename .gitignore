@@ -12,4 +12,5 @@ __MACOSX/
 .history/
 
 public/scenario/
+modelscope-upload/
 .shadow-local/

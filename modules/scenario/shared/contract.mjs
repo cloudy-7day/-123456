@@ -32,6 +32,14 @@ export function validateUnderstanding(raw,sources){
  data.product.evidence=data.product.evidence.map(locate);
  if(data.product.status==='specified' && (!data.product.name || !data.product.evidence.some(e=>e.quote.includes(data.product.name)))) throw new ValidationError('指定产品缺少原文依据');
  if(data.product.status==='unspecified' && data.product.name!==null) throw new ValidationError('未指定产品应为 null');
+ if(data.product.status==='specified'){
+  data.observations=data.observations.filter(o=>!(o.category==='product'&&o.kind==='unknown'));
+  if(!data.observations.some(o=>o.category==='product'&&o.kind==='fact')){
+   const e=data.product.evidence.find(e=>e.quote.includes(data.product.name));
+   let id='confirmed_product';while(data.observations.some(o=>o.id===id))id+='x';
+   data.observations.push({id,category:'product',kind:'fact',value:e.quote,evidence:[e],rationale:'原文提及的产品意向，不代表已购或适配已验证。',critical:false});
+  }
+ }
  return data;
 }
 export function deriveGate(data,{reviewed=false,revised=false}={}){

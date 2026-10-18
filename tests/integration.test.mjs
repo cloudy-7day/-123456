@@ -4,7 +4,7 @@ import fs from 'node:fs';
 import { runPipeline, validate } from '../src/pipeline.mjs';
 import { runShadowBatch } from '../src/shadow-batch.mjs';
 
-const read = name => JSON.parse(fs.readFileSync(new URL('../handoffs/output-results/examples/' + name, import.meta.url)));
+const read = name => JSON.parse(fs.readFileSync(new URL('./fixtures/output-results/' + name, import.meta.url)));
 const input = read('output-task.json');
 const adapt = fixture => read(fixture).sources.map(s => ({ ref:s.id, kind:s.type, text:s.text, title:s.title }));
 const sources = adapt('source-fixture.json');
@@ -31,10 +31,16 @@ test('partially empty content cannot be mistaken for a blocked result',async()=>
   const output=read('expected-output.json');output.content.title='';
   await assert.rejects(run(output),/必填/);
 });
-test('duplicate follow-up days cannot pass the integrated pipeline',async()=>{
-  const output=read('expected-output.json');output.follow_up[1].day=1;
-  await assert.rejects(run(output),/1.*3.*7/);
+test('complete copy requires neither timed scripts nor follow-up schedules',async()=>{
+  const output=read('expected-output.json');
+  delete output.sales_plan; delete output.follow_up;
+  const used = new Set([...JSON.stringify({...output,source_refs:[]}).matchAll(/\[(S\d+|I\d+)\]/g)].map(m=>m[1]).concat(output.image_plan.map(i=>i.source_ref)));
+  output.source_refs=[...used];
+  const result=await run(output);
+  assert.equal(result.delivery.status,'draft');
+  assert.deepEqual(Object.keys(result.output).sort(),['customer_insight','strategy','content','image_plan','source_refs','pending_confirmation'].sort());
 });
+
 test('image references must also appear in source_refs',async()=>{
   const output=read('expected-output.json');output.source_refs=output.source_refs.filter(r=>r!=='I3');
   await assert.rejects(run(output),/引用/);
