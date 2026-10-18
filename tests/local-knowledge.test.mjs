@@ -9,6 +9,24 @@ import { config, ROOT } from '../src/config.mjs';
 import { createScenarioService } from '../src/scenario-service.mjs';
 let api; try { api=await import('../src/local-knowledge.mjs'); } catch {}
 
+test('image ranking retrieves later scene details before generic colors and deduplicates bytes',()=>{
+  assert.equal(typeof api.rankKnowledgeImages,'function');
+  const generic=Array.from({length:6},(_,i)=>({title:`配色${i}`,sha256:`color${i}`}));
+  const keyboard={title:'舒适键盘细节',sha256:'keyboard'};
+  const carry={title:'轻薄机身细节',sha256:'carry'};
+  const images=[...generic,keyboard,carry,{...keyboard,title:'另一文件名'}];
+  const ranked=api.rankKnowledgeImages(images,{scenario:'每天背电脑去图书馆写代码'});
+  assert.deepEqual(new Set(ranked.slice(0,2).map(x=>x.sha256)),new Set(['keyboard','carry']));
+  assert.equal(ranked.filter(x=>x.sha256==='keyboard').length,1);
+  assert.equal(images.length,9,'ranking must not mutate source catalog');
+});
+
+test('image ranking preserves unmatched order and prefers clear originals',()=>{
+  assert.equal(typeof api.rankKnowledgeImages,'function');
+  const images=[{title:'模糊屏幕',sha256:'blur'},{title:'外观一',sha256:'one'},{title:'外观二',sha256:'two'}];
+  assert.deepEqual(api.rankKnowledgeImages(images,{scenario:'普通选购'}).map(x=>x.sha256),['one','two','blur']);
+});
+
 test('bundled catalog has distinct systems and stable unique product IDs',async()=>{
   assert.ok(api?.localCatalog,'local catalog implementation required');
   const catalog=await api.localCatalog();

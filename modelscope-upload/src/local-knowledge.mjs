@@ -6,6 +6,30 @@ import { ROOT } from './config.mjs';
 const defaultDir = path.join(ROOT, 'knowledge');
 const hash = bytes => createHash('sha256').update(bytes).digest('hex');
 const normalized = value => String(value).normalize('NFKC').toLowerCase().replace(/^(huawei|华为)\s*/,'').replace(/\s+/g,'');
+// Rank only the already resolved product's images, using index descriptions, not pixels.
+const imageTopics = [
+  [/背电脑|携带|通勤|轻便|轻薄|图书馆|出差/, /轻薄|机身|便携|重量/],
+  [/代码|编程|写作|打字|键盘/, /键盘|触控板/],
+  [/阅读|文档|屏幕|看书|护眼/, /屏幕|显示|护眼|OLED/i],
+  [/笔记|手写|画画|绘图/, /手写|触控|画笔/],
+  [/协作|传文件|手机|多屏/, /协同|互联|多屏|分享/],
+  [/接口|外接|投影/, /接口|扩展|连接/],
+];
+export function rankKnowledgeImages(images, input) {
+  const query = [input.scenario, input.audience, input.goal].filter(Boolean).join(' ');
+  const seen = new Set();
+  return images.map((asset, order) => {
+    const metadata = `${asset.title || ''} ${asset.description || ''}`;
+    return { asset, order, blurred: Number(/blur|模糊/i.test(`${metadata} ${asset.source_url || ''}`)),
+      score: imageTopics.filter(([task, image]) => task.test(query) && image.test(metadata)).length };
+  }).sort((a,b) => a.blurred-b.blurred || b.score-a.score || a.order-b.order)
+    .filter(({asset}) => {
+      const identity = asset.sha256 || asset.file || asset.path;
+      if (!identity) return true;
+      if (seen.has(identity)) return false;
+      seen.add(identity); return true;
+    }).map(({asset}) => asset);
+}
 export function assetPath(directory, file) {
   if (!/^assets\/[a-f0-9]{64}\.(md|csv|txt|json|png|jpg|webp)$/.test(file || '')) throw Error('本地知识库资产路径无效。');
   return path.join(directory, ...file.split('/'));
@@ -55,7 +79,7 @@ export class LocalKnowledge {
       // Keep complete qualifiers; local source files are bounded by the importer.
       sources.push({ref:`S${sources.length+1}`,kind:'text',title:document.title,path:document.path,text,truncated:false,sha256:document.sha256});
     }
-    const images=[...product.images].sort((a,b)=>Number(/blur|模糊/i.test(a.source_url+' '+a.title))-Number(/blur|模糊/i.test(b.source_url+' '+b.title)));
+    const images=rankKnowledgeImages(product.images,input);
     for(const asset of images){
       if(sources.filter(s=>s.kind==='image').length>=6)break;
       try {

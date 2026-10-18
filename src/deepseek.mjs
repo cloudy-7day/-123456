@@ -27,7 +27,7 @@ export class DeepSeekClient {
       model: this.model,
       messages: [
         { role: 'system', content: system },
-        { role: 'user', content: JSON.stringify({ task: input, customer_context: customerContext, evidence: sources.map(({ ref, title, kind, text, path }) => ({ ref, title, kind, text, path })), output_schema: outputSchema }) },
+        { role: 'user', content: JSON.stringify({ task: input, customer_context: customerContext, evidence: sources.map(({ ref, title, kind, text, path, description, index_path, width, height }) => ({ ref, title, kind, text, path, description, index_path, width, height })), output_schema: outputSchema }) },
       ],
       response_format: { type: 'json_object' },
       thinking: { type: 'disabled' },

@@ -35,12 +35,12 @@ export function validateUnderstanding(raw,sources){
  return data;
 }
 export function deriveGate(data,{reviewed=false,revised=false}={}){
- const reasons=[];
+ const reasons=[],warnings=[];
  if(!reviewed) reasons.push('洞察尚未人工确认');
  if(revised) reasons.push('修订内容尚未重新理解');
- data.questions.filter(q=>q.priority==='blocking').forEach(q=>reasons.push(q.question));
- data.observations.filter(o=>o.critical && o.kind!=='fact').forEach(o=>reasons.push(`${categories[o.category]}仍待确认`));
+ data.questions.forEach(q=>warnings.push(q.question));
+ data.observations.filter(o=>o.critical && o.kind!=='fact').forEach(o=>warnings.push(`${categories[o.category]}仍待核验，草稿不作适配承诺`));
  data.conflicts.forEach(c=>reasons.push(c.resolutionQuestion));
  if(data.product.status==='ambiguous') reasons.push('产品意向存在歧义');
- return {status:reasons.length?'paused':'ready_for_ima',reasons:[...new Set(reasons)],productFactsVerified:false,imaStatus:'not_connected'};
+ return {status:reasons.length?'paused':'ready_for_ima',reasons:[...new Set(reasons)],warnings:[...new Set(warnings)],productFactsVerified:false,imaStatus:'not_connected'};
 }

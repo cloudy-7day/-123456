@@ -15,10 +15,10 @@ function InsightRow({item,value,onEdit,onLocate}){
 }
 function Questions({analysis,answers,onAnswer,onLocate}){
  const [optional,setOptional]=useState(false);const questions=analysis.understanding.questions;
- return <section className="questions"><div className="section-line"><h3>值得再问一句</h3><span>{questions.filter(q=>q.priority==='blocking').length} 个关键问题</span></div>{analysis.understanding.conflicts.map((c,i)=><div className="conflict" key={i}><strong>记录有冲突</strong><p>{c.description}</p><SourceEvidence evidence={c.evidence} onLocate={onLocate}/>{!questions.length?<label>{c.resolutionQuestion}<input value={answers[`conflict_${i}`]||''} onChange={e=>onAnswer(`conflict_${i}`,e.target.value)} placeholder="写下客户确认，以此为准"/></label>:null}</div>)}{questions.filter(q=>q.priority==='blocking'||optional).map(q=><div className="question" key={q.id}><label htmlFor={`q-${q.id}`}>{q.question}<span>{q.priority==='blocking'?'关键':'可稍后'}</span></label><p>为什么问：{q.why}</p><input id={`q-${q.id}`} value={answers[q.id]||''} onChange={e=>onAnswer(q.id,e.target.value)} placeholder="暂时问不到可以留空；保存后仍暂停适配"/></div>)}{questions.some(q=>q.priority==='optional')?<button className="text-button" onClick={()=>setOptional(!optional)}>{optional?'收起':'查看'}非关键补充</button>:null}{!questions.length&&!analysis.understanding.conflicts.length?<p className="fine">本轮没有必须追问的问题。未提供的信息仍保留未知。</p>:null}</section>;
+ return <section className="questions"><div className="section-line"><h3>后续核验建议</h3><span>{questions.length} 项可稍后核验</span></div>{analysis.understanding.conflicts.map((c,i)=><div className="conflict" key={i}><strong>记录有冲突</strong><p>{c.description}</p><SourceEvidence evidence={c.evidence} onLocate={onLocate}/>{!questions.length?<label>{c.resolutionQuestion}<input value={answers[`conflict_${i}`]||''} onChange={e=>onAnswer(`conflict_${i}`,e.target.value)} placeholder="写下客户确认，以此为准"/></label>:null}</div>)}{questions.filter(q=>q.priority==='blocking'||optional).map(q=><div className="question" key={q.id}><label htmlFor={`q-${q.id}`}>{q.question}<span>{'可稍后'}</span></label><p>为什么问：{q.why}</p><input id={`q-${q.id}`} value={answers[q.id]||''} onChange={e=>onAnswer(q.id,e.target.value)} placeholder="可留空，先按已有资料生成草稿"/></div>)}{questions.some(q=>q.priority==='optional')?<button className="text-button" onClick={()=>setOptional(!optional)}>{optional?'收起':'查看'}非关键补充</button>:null}{!questions.length&&!analysis.understanding.conflicts.length?<p className="fine">没有需要现在补填的信息。未提供的条件保留待核验。</p>:null}</section>;
 }
 function App(){
- const [generating,setGenerating]=useState(false);
+ const [generating,setGenerating]=useState(false);const [generationIntent,setGenerationIntent]=useState(0);
  const [scene,setScene]=useState('campus');const [channel,setChannel]=useState('xiaohongshu');const [text,setText]=useState('');const [sample,setSample]=useState(null);const [supplements,setSupplements]=useState([]);
  const [analysis,setAnalysis]=useState(null);const [confirmed,setConfirmed]=useState(null);const [edits,setEdits]=useState({});const [answers,setAnswers]=useState({});const [filter,setFilter]=useState('all');const [busy,setBusy]=useState(false);const [saving,setSaving]=useState(false);const [error,setError]=useState('');const [notice,setNotice]=useState('');const [health,setHealth]=useState(null);const [seconds,setSeconds]=useState(0);const [located,setLocated]=useState(null);const [reviewed,setReviewed]=useState(false);
  const controller=useRef(null);const inputRef=useRef(null);const sourceRef=useRef(null);
@@ -37,10 +37,18 @@ function App(){
   Object.entries(answers).filter(([,v])=>v.trim()).forEach(([id,value])=>{const q=analysis?.understanding.questions.find(q=>q.id===id)?.question||analysis?.understanding.conflicts[Number(id.split('_')[1])]?.resolutionQuestion||'确认';correction.push(`针对“${q}”的客户补充，以此为准：${value}`);});
   if(correction.length)next.push({id:`revision_${Date.now()}`,type:'revision',text:correction.join('\n')});
   const sources=[{id:'scenario',type:'scenario',text:text.trim()},...next];
-  try{const data=await api('/api/analyze',{sources,sampleId:sample?.id||null,parentAnalysisId:analysis?.analysisId||null},controller.current.signal);setSupplements(next);setAnalysis(data);setEdits({});setAnswers({});setFilter('all');setLocated(null);setNotice('理解完成，请核对事实、推断和待确认项。');}catch(e){setError(e.name==='AbortError'?'已取消。本次输入保留，可重新理解。':e.message);}finally{setBusy(false);}
+  try{const data=await api('/api/analyze',{sources,sampleId:sample?.id||null,parentAnalysisId:analysis?.analysisId||null},controller.current.signal);setSupplements(next);setAnalysis(data);setEdits({});setAnswers({});setFilter('all');setLocated(null);setNotice('已自动提取需求；未知信息可留待核验，直接继续生成草稿。');return data;}catch(e){setError(e.name==='AbortError'?'已取消。本次输入保留，可重新理解。':e.message);return null;}finally{setBusy(false);}
  }
  async function confirm(){
-  setSaving(true);setError('');try{const request={analysisId:analysis.analysisId,edits:Object.entries(edits).filter(([,value])=>value.trim()).map(([id,value])=>({id,value}))};const data=await api('/api/confirm',request);setConfirmed(data);setNotice(data.gate.status==='paused'?'洞察已保存，产品适配判断保持暂停。':'需求已确认，可以生成文案与店员脚本。');}catch(e){setError(e.message);}finally{setSaving(false);}
+  setSaving(true);setError('');
+  try{
+   const current=(!analysis||dirty||stale)?await analyze():analysis;
+   if(!current)return;
+   const unresolved=current.gate.reasons.filter(r=>r!=='洞察尚未人工确认');
+   if(unresolved.length){setError('原文有需要先澄清的冲突：'+unresolved.join('；'));return;}
+   const data=await api('/api/confirm',{analysisId:current.analysisId,edits:[]});
+   setConfirmed(data);setReviewed(true);setGenerationIntent(n=>n+1);setNotice('已整理需求，正在准备资料与草稿。');
+  }catch(e){setError(e.message);}finally{setSaving(false);}
  }
  const rows=analysis?.understanding.observations||[];const visibleRows=rows.filter(o=>filter==='all'||o.kind===filter);
  const selectedScene=sceneOptions.find(s=>s.id===scene),selectedChannel=channelOptions.find(c=>c.id===channel);
@@ -57,7 +65,7 @@ function App(){
  <details className="provenance"><summary>需要输入示例？</summary><button className="text-button" onClick={()=>selectSample(samples[0])}>填入校园学习模拟场景</button><p>示例仅用于试用，填入后可直接修改。</p>{sample?<p>{sample.label}；{sample.fiction}</p>:null}</details>
  {supplements.length?<details className="provenance"><summary>已纳入 {supplements.length} 次补充</summary>{supplements.map(s=><p key={s.id}>{s.text}</p>)}</details>:null}
  {located?<p className="fine">已定位原文：“{located.quote}”</p>:null}
- <div className="analyze-actions"><button className="primary" disabled={!text.trim()||!health?.configured} onClick={analyze}>{busy?`正在理解 · ${seconds}s`:analysis?'重新理解完整输入':'理解完整输入'}</button></div>
+ <div className="analyze-actions"><button className="primary" disabled={!text.trim()||!health?.configured} onClick={confirm}>{busy?`正在整理需求 · ${seconds}s`:'生成文案与店员脚本'}</button><button className="text-button" disabled={!text.trim()||!health?.configured} onClick={analyze}>仅查看理解</button></div>
  <p className="privacy">场景将发送给 DeepSeek，请省略无关个人信息。场景标签用于组织内容，不会据此补造客户事实。</p>
  </section>
  <div role="status" aria-live="polite">{notice?<p className="notice">{notice}</p>:null}</div>{error?<div role="alert" className="error">{error}</div>:null}{stale?<div className="warning">输入已修改，请重新理解后生成。</div>:null}
@@ -69,12 +77,12 @@ function App(){
  <div className="filters" role="group" aria-label="筛选洞察">{[['all','全部'],...Object.entries(kindLabel)].map(([key,label])=><button key={key} className={filter===key?'selected':''} onClick={()=>setFilter(key)}>{label}</button>)}</div>
  <div className="insight-list">{visibleRows.map(item=><InsightRow key={item.id} item={item} value={edits[item.id]} onEdit={(id,v)=>{setEdits(old=>({...old,[id]:v}));setReviewed(false);}} onLocate={locate}/>)}</div>
  </details>
- <div className="understanding-brief"><p><strong>已提取：</strong>{facts.map(o=>o.value).join('；')||'暂无可确认的客户事实。'}</p><p><strong>产品意向：</strong>{analysis.understanding.product.name||'输入未指定，可在下一步选择检索产品。'}</p></div>
+ <div className="understanding-brief"><p><strong>已提取：</strong>{facts.map(o=>o.value).join('；')||'暂无可确认的客户事实。'}</p><p><strong>产品意向：</strong>{analysis.understanding.product.name||'未指定，系统将从本地资料库准备一个候选，可随时更换。'}</p></div>
  {critical.length?<div className="warning">请先展开并补充关键条件：{critical.join('；')}</div>:null}
- {dirty?<div className="warning">更正尚未纳入理解，请先重新理解完整输入。</div>:null}
- <div className="compact-confirm"><label className="checkbox"><input type="checkbox" checked={reviewed} disabled={dirty||stale} onChange={e=>setReviewed(e.target.checked)}/>我已确认提取摘要，可继续生成</label><button className="primary" disabled={!reviewed||dirty||stale} onClick={confirm}>{saving?'确认中…':confirmed?'已确认，可继续生成':'确认理解并继续'}</button></div>
+ {dirty?<div className="warning">已记录你的修改，点击继续会自动整理，无需回到顶部重新分析。</div>:null}
+ <div className="compact-confirm"><p className="fine">软件、预算和已有设备等未知信息可以留空，先生成有依据的草稿。</p><button className="primary" disabled={!text.trim()||!health?.configured} onClick={confirm}>{saving?'正在整理…':dirty||stale?'整理补充并继续生成':'继续生成草稿'}</button></div>
  </section>:null}</fieldset>
- {confirmed&&!stale&&!dirty&&reviewed?<Handoff key={confirmed.analysisId+scene+channel} analysis={confirmed} sceneLabel={selectedScene.label} platform={selectedChannel.label} onGeneratingChange={setGenerating}/>:null}
+ {confirmed&&!stale&&!dirty&&reviewed?<Handoff key={confirmed.analysisId+scene+channel+generationIntent} autoStart={true} analysis={confirmed} sceneLabel={selectedScene.label} platform={selectedChannel.label} onGeneratingChange={setGenerating}/>:null}
  <RecentResults/>
  </main><footer><span>完整输入 → 理解摘要 → 文案与店员脚本</span><span>资料有据 · 使用前核对</span></footer></>;
 }

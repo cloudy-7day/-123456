@@ -20,8 +20,8 @@ const draft={customer_insight:'客户经常出差',strategy:'带原有任务到�
 test('confirmed rich understanding converts to three unchanged legacy input contracts without inventing audience',()=>{
  const a=sampleAnalysis(),h=buildHandoff(a,opts(a));assert.equal(h.tasks.length,3);assert.deepEqual(Object.keys(h.tasks[0]),['product','audience','scenario','platform','goal','notes']);assert.match(h.tasks[0].audience,/不推断/);assert.equal(h.customer_context.understanding.product.status,'unspecified');assert.equal(h.customer_context.product_selection.origin,'salesperson_selection');
 });
-test('unselected model, unreviewed output, critical unknowns and forged gate cannot enter generation',()=>{
- const a=sampleAnalysis();assert.throws(()=>buildHandoff(a,{...opts(a),product:''}));assert.throws(()=>buildHandoff(a,{...opts(a),productConfirmed:false}));a.review.status='pending';assert.throws(()=>buildHandoff(a,opts(a)),/确认/);a.review.status='confirmed';a.understanding.questions=[{id:'q',topic:'software',priority:'blocking',question:'软件是什么？',why:'决定适用性',evidence:[]}];a.gate.status='ready_for_ima';assert.throws(()=>buildHandoff(a,opts(a)),/软件/);
+test('unselected model and unreviewed output remain blocked; unknown software permits a bounded draft',()=>{
+ const a=sampleAnalysis();assert.throws(()=>buildHandoff(a,{...opts(a),product:''}));assert.throws(()=>buildHandoff(a,{...opts(a),productConfirmed:false}));a.review.status='pending';assert.throws(()=>buildHandoff(a,opts(a)),/确认/);a.review.status='confirmed';a.understanding.questions=[{id:'q',topic:'software',priority:'blocking',question:'软件是什么？',why:'决定适用性',evidence:[]}];a.gate.status='ready_for_ima';assert(buildHandoff(a,opts(a)).customer_context.draft_limitations.includes('软件是什么？'));
 });
 test('long input is rejected instead of truncated; original and revisions retained',()=>{
  const a=sampleAnalysis();a.input.sources.push({id:'revision',type:'revision',text:'更正，以此为准：只用浏览器，不用其他软件。'});assert.match(buildHandoff(a,opts(a)).tasks[0].scenario,/后续更正/);a.input.sources.push({id:'long',type:'supplement',text:'字'.repeat(2001)});assert.throws(()=>buildHandoff(a,opts(a)),/2000/);

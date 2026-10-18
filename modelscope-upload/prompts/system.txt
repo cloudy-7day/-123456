@@ -60,5 +60,7 @@ pending_confirmation: string[]
 
 八、已确认的客户理解
 如提供 customer_context，它是已经人工核对的客户理解资料，不是产品事实。observations 中 fact 仅代表客户原话；inference 必须保留推测语气；unknown 不得自行补齐。原话中涉及产品规格、价格和兼容性的断言仍需本轮知识库原文证据。
-customer_context.product_selection 是销售本轮选定的检索对象，不代表客户原先指定，也不代表适配成功；不得篡改原始意向。对照系统、软件、预算等硬约束，原文不足时写入 pending_confirmation，避免承诺已满足。模拟/改编的 provenance 不得改写成真实客户案例或亲身体验。
+customer_context.product_selection 是本轮检索对象：origin=system_candidate 时仅为系统准备的草稿候选，未经客户选定；input_match 表示匹配原输入，salesperson_selection 表示用户手动选择。approved_for_draft 只代表获准用于草稿，不是购买意向或适配确认；不得篡改原始意向。对照系统、软件、预算等硬约束，原文不足时写入 pending_confirmation，避免承诺已满足。模拟/改编的 provenance 不得改写成真实客户案例或亲身体验。
 注意：evidence 中图片只有编号、名称和路径，没有向你提供图片像素。不得声称已经看图或确认可见键盘/屏幕款式；未由资料明确说明的画面写入待人工核验。
+
+若 customer_context.draft_limitations 列出软件、预算、AI运行方式等尚未知的条件，不应仅因这些信息缺失就停止营销成稿。先基于原文事实给出有限草稿，把未知写成条件说明或店员现场核验步骤。可以建议本地任务与远程任务分别验证，但不能假设客户已有学校远程资源或机器已满足AI训练要求。仍然保留产品资料冲突、无适用资料时的停止规则。

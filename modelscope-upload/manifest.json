@@ -63,7 +63,7 @@
     },
     {
       "file": "src/deepseek.mjs",
-      "sha256": "46ef886ebf6361a09aaf7a2592ce837d9d1897501d65d067600ba714836e4ba8"
+      "sha256": "abb11c953078541aface99e0929941653c5fcd4d82f57403e54241132e7ce781"
     },
     {
       "file": "src/evidence-cache.mjs",
@@ -71,7 +71,7 @@
     },
     {
       "file": "src/handoff.mjs",
-      "sha256": "3d166fe8e5e3914911cca74d28c65f35601e9b9a2f5e04b06d7f059a6779f2b9"
+      "sha256": "ca1cf7d65dbed832ce3b1f524c0c8837b96fa9f259cb1af394f5265d3cbf64b2"
     },
     {
       "file": "src/ima.mjs",
@@ -79,11 +79,11 @@
     },
     {
       "file": "src/local-knowledge.mjs",
-      "sha256": "2f2849f8b63f8bf2bcdd583498b271aa596bbe8859fa56bbb580fc535c848875"
+      "sha256": "d0d69b9d9504f717e8a95604c128ddf1dd500a1819933ea9853284d6cd32740a"
     },
     {
       "file": "src/pipeline.mjs",
-      "sha256": "52e98853687cf18a3ce0c19a97d2b2ef51a8f865bd6deab1955dd5355e130d0c"
+      "sha256": "f4342f6976b58857a126388874613d0634ab2fcd305d76f5051c3daab2069c3b"
     },
     {
       "file": "src/runtime.mjs",
@@ -106,8 +106,12 @@
       "sha256": "457feacf7ab5c917e021318d07fa081609055841e98082443df2aedc47b8d72d"
     },
     {
+      "file": "prompts/image-rules.txt",
+      "sha256": "d74bcce10490b811ff2fade6e470725952f0488ad216c710ec84d66b9c7bf5ea"
+    },
+    {
       "file": "prompts/system.txt",
-      "sha256": "81876a8770c055053b6aa0101b19371c8166ffa4d5432f571343810ecac8e880"
+      "sha256": "191a965f01082ca93ab256328ac95adcc88c84fd6900063af200875dabbdbf84"
     },
     {
       "file": "modules/scenario/src/api.js",
@@ -115,11 +119,11 @@
     },
     {
       "file": "modules/scenario/src/Handoff.jsx",
-      "sha256": "91281f4e9462ad8af734ad6ebc05bfc8d06ac598d7f5e5176614d6e9278cf3e6"
+      "sha256": "ad4fac224e283fa5ee4728269d0b0dd747a0c84f1fe28f128c6e1690716c022a"
     },
     {
       "file": "modules/scenario/src/main.jsx",
-      "sha256": "670c1d4a69efb8a6d9ae80638833cc092110446d8974f7c02cd017d06386e600"
+      "sha256": "9b9e53a2eeb9a74dabf2f4858748b39eea46ce6b27e903de4feda3ca620bea00"
     },
     {
       "file": "modules/scenario/src/RecentResults.jsx",
@@ -143,7 +147,7 @@
     },
     {
       "file": "modules/scenario/server/prompt.mjs",
-      "sha256": "dad60e7870e5d4cba1a256f30c8fa4a2fb48f8bc18bde7f7b04b1227173f944d"
+      "sha256": "20f526eb15cf4621909790cfe315f2b6821ecbcfd58e06ce31a33d9ee5d4ca28"
     },
     {
       "file": "modules/scenario/server/review.mjs",
@@ -159,11 +163,15 @@
     },
     {
       "file": "modules/scenario/shared/contract.mjs",
-      "sha256": "4974fe72a288bd1d9bb87874bb6c35ef950bee044f1439b315a3b93eceaf6b4c"
+      "sha256": "72511d6e7103d06d411b2598c45066a9af747ad4a156ec66d47569f6c735ef0d"
     },
     {
       "file": "modules/scenario/shared/experience.mjs",
       "sha256": "e49a277907f45fc3f4bfa9d2d600116018dc49787b1fe8598cc69b6cd6827399"
+    },
+    {
+      "file": "modules/scenario/shared/product-suggestion.mjs",
+      "sha256": "178927cd0014a9d29f929dcc20f98360db787f933bc5fcdc46d87693ea1dbb7f"
     },
     {
       "file": "modules/scenario/shared/samples.mjs",
