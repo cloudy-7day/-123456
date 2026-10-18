@@ -1,0 +1,1 @@
+export const categories = { situation:'客户处境', task:'使用任务', pain:'核心痛点', constraint:'硬性约束', preference:'偏好与取舍', concern:'顾虑', motivation:'购买动机', devices:'已有设备', software:'软件要求', os:'系统要求', budget:'预算', product:'产品意向' };

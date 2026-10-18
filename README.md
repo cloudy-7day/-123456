@@ -1,98 +1,86 @@
-# 华为 PC 门店增长智能体 · 最小链路
+# 华为 PC 营销助手 · 协作试用版
 
-用本地 ima 凭证读取比赛指定知识库的原文与图片，再使用 DeepSeek 生成结构化方案。优先验证真实接口、来源传递和导出，输入内容与输出质量留给团队继续细化。
+本版本用于独立分支 `codex/scenario-shadow-trial` 的协作试用，保留原接口与主分支。上游基线记录在 `docs/shadow-base.json`；原 README 保留在 `docs/upstream-README.md`，其中验证与凭证说明属于队友环境，不代表本机状态。
 
-## 启动
+## 打开
 
-需要 Node.js 24，无需安装 npm 依赖。在本目录打开终端：
+本机双击 `启动影子版本.command`，打开 http://127.0.0.1:8790/scenario/ 。原单平台页面仍在 http://127.0.0.1:8790/ 。如端口被占用，关闭已有影子服务后再启动。
 
-```powershell
-npm start
+## 队友快速试用
+
+需要 Node.js 24 和 pnpm。在新的文件夹检出试用分支，避免覆盖已有工作：
+
+```sh
+git clone --branch codex/scenario-shadow-trial --single-branch https://github.com/cloudy-7day/qiuqiuyaoyao.git huawei-shadow-trial
+cd huawei-shadow-trial
+pnpm install --frozen-lockfile
+pnpm build
 ```
 
-访问 http://127.0.0.1:8787 。页面可输入任务、检查连接、生成结果、查看原文与配图、复制文案和下载 JSON。
+将 `.env.example` 复制为 `.env.local`（Windows 可在资源管理器中复制），在本机填写：
 
-```powershell
-npm run doctor
-npm run demo
-npm test
+```dotenv
+DEEPSEEK_API_KEY=填写自己的密钥
+IMA_OPENAPI_CLIENTID=填写自己的客户端ID
+IMA_OPENAPI_APIKEY=填写自己的ima密钥
+IMA_KB_NAME=任德耀新建华为PC知识库
+PORT=8790
 ```
 
-- `doctor`：分别验证 ima 指定库权限与 DeepSeek 可用模型。
-- `demo`：读取 `examples/task.json`，真实运行并保存 `output/latest.json`。
-- `test`：运行本地单元与 HTTP 测试，不调用付费模型。
-- 若已启动服务，直接打开页面即可；更改凭证后重启服务。
-- Codex 沙箱可能阻止外网 DNS 或本地回环连接；在正常终端运行，或给予本次网络访问权限。
+账号须能访问该知识库。不要把填好的文件提交到 GitHub。然后在仓库根目录运行：
 
-CLI 自定义输入：
-
-```powershell
-node cli.mjs run --input examples/task.json --output output/my-result.json
+```sh
+pnpm doctor
+pnpm start
 ```
 
-## 三人协作边界
+打开 http://127.0.0.1:8790/scenario/ 。若只配置 DeepSeek，可先测试场景理解；真实检索和后续生成需要 ima 凭证。doctor 报错时先检查凭证及知识库权限。
 
-发给两位队友的详细交接文档：[输入卡与输出结果对接说明](docs/队友对接说明.md)，含交付清单、JSON 示例、修改边界及联调步骤。
+已有外部配置也可复用：macOS/Linux 使用 `SHADOW_ENV_FILE=/absolute/path/to/.env.local pnpm start`；Windows PowerShell 先设置 `$env:SHADOW_ENV_FILE="C:\path\to\.env.local"`，再运行 `pnpm start`。若旧配置指定了其他 PORT，浏览器地址也要同步修改。
 
-| 负责人 | 主要文件 | 交接要求 |
-|---|---|---|
-| 输入卡 | `contracts/input.schema.json`、`examples/task.json` | 定义字段含义、必填项、枚举、默认值、示例；页面自动读这个契约 |
-| 输出结果 | `contracts/output.schema.json`、`prompts/system.txt` | 定义各区块结构、表达要求和示例；页面按结构渲染 |
-| 链路集成 | `src/ima.mjs`、`src/deepseek.mjs`、`src/pipeline.mjs`、`server.mjs` | 负责连接、数据流、错误处理、来源、运行与导出 |
+### 建议试验顺序
 
-当前约定保留的输入字段：`product`、`audience`、`scenario`、`platform`；可新增字段。
+1. 输入一张场景卡，点击理解，检查原文依据、推断和未知是否准确。
+2. 补充必要信息并重新理解，人工核对后确认。存在关键冲突时应暂停后续。
+3. 填写知识库中完整产品型号，确认选择，导出三平台任务，核对与原协议兼容。
+4. 检查接口连接，再运行真实 ima 检索与三平台生成；检查来源、各平台结果和失败提示。
+5. 修改原始输入，确认旧结果失效，需要重新理解。
 
-当前约定保留的输出字段：`content.title/body/call_to_action`、`source_refs`、`image_plan[].source_ref`；修改这些字段时同步集成人员。
+反馈请附脱敏场景、复现步骤、报错或结果截图，不要附密钥。当前实现按销售确认的型号检索，尚未实现大模型自主扩展检索词。
 
-契约校验器支持本项目使用的 JSON Schema 子集：`type`、`properties`、`required`、`enum`、`maxLength`、`items`、`minItems`，不是完整 JSON Schema 引擎。默认表单面向平铺字符串字段；增加嵌套输入、数值或复杂控件时由集成人员扩展页面。
+## 哪些部分保留，哪些部分改进
 
-## 配置
+- 使用我们的场景输入、原文依据、事实/推断/未知分层、澄清与人工确认。
+- 保留队友 ima 检索、产品目录定位、引用编号校验、营销输出 schema 和原 `/api/run` 接口。
+- 新增 `src/handoff.mjs`：将确认后的洞察转换为原 `product/audience/scenario/platform/goal/notes` 格式；完整结构化洞察单独传递给模型，不压扁丢失。
+- 用户未指定产品仍可理解场景；要接队友链路时必须由销售明确选择完整型号。没有实现自动产品推荐，不会擅自填型号，也不把检索目标冒充客户原始意向。
+- 默认选中小红书、公众号、朋友圈；复用一次 ima 检索，逐平台生成。每个平台保留原来的六字段结果外壳，方便队友接收；全平台包另用 `schema_version=shadow.1`。
+- 服务端重新计算放行条件，不相信前端自报 ready。修订后须重新分析；重复确认旧分析不能清除修订暂停。
+- 场景超过原协议2000字符时明确阻止，不静默截断。用户修改示例后保留原示例及“新增内容不属于原帖”的标记。
 
-程序读取现有进程环境变量，补充加载 `.env.local` / `.env`；已有环境变量优先。ima 官方脚本还会回退到用户目录下 `.config/ima/client_id` 和 `.config/ima/api_key`。
+## 接入与错误约定
 
-| 变量 | 用途 / 默认 |
-|---|---|
-| `IMA_OPENAPI_CLIENTID` | ima Client ID |
-| `IMA_OPENAPI_APIKEY` | ima API Key |
-| `IMA_KB_NAME` | 默认 `任德耀新建华为PC知识库`，按名称精确匹配 |
-| `DEEPSEEK_API_KEY` | 使用机器上已有 DeepSeek 环境变量 |
-| `DEEPSEEK_MODEL` | 默认 `deepseek-flash`，本机账号模型列表已验证 |
-| `DEEPSEEK_BASE_URL` | 默认 `https://api.deepseek.com`；也支持本机兼容接口地址 |
-| `PORT` | 默认 `8787`，仅监听 `127.0.0.1` |
+`POST /api/analyze`、`POST /api/confirm` 保留场景模块协议。
 
-本机有效 ima 配置已保存于 `.env.local`。`.env*` 凭证文件、`.ima-local/`、`tmp/`、`output/` 均已排除版本控制；不把它们上传仓库。`.env.example` 仅含变量名称和非敏感默认值。
+`POST /api/handoff`：传 `{analysisId, product, productConfirmed:true, platforms:["小红书"], audience:"", goal:"引导咨询和到店体验"}`，返回 `handoff.1` 的任务数组与独立客户理解上下文。analysisId 必须来自本服务内存中、已确认且一小时内的分析。
 
-此前已有的 `scripts/ima-client.cjs` / `ima-check.cjs` 使用 `.ima-local/credentials.json`，已保留。这与本应用的 `.env.local` 是两套读取入口；更新某一份不会自动同步另一份。本应用用 `npm run doctor` 检查。
+`POST /api/run-scenario`：同上输入，返回 NDJSON。事件有 progress、platform_result、platform_error、result、error。HTTP 200 不是成功凭据，必须等待最终事件。部分失败时最终 result.complete=false，并保留成功平台结果与错误列表。检索整体失败时输出 error，停止生成。
 
-## 当前数据流
+旧 `/api/run` 请求和响应不变。旧 `contracts/input.schema.json` 和 `contracts/output.schema.json` 均原样保留。`modelscope-upload/` 是上游历史副本，未同步本次变更，不用于运行影子版本。
 
-1. 按输入契约检查任务，缺少产品、客户、场景或平台时停止。
-2. 用官方 skill 查找指定知识库，兼容实际返回的 `kb_id/kb_name`。
-3. 搜索完整产品名，浏览命中目录并核对路径，只选择 P1 下带产品事实文件的目录。
-4. 搜索未定位时按目录回退，支持游标分页。拒绝模糊选择多个型号。
-5. 通过 `get_media_info` 读取产品事实、卖点限制、图片索引；下载同产品 `images` 中最多3张图片。
-6. 将输入、带来源编号的原文、图片名称、输出契约传给 DeepSeek；不发送 ima 凭证和签名访问链接。
-7. 检查 JSON 结构与引用编号；保留原文、图片文件、待确认事项、运行时间。
-8. 页面展示与导出，或 CLI 写入指定 JSON 文件。
+## 本次验证
 
-`output/latest.json` 保存最近一次成功运行；生成失败不会用虚假或固定结果替代。图片保存在 `output/media/`。页面刷新后点击“上次结果”查看已保存结果。
+- 35 项本地测试通过，包含队友原测试、场景模块测试和新增兼容测试。
+- 构建通过。浏览器桌面1440×1000、手机390×844无横向溢出或脚本异常。
+- 真实 DeepSeek：完成理解、人工确认、三平台兼容任务导出。
+- 真实 ima：本机缺少凭证，实际请求返回缺少凭证错误，未宣称检索通过。
+- 平台成功结果展示、切换、原协议下载和部分失败处理使用明确的测试数据验证，不冒充真实 ima 联调。
+- Browser 插件未提供，IAB 在本会话连续超时；UI 验证使用现有 Playwright Chromium。
 
-## 已验证与当前范围
+```sh
+pnpm test
+```
 
-- 真实读取指定 ima 知识库，取得 MateBook 14 鸿蒙版的3份文本资料和3张图片。
-- 真实调用 DeepSeek，生成客户洞察、策略、图文、演示建议、跟进计划和待确认项。
-- 首次 CLI 端到端约50秒；实际耗时随网络和模型负载变化。
-- 页面端已验证“职场出差＋朋友圈”任务，约50秒，JSON下载与3张图片展示正常，浏览器无脚本异常。
-- 两组结果分别保存在 `output/sample-xiaohongshu.json` 和 `output/sample-moments.json`。
-- 16项本地测试通过，覆盖认证/业务错误、空搜索目录回退、分页、同名型号歧义、单图失败、无原文中断、来源引用、模型截断、同源、输入校验和中文请求分片。
+## 仍待完成
 
-当前仅验证 JSON 结构和引用编号是否存在。没有实现逐句事实核验、视觉型号核验、完整营销合规检查、价格计算引擎和自动发送跟进。报价明确待规则；跟进仅生成建议。
-
-检索目前支持知识库的 P1 产品目录及 Markdown/CSV 文本和 PNG/JPEG/WebP 图片；笔记、PDF/Word正文解析、扩展产品发现卡、其他库布局和多产品比较需要后续扩展。素材链接只接受官方 ima 与腾讯云存储地址；不对来源 URL 进行任意外网抓取。
-
-指定产品时使用知识库的完整型号，例如 `HUAWEI MateBook 14（鸿蒙版）` 或 `MateBook 14 酷睿 Ultra`，不要仅写“轻薄本”。
-
-## 接口依据
-
-- ima：仓库中官方 `vendor/ima-skills-1.1.10/ima-skill/` 及其接口文档。
-- DeepSeek：[官方 Chat Completions 文档](https://api-docs.deepseek.com/api/create-chat-completion/)。
+完整真实端到端联调需要在本机配置 `IMA_OPENAPI_CLIENTID` 与 `IMA_OPENAPI_APIKEY`，确认账号已加入比赛知识库，然后使用页面“检查接口连接”和真实场景运行。逐句事实核验、产品自动选型、报价计算与自动发消息均未实现。这里的确认只代表客户需求经过核对，不能等同于产品适配通过。

@@ -10,3 +10,5 @@
 跟进计划分别覆盖第1、3、7天，针对未解决顾虑写话术。本次只生成计划，不发送消息。
 禁止虚构个人体验、评价、销量、优惠、奖项和对比测试；避免绝对化承诺。
 严格符合提供的output_schema，只输出一个JSON对象；不要Markdown代码围栏。各段保持简短，正文约300字。
+如提供 customer_context，它是已经人工核对的客户理解资料，不是产品事实。observations 中 fact 仅代表客户原话；inference 必须保留推测语气；unknown 不得自行补齐。原话中涉及产品规格、价格和兼容性的断言仍需本轮 ima 原文证据。
+customer_context.product_selection 是销售本轮选定的检索对象，不代表客户原先指定，也不代表适配成功；不得篡改原始意向。对照系统、软件、预算等硬约束，原文不足时写入 pending_confirmation，避免承诺已满足。模拟/改编的 provenance 不得改写成真实客户案例或亲身体验。

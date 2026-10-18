@@ -1,0 +1,52 @@
+{
+  "upstream": {
+    "repository": "cloudy-7day/qiuqiuyaoyao",
+    "sha": "bc0deb1cb97ac83d8ebc3af4d4f4679e148bb4d5"
+  },
+  "modified": [
+    "README.md",
+    ".gitignore",
+    "package.json",
+    "server.mjs",
+    "prompts/system.txt",
+    "src/deepseek.mjs",
+    "src/config.mjs",
+    ".env.example"
+  ],
+  "added": [
+    "pnpm-lock.yaml",
+    "启动影子版本.command",
+    "pnpm-workspace.yaml",
+    "tests/shadow.test.mjs",
+    "docs/upstream-README.md",
+    "docs/shadow-base.json",
+    "src/scenario-service.mjs",
+    "src/handoff.mjs",
+    "src/shadow-batch.mjs",
+    "modules/scenario/index.html",
+    "modules/scenario/README.md",
+    "modules/scenario/.gitignore",
+    "modules/scenario/package.json",
+    "modules/scenario/tests/live.mjs",
+    "modules/scenario/tests/contract.test.mjs",
+    "modules/scenario/server/understand.mjs",
+    "modules/scenario/server/index.mjs",
+    "modules/scenario/server/prompt.mjs",
+    "modules/scenario/server/review.mjs",
+    "modules/scenario/server/config.mjs",
+    "modules/scenario/shared/samples.mjs",
+    "modules/scenario/shared/categories.mjs",
+    "modules/scenario/shared/contract.mjs",
+    "modules/scenario/src/Handoff.jsx",
+    "modules/scenario/src/main.jsx",
+    "modules/scenario/src/style.css",
+    "modules/scenario/src/api.js"
+  ],
+  "credential_scan": "no known keys in deliverable",
+  "legacy_contracts_unchanged": true,
+  "delivery_branch": "codex/scenario-shadow-trial",
+  "omitted_unused_assets": [
+    "modules/scenario/public/assets/matebook14.png",
+    "modules/scenario/public/assets/huawei-logo.svg"
+  ]
+}
