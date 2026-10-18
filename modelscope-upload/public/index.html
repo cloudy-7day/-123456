@@ -22,6 +22,7 @@ function renderValue(parent,value,schema){
 }
 function render(result){
  current=result;$('result').replaceChildren();
+ if(result.delivery){const state=make('div',undefined,result.delivery.status==='blocked'?'error':'notice');state.append(make('p',result.delivery.status==='blocked'?'已暂停成稿，请先核对资料。':result.delivery.status==='needs_images'?'文字草稿已生成，配图待补。':'已生成草稿，使用前请核验。'));for(const reason of result.delivery.reasons)state.append(make('p',reason));$('result').append(state)}
  for(const [key,value] of Object.entries(result.output)){const card=make('div',undefined,'card');card.append(make('h2',contracts.output.properties[key]?.title||key));renderValue(card,value,contracts.output.properties[key]);$('result').append(card)}
  const evidence=make('div',undefined,'card');evidence.append(make('h2','资料依据与图片'));
  const images=make('div',undefined,'images');
@@ -30,13 +31,13 @@ function render(result){
  const check=make('div',undefined,'card');check.append(make('h2','检查与运行记录'),make('p',result.checks.note));
  check.append(make('p',`来源 ${result.sources.length} 份 · 耗时 ${(result.meta.duration_ms/1000).toFixed(1)} 秒 · 模型 ${result.meta.model||''}`,'muted'));
  for(const warning of result.meta.warnings||[])check.append(make('p',warning,'error'));
- $('result').append(check);$('copy').disabled=false;$('download').disabled=false;
+ $('result').append(check);$('copy').disabled=result.delivery?.status==='blocked';$('download').disabled=false;
 }
 async function init(){contracts=await fetch('/api/contracts').then(r=>r.json());for(const [key,schema] of Object.entries(contracts.input.properties)){const label=make('label',schema.title||key);const field=make(schema.enum?'select':(schema.maxLength>500?'textarea':'input'));field.name=key;field.required=contracts.input.required.includes(key);if(schema.maxLength)field.maxLength=schema.maxLength;if(schema.enum)for(const value of schema.enum){const option=make('option',value);option.value=value;field.append(option)}field.value=schema.default||'';label.append(field);$('fields').append(label)}}
 $('task').addEventListener('submit',async event=>{event.preventDefault();$('submit').disabled=true;$('progress').textContent='';$('result').replaceChildren(make('div','正在运行…','card'));$('copy').disabled=true;$('download').disabled=true;let gotResult=false;
  try{const input=Object.fromEntries(new FormData(event.target));const response=await fetch('/api/run',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify(input)});if(!response.ok)throw Error((await response.json()).error);const reader=response.body.getReader(),decoder=new TextDecoder();let pending='';while(true){const {value,done}=await reader.read();pending+=decoder.decode(value||new Uint8Array(),{stream:!done});const lines=pending.split('\n');pending=lines.pop();for(const line of lines.filter(Boolean)){const item=JSON.parse(line);if(item.type==='progress')$('progress').textContent+=item.message+'\n';if(item.type==='error')throw Error(item.message);if(item.type==='result'){render(item.result);gotResult=true}}if(done)break}if(!gotResult)throw Error('连接中断，未收到完整结果，请重试。')}
  catch(error){showError(error.message)}finally{$('submit').disabled=false}});
-$('check').onclick=async()=>{$('check').disabled=true;$('connection').textContent='正在检查…';try{const response=await fetch('/api/status');const d=await response.json();$('connection').textContent=Object.entries(d).map(([name,s])=>name+': '+(s.ok?'已连接':s.error)).join('\n');$('connection').style.whiteSpace='pre-wrap'}catch(e){$('connection').textContent=e.message}finally{$('check').disabled=false}};
+$('check').onclick=async()=>{$('check').disabled=true;$('connection').textContent='正在检查…';try{const response=await fetch('/api/status');const d=await response.json();$('connection').textContent=Object.entries(d).map(([name,s])=>name+': '+(s.ok?(s.mode==='cached'?'使用缓存资料（未验证实时检索）':'已连接'):s.error)).join('\n');$('connection').style.whiteSpace='pre-wrap'}catch(e){$('connection').textContent=e.message}finally{$('check').disabled=false}};
 $('latest').onclick=async()=>{try{const response=await fetch('/api/latest');const d=await response.json();if(!response.ok)throw Error(d.error);render(d)}catch(e){showError(e.message)}};
 $('copy').onclick=async()=>{try{await navigator.clipboard.writeText([current.output.content.title,current.output.content.body,current.output.content.call_to_action].join('\n\n'));$('progress').textContent+='文案已复制\n'}catch{showError('浏览器未允许复制，请手动选择正文。')}};
 $('download').onclick=()=>{const url=URL.createObjectURL(new Blob([JSON.stringify(current,null,2)],{type:'application/json;charset=utf-8'}));const a=make('a');a.href=url;a.download='门店销售方案.json';a.click();setTimeout(()=>URL.revokeObjectURL(url),1000)};

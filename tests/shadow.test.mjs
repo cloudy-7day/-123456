@@ -15,7 +15,7 @@ export function sampleAnalysis(){
  return {schemaVersion:'1.0',analysisId:randomUUID(),createdAt:new Date().toISOString(),input:{sources},understanding,review:{status:'confirmed',edits:[]},gate:deriveGate(understanding,{reviewed:true}),provenance:{kind:'user_input'},call:{model:'test-fixture',durationMs:1,attempts:1}};
 }
 const opts=a=>({analysisId:a.analysisId,product:'MateBook 14 酷睿 Ultra',productConfirmed:true,platforms:['小红书','公众号','朋友圈']});
-const draft={customer_insight:'客户经常出差',strategy:'带原有任务到店体验',content:{title:'测试标题',body:'测试原文[S1]',call_to_action:'到店体验'},image_plan:[],sales_plan:{quote:'暂不报价',demo_script:'测试演示'},follow_up:[],source_refs:['S1'],pending_confirmation:[]};
+const draft={customer_insight:'客户经常出差',strategy:'带原有任务到店体验',content:{title:'测试标题',body:'测试原文[S1]',call_to_action:'到店体验'},image_plan:[],sales_plan:{quote:'暂不报价',demo_script:'测试演示'},follow_up:[1,3,7].map(day=>({day,message:"测试跟进草稿"})),source_refs:['S1'],pending_confirmation:[]};
 
 test('confirmed rich understanding converts to three unchanged legacy input contracts without inventing audience',()=>{
  const a=sampleAnalysis(),h=buildHandoff(a,opts(a));assert.equal(h.tasks.length,3);assert.deepEqual(Object.keys(h.tasks[0]),['product','audience','scenario','platform','goal','notes']);assert.match(h.tasks[0].audience,/不推断/);assert.equal(h.customer_context.understanding.product.status,'unspecified');assert.equal(h.customer_context.product_selection.origin,'salesperson_selection');

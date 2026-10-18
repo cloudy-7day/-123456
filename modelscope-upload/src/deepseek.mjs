@@ -22,14 +22,15 @@ export class DeepSeekClient {
     if (!models.includes(this.model)) throw Error(`配置模型 ${this.model} 不在可用列表：${models.join(', ')}`);
     return { ok: true, model: this.model, models };
   }
-  async generate({ input, sources, outputSchema, system }) {
+  async generate({ input, sources, outputSchema, system, customerContext }) {
     const data = await this.request('chat/completions', {
       model: this.model,
       messages: [
         { role: 'system', content: system },
-        { role: 'user', content: JSON.stringify({ task: input, evidence: sources.map(({ ref, title, kind, text, path }) => ({ ref, title, kind, text, path })), output_schema: outputSchema }) },
+        { role: 'user', content: JSON.stringify({ task: input, customer_context: customerContext, evidence: sources.map(({ ref, title, kind, text, path }) => ({ ref, title, kind, text, path })), output_schema: outputSchema }) },
       ],
       response_format: { type: 'json_object' },
+      thinking: { type: 'disabled' },
       max_tokens: 5000,
       stream: false,
     });

@@ -5,23 +5,26 @@ import { pathToFileURL } from 'node:url';
 import { config, ROOT, readJson, safeError } from './src/config.mjs';
 import { validate } from './src/pipeline.mjs';
 import { execute, doctor } from './src/runtime.mjs';
+import { createScenarioService } from './src/scenario-service.mjs';
 
-export function createApp({ settings = config(), run, check } = {}) {
+export function createApp({ settings = config(), run, check, scenarioDependencies } = {}) {
   let busy = false;
+  const scenario = createScenarioService(settings, scenarioDependencies);
   const server = http.createServer(async (req, res) => {
-    // The container sits behind the Studio HTTPS reverse proxy.
-    // Accept its public host while keeping browser requests same-origin.
-    const requestHost = req.headers.host;
-    const forwardedHost = req.headers['x-forwarded-host'];
-    const allowedHosts = [requestHost, forwardedHost].filter(host => typeof host === 'string' && /^[a-z0-9.\-]+(?::\d+)?$/i.test(host));
+    const port = server.address()?.port;
+    const cloud = settings.host === '0.0.0.0';
+    const allowedHosts = cloud
+      ? [req.headers.host, req.headers['x-forwarded-host']].filter(host => typeof host === 'string' && /^[a-z0-9.\-]+(?::\d+)?$/i.test(host))
+      : [`127.0.0.1:${port}`, `localhost:${port}`];
     const reply = (code, data) => { res.writeHead(code, { 'Content-Type': 'application/json; charset=utf-8' }); res.end(JSON.stringify(data)); };
     res.setHeader('X-Content-Type-Options', 'nosniff');
     res.setHeader('Cache-Control', 'no-store');
-    res.setHeader('Content-Security-Policy', "default-src 'self'; script-src 'self' 'unsafe-inline'; style-src 'self' 'unsafe-inline'; img-src 'self'; frame-ancestors 'self' https://modelscope.cn https://*.modelscope.cn https://modelscope.ai https://*.modelscope.ai");
-    if (!allowedHosts.includes(requestHost)) return reply(403, { error: '不支持的访问地址' });
-    if (req.headers.origin && !allowedHosts.some(host => ['http', 'https'].some(protocol => req.headers.origin === `${protocol}://${host}`))) return reply(403, { error: '只允许同源请求' });
+    res.setHeader('Content-Security-Policy', "default-src 'self'; script-src 'self' 'unsafe-inline'; style-src 'self' 'unsafe-inline'; img-src 'self'; frame-ancestors " + (cloud ? "'self' https://modelscope.cn https://*.modelscope.cn https://modelscope.ai https://*.modelscope.ai" : "'none'"));
+    if (!allowedHosts.includes(req.headers.host)) return reply(403, { error: '不支持的访问地址' });
+    if (req.headers.origin && !allowedHosts.some(host => (cloud ? ['http', 'https'] : ['http']).some(protocol => req.headers.origin === `${protocol}://${host}`))) return reply(403, { error: '只允许同源请求' });
     try {
       const route = new URL(req.url, `http://${req.headers.host}`).pathname;
+      if(await scenario(req,res,route,reply)) return;
       if (req.method === 'GET' && route === '/') {
         res.writeHead(200, { 'Content-Type': 'text/html; charset=utf-8' });
         return res.end(await fs.readFile(path.join(ROOT, 'public/index.html')));
@@ -74,5 +77,5 @@ export function createApp({ settings = config(), run, check } = {}) {
 
 if (process.argv[1] && import.meta.url === pathToFileURL(path.resolve(process.argv[1])).href) {
   const settings = config();
-  createApp({ settings }).listen(settings.port, settings.host, () => console.log(`门店增长智能体：http://${settings.host}:${settings.port}`));
+  createApp({ settings }).listen(settings.port, settings.host, () => console.log(`门店增长智能体：http://${settings.host}:${settings.port}/scenario/`));
 }

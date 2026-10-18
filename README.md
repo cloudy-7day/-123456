@@ -1,86 +1,67 @@
-# 华为 PC 营销助手 · 协作试用版
+# 门店增长智能体 · 本地整合版
 
-本版本用于独立分支 `codex/scenario-shadow-trial` 的协作试用，保留原接口与主分支。上游基线记录在 `docs/shadow-base.json`；原 README 保留在 `docs/upstream-README.md`，其中验证与凭证说明属于队友环境，不代表本机状态。
+本地分支 `codex/local-integration` 合并输入理解模块与输出交付包，保留 ima → DeepSeek 主链路。未推送 GitHub，未更新魔搭。上游试用说明保存在 `docs/scenario-trial-README.md`，其中旧验证结论不代表本版本。
 
-## 打开
+## 本机打开
 
-本机双击 `启动影子版本.command`，打开 http://127.0.0.1:8790/scenario/ 。原单平台页面仍在 http://127.0.0.1:8790/ 。如端口被占用，关闭已有影子服务后再启动。
+入口：http://127.0.0.1:8791/scenario/ 。点击“查看上次生成方案”可直接查看已生成的三平台结果；新任务按“填写场景 → 理解 → 核对确认 → 选择产品 → 生成”操作。原服务仍在 8787，独立运行。
 
-## 队友快速试用
+**当前运行的是显式缓存资料模式。** 本次实时 ima 检索返回 `220021: 资料获取次数已达上限，请明天再尝试`。本地已使用此前真实取得的知识库原文和图片，配合真实 DeepSeek，完成三平台生成。页面和 JSON 均标注资料原始日期，不将缓存冒充本次检索。缓存仅适用于资料对应的同一产品。
 
-需要 Node.js 24 和 pnpm。在新的文件夹检出试用分支，避免覆盖已有工作：
+## 安装和启动
 
-```sh
-git clone --branch codex/scenario-shadow-trial --single-branch https://github.com/cloudy-7day/qiuqiuyaoyao.git huawei-shadow-trial
-cd huawei-shadow-trial
+需要 Node.js 24、pnpm 11.25.0。在本目录执行：
+
+```powershell
 pnpm install --frozen-lockfile
 pnpm build
-```
-
-将 `.env.example` 复制为 `.env.local`（Windows 可在资源管理器中复制），在本机填写：
-
-```dotenv
-DEEPSEEK_API_KEY=填写自己的密钥
-IMA_OPENAPI_CLIENTID=填写自己的客户端ID
-IMA_OPENAPI_APIKEY=填写自己的ima密钥
-IMA_KB_NAME=任德耀新建华为PC知识库
-PORT=8790
-```
-
-账号须能访问该知识库。不要把填好的文件提交到 GitHub。然后在仓库根目录运行：
-
-```sh
-pnpm doctor
-pnpm start
-```
-
-打开 http://127.0.0.1:8790/scenario/ 。若只配置 DeepSeek，可先测试场景理解；真实检索和后续生成需要 ima 凭证。doctor 报错时先检查凭证及知识库权限。
-
-已有外部配置也可复用：macOS/Linux 使用 `SHADOW_ENV_FILE=/absolute/path/to/.env.local pnpm start`；Windows PowerShell 先设置 `$env:SHADOW_ENV_FILE="C:\path\to\.env.local"`，再运行 `pnpm start`。若旧配置指定了其他 PORT，浏览器地址也要同步修改。
-
-### 建议试验顺序
-
-1. 输入一张场景卡，点击理解，检查原文依据、推断和未知是否准确。
-2. 补充必要信息并重新理解，人工核对后确认。存在关键冲突时应暂停后续。
-3. 填写知识库中完整产品型号，确认选择，导出三平台任务，核对与原协议兼容。
-4. 检查接口连接，再运行真实 ima 检索与三平台生成；检查来源、各平台结果和失败提示。
-5. 修改原始输入，确认旧结果失效，需要重新理解。
-
-反馈请附脱敏场景、复现步骤、报错或结果截图，不要附密钥。当前实现按销售确认的型号检索，尚未实现大模型自主扩展检索词。
-
-## 哪些部分保留，哪些部分改进
-
-- 使用我们的场景输入、原文依据、事实/推断/未知分层、澄清与人工确认。
-- 保留队友 ima 检索、产品目录定位、引用编号校验、营销输出 schema 和原 `/api/run` 接口。
-- 新增 `src/handoff.mjs`：将确认后的洞察转换为原 `product/audience/scenario/platform/goal/notes` 格式；完整结构化洞察单独传递给模型，不压扁丢失。
-- 用户未指定产品仍可理解场景；要接队友链路时必须由销售明确选择完整型号。没有实现自动产品推荐，不会擅自填型号，也不把检索目标冒充客户原始意向。
-- 默认选中小红书、公众号、朋友圈；复用一次 ima 检索，逐平台生成。每个平台保留原来的六字段结果外壳，方便队友接收；全平台包另用 `schema_version=shadow.1`。
-- 服务端重新计算放行条件，不相信前端自报 ready。修订后须重新分析；重复确认旧分析不能清除修订暂停。
-- 场景超过原协议2000字符时明确阻止，不静默截断。用户修改示例后保留原示例及“新增内容不属于原帖”的标记。
-
-## 接入与错误约定
-
-`POST /api/analyze`、`POST /api/confirm` 保留场景模块协议。
-
-`POST /api/handoff`：传 `{analysisId, product, productConfirmed:true, platforms:["小红书"], audience:"", goal:"引导咨询和到店体验"}`，返回 `handoff.1` 的任务数组与独立客户理解上下文。analysisId 必须来自本服务内存中、已确认且一小时内的分析。
-
-`POST /api/run-scenario`：同上输入，返回 NDJSON。事件有 progress、platform_result、platform_error、result、error。HTTP 200 不是成功凭据，必须等待最终事件。部分失败时最终 result.complete=false，并保留成功平台结果与错误列表。检索整体失败时输出 error，停止生成。
-
-旧 `/api/run` 请求和响应不变。旧 `contracts/input.schema.json` 和 `contracts/output.schema.json` 均原样保留。`modelscope-upload/` 是上游历史副本，未同步本次变更，不用于运行影子版本。
-
-## 本次验证
-
-- 35 项本地测试通过，包含队友原测试、场景模块测试和新增兼容测试。
-- 构建通过。浏览器桌面1440×1000、手机390×844无横向溢出或脚本异常。
-- 真实 DeepSeek：完成理解、人工确认、三平台兼容任务导出。
-- 真实 ima：本机缺少凭证，实际请求返回缺少凭证错误，未宣称检索通过。
-- 平台成功结果展示、切换、原协议下载和部分失败处理使用明确的测试数据验证，不冒充真实 ima 联调。
-- Browser 插件未提供，IAB 在本会话连续超时；UI 验证使用现有 Playwright Chromium。
-
-```sh
 pnpm test
 ```
 
-## 仍待完成
+本机复用已有外部配置与资料的启动命令（8791 已运行时无需重复启动）：
 
-完整真实端到端联调需要在本机配置 `IMA_OPENAPI_CLIENTID` 与 `IMA_OPENAPI_APIKEY`，确认账号已加入比赛知识库，然后使用页面“检查接口连接”和真实场景运行。逐句事实核验、产品自动选型、报价计算与自动发消息均未实现。这里的确认只代表客户需求经过核对，不能等同于产品适配通过。
+```powershell
+.\scripts\start-local.ps1 -EnvFile ..\.env.local -EvidenceFile ..\output\latest.json
+```
+
+额度恢复后，省略 `-EvidenceFile` 即使用实时检索：
+
+```powershell
+.\scripts\start-local.ps1 -EnvFile ..\.env.local
+```
+
+换机器时，将 `.env.example` 复制为本机 `.env.local`，填写 ima 和 DeepSeek 凭证，再运行 `scripts/start-local.ps1 -EnvFile .env.local`。本机 DeepSeek 密钥来自用户环境变量；不用复制密钥到代码。缓存文件和原图片必须配套，只有 JSON 不足以恢复图片。不要上传凭证、`output/`、`tmp/` 或本地依赖。
+
+## 三人协作和合并规则
+
+| 负责人 | 主要文件 | 对接约定 |
+| --- | --- | --- |
+| 输入卡同学 | `modules/scenario/src/` 中输入、洞察和审核组件；`modules/scenario/server/`；`modules/scenario/shared/` | 负责场景结构、原文依据、事实/推断/未知与确认门槛。修改共享结构时同时更新服务端校验和测试。 |
+| 输出结果同学 | `prompts/system.txt`、`contracts/output.schema.json`；结果展示 `ResultView.jsx` | 模型输出保留下面的八个字段；新增要求先补样例和校验。不要改 ima/DeepSeek 凭证、接口和检索逻辑。 |
+| 链路集成负责人 | `src/handoff.mjs`、`src/pipeline.mjs`、`src/shadow-batch.mjs`、`src/scenario-service.mjs`、`server.mjs`，以及 `Handoff.jsx`、`RecentResults.jsx`、部署脚本 | 负责两端适配、流式状态、来源验证、错误处理和部署。公共入口 `main.jsx`、共享 CSS、依赖与锁文件由集成者统一合并。 |
+
+输入卡通过 `src/handoff.mjs` 转为兼容任务：`product/audience/scenario/platform` 必填字符串，`goal/notes` 可选。已确认的结构化洞察作为独立 `customer_context` 传入，不能把推断当成客户原话。
+
+模型输出固定八个字段：`customer_insight`、`strategy`、`content`、`image_plan`、`sales_plan`、`follow_up`、`source_refs`、`pending_confirmation`。具体类型以根目录 `contracts/output.schema.json` 为准。来源编号必须确实存在，正文及图片使用的来源必须与声明一致，跟进天数固定为 1/3/7。
+
+`delivery` 和检索模式属于服务端结果外层，不让模型伪造：`draft` 表示草稿生成，`needs_images` 表示需补图，`blocked` 表示内容不能交付。草稿不等于事实或合规已逐句审核。全平台包继续使用 `schema_version=shadow.1`；原 `/api/run` 保持可用。
+
+`/api/run-scenario` 返回 NDJSON，HTTP 200 只代表开始。前端接收 `platform_result` 逐项展示，最后检查 `result.complete`、`errors` 和 `blocked`；总体检索失败会返回 `error`。不能把“接口返回 200”当成三平台成功。
+
+每人独立分支提交，经集成分支统一构建和测试；不按文件时间覆盖，也不整包替换另一人的目录。`handoffs/output-results/` 保留队友交付记录，运行时读取根目录提示词与 schema。更新交付记录不会自动生效，应由集成者审查后同步。
+
+## 魔搭部署包
+
+运行 `pnpm package:modelscope` 从源码白名单重建 `modelscope-upload/`。这是生成目录，不手改其中副本；只上传其内部文件，Dockerfile 位于魔搭仓库根目录。Node.js 24、多阶段构建 React、监听 `0.0.0.0:7860`。
+
+魔搭私密环境变量：`DEEPSEEK_API_KEY`、`IMA_OPENAPI_CLIENTID`、`IMA_OPENAPI_APIKEY`。建议显式填写 `IMA_KB_NAME=任德耀新建华为PC知识库` 和 `DEEPSEEK_MODEL=deepseek-flash`。线上不设置本机的 `SHADOW_ENV_FILE` 或 `IMA_EVIDENCE_CACHE_FILE` 路径。
+
+本次只准备部署包，没有上传。Docker 引擎未运行，尚未验证镜像构建。线上同步应在实时 ima 全链路补验后进行。
+
+## 验证与边界
+
+46 项测试、前端构建通过；真实 DeepSeek 已完成分析与三平台生成，浏览器验证复制、下载、图片、历史恢复与移动端布局。生成时锁定上游输入，避免结果因中途编辑丢失。详细证据见 `docs/local-integration-verification.md`。
+
+尚未完成实时 ima 重新取数全链路、Docker 镜像构建、逐句事实审核、自动选型和四级报价计算。没有自动发消息。本次小红书结果仅选出两张图，界面标注需补一张；文案品质与长度仍可由输出同学优化。
+
+这是团队演示服务，无多用户隔离；分析确认记录存在内存，重启后需重新理解。历史结果只恢复展示，不恢复确认权限。

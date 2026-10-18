@@ -5,7 +5,8 @@ import http from 'node:http';
 import { createApp } from '../server.mjs';
 
 test('cloud host and HTTPS proxy requests work; unrelated origins stay blocked', async () => {
-  const server = createApp({ settings: { port: 0 }, run: () => assert.fail('invalid input must not generate') });
+  const saved={schema_version:'shadow.1',complete:false,results:[],errors:[{platform:'小红书',message:'test'}]};
+  const server = createApp({ settings: { port: 0, host: "0.0.0.0" }, run: () => assert.fail('invalid input must not generate'), scenarioDependencies:{loadLatest:async()=>saved} });
   server.listen(0, '0.0.0.0');
   await once(server, 'listening');
   const request = (url, headers = {}, method = 'GET', body) => new Promise((resolve, reject) => {
@@ -21,6 +22,13 @@ test('cloud host and HTTPS proxy requests work; unrelated origins stay blocked',
     assert.match(page.headers['content-security-policy'], /frame-ancestors .*https:\/\/\*\.modelscope.cn/);
     const schema = await request('/api/contracts', { Host: 'demo.modelscope.cn', Origin: 'https://demo.modelscope.cn' });
     assert.equal(schema.status, 200);
+    const latest=await request('/api/scenario-latest',{Host:'demo.modelscope.cn'});
+    assert.equal(latest.status,200);
+    assert.deepEqual(JSON.parse(latest.data),saved);
+    const ui = await request('/scenario/', { Host: 'demo.modelscope.cn' });
+    assert.equal(ui.status, 200);
+    const asset = ui.data.match(/src="([^"]+.js)"/)[1];
+    assert.equal((await request(asset, {Host:'demo.modelscope.cn'})).status,200);
     assert.ok(JSON.parse(schema.data).input.required.includes('product'));
     const proxy = { Host: 'container:7860', 'X-Forwarded-Host': 'demo.modelscope.cn', Origin: 'https://demo.modelscope.cn', 'Content-Type': 'application/json' };
     assert.equal((await request('/api/run', proxy, 'POST', '{}')).status, 400);

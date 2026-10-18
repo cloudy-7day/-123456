@@ -12,13 +12,16 @@ export function createApp({ settings = config(), run, check, scenarioDependencie
   const scenario = createScenarioService(settings, scenarioDependencies);
   const server = http.createServer(async (req, res) => {
     const port = server.address()?.port;
-    const allowedHosts = [`127.0.0.1:${port}`, `localhost:${port}`];
+    const cloud = settings.host === '0.0.0.0';
+    const allowedHosts = cloud
+      ? [req.headers.host, req.headers['x-forwarded-host']].filter(host => typeof host === 'string' && /^[a-z0-9.\-]+(?::\d+)?$/i.test(host))
+      : [`127.0.0.1:${port}`, `localhost:${port}`];
     const reply = (code, data) => { res.writeHead(code, { 'Content-Type': 'application/json; charset=utf-8' }); res.end(JSON.stringify(data)); };
     res.setHeader('X-Content-Type-Options', 'nosniff');
     res.setHeader('Cache-Control', 'no-store');
-    res.setHeader('Content-Security-Policy', "default-src 'self'; script-src 'self' 'unsafe-inline'; style-src 'self' 'unsafe-inline'; img-src 'self'; frame-ancestors 'none'");
+    res.setHeader('Content-Security-Policy', "default-src 'self'; script-src 'self' 'unsafe-inline'; style-src 'self' 'unsafe-inline'; img-src 'self'; frame-ancestors " + (cloud ? "'self' https://modelscope.cn https://*.modelscope.cn https://modelscope.ai https://*.modelscope.ai" : "'none'"));
     if (!allowedHosts.includes(req.headers.host)) return reply(403, { error: '不支持的访问地址' });
-    if (req.headers.origin && !allowedHosts.some(host => req.headers.origin === `http://${host}`)) return reply(403, { error: '只允许本地同源请求' });
+    if (req.headers.origin && !allowedHosts.some(host => (cloud ? ['http', 'https'] : ['http']).some(protocol => req.headers.origin === `${protocol}://${host}`))) return reply(403, { error: '只允许同源请求' });
     try {
       const route = new URL(req.url, `http://${req.headers.host}`).pathname;
       if(await scenario(req,res,route,reply)) return;
@@ -52,7 +55,7 @@ export function createApp({ settings = config(), run, check, scenarioDependencie
         catch (error) { return reply(400, { error: safeError(error) }); }
         if (busy) return reply(409, { error: '已有任务运行中，请稍后重试' });
         busy = true;
-        res.writeHead(200, { 'Content-Type': 'application/x-ndjson; charset=utf-8' });
+        res.writeHead(200, { 'Content-Type': 'application/x-ndjson; charset=utf-8', 'X-Accel-Buffering': 'no' });
         const send = value => { if (!res.destroyed) res.write(JSON.stringify(value) + '\n'); };
         try {
           const result = await (run || ((task, progress) => execute(task, progress, settings)))(input, message => send({ type: 'progress', message }));
@@ -74,5 +77,5 @@ export function createApp({ settings = config(), run, check, scenarioDependencie
 
 if (process.argv[1] && import.meta.url === pathToFileURL(path.resolve(process.argv[1])).href) {
   const settings = config();
-  createApp({ settings }).listen(settings.port, '127.0.0.1', () => console.log(`门店增长智能体：http://127.0.0.1:${settings.port}`));
+  createApp({ settings }).listen(settings.port, settings.host, () => console.log(`门店增长智能体：http://${settings.host}:${settings.port}/scenario/`));
 }

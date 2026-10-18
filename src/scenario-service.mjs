@@ -13,12 +13,17 @@ async function body(req) {
   try { return JSON.parse(Buffer.concat(chunks).toString('utf8')); }
   catch { throw Object.assign(Error('JSON 格式不正确'),{status:400}); }
 }
-export function createScenarioService(settings, {analyze=understand, batch=runShadowBatch}={}) {
+export function createScenarioService(settings, {analyze=understand, batch=runShadowBatch, loadLatest=async()=>JSON.parse(await fs.readFile(path.join(ROOT,'output/shadow-latest.json'),'utf8'))}={}) {
   const cache=new Map(); let busy=false;
   const get=id=>{const a=cache.get(id); if(!a || Date.now()-a.time>3600000)throw Object.assign(Error('分析已过期，请重新理解。'),{status:410});return a;};
   return async function handle(req,res,route,reply){
+    if(req.method==='GET' && route==='/api/scenario-latest'){
+      try {reply(200,await loadLatest());}
+      catch(error){reply(error.code==='ENOENT'?404:500,{error:error.code==='ENOENT'?'还没有保存的多平台结果。':safeError(error)});}
+      return true;
+    }
     if(req.method==='GET' && route==='/api/health') {
-      reply(200,{configured:Boolean(settings.apiKey),provider:'deepseek',model:settings.model,imaConnected:false,imaStatus:'not_checked',shadow:true});return true;
+      reply(200,{configured:Boolean(settings.apiKey),provider:'deepseek',model:settings.model,imaConnected:false,imaStatus:'not_checked',retrievalMode:settings.evidenceCacheFile?'cached':'live'});return true;
     }
     if(req.method==='GET' && (route==='/scenario' || route.startsWith('/scenario/'))){
       const relative=route.replace(/^\/scenario\/?/,'')||'index.html';
@@ -47,7 +52,7 @@ export function createScenarioService(settings, {analyze=understand, batch=runSh
       if(route==='/api/handoff'){reply(200,handoff);return true;}
       if(busy)throw Object.assign(Error('已有任务运行中，请稍后重试。'),{status:409});
       busy=true;
-      res.writeHead(200,{'Content-Type':'application/x-ndjson; charset=utf-8'});
+      res.writeHead(200,{'Content-Type':'application/x-ndjson; charset=utf-8','X-Accel-Buffering':'no'});
       const send=event=>{if(!res.destroyed)res.write(JSON.stringify(event)+'\n');};
       try {
         const result=await batch(handoff,settings,send);

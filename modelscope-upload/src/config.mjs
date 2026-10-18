@@ -4,18 +4,20 @@ import { fileURLToPath } from 'node:url';
 export const ROOT = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '..');
 
 export function config() {
+  if (process.env.SHADOW_ENV_FILE) process.loadEnvFile(process.env.SHADOW_ENV_FILE);
   for (const name of ['.env.local', '.env']) {
     const file = path.join(ROOT, name);
     if (fs.existsSync(file)) process.loadEnvFile(file);
   }
   return {
     kbName: process.env.IMA_KB_NAME || '任德耀新建华为PC知识库',
+    evidenceCacheFile: process.env.IMA_EVIDENCE_CACHE_FILE ? path.resolve(process.env.IMA_EVIDENCE_CACHE_FILE) : undefined,
     skillPath: path.join(ROOT, 'vendor/ima-skills-1.1.10/ima-skill/ima_api.cjs'),
     model: process.env.DEEPSEEK_MODEL || 'deepseek-flash',
     apiKey: process.env.DEEPSEEK_API_KEY || '',
     baseUrl: process.env.DEEPSEEK_BASE_URL || 'https://api.deepseek.com',
-    host: process.env.HOST || '0.0.0.0',
-    port: Number(process.env.PORT || 7860),
+    host: process.env.HOST || '127.0.0.1',
+    port: Number(process.env.PORT || 8791),
   };
 }
 

@@ -1,0 +1,44 @@
+{
+  "fixture_only": true,
+  "provenance": "依据用户提供的本地知识库快照摘录；手写理想输出的配套资料，不是本次ima检索结果或已验证的当期产品信息。图片仅供本地交接核对，公开传播前确认权限。",
+  "source_snapshot_date": "2026-10-17",
+  "runtime_adapter_note": "此文件是测试夹具说明，不是生产sources接口定义；集成者应适配现有来源对象结构，不覆盖真实检索结果。",
+  "sources": [
+    {
+      "id": "S1",
+      "type": "text",
+      "product": "HUAWEI MateBook 14（鸿蒙版）",
+      "title": "HUAWEI MateBook 14（鸿蒙版）—产品事实（本地摘录）",
+      "file": "fixtures/product-excerpt.md",
+      "original_relative_path": "P1-产品参数库/01-鸿蒙电脑/HUAWEI MateBook 14/产品事实.md",
+      "text": "重量：约1.33 kg（圆键盘含电池）；约1.32 kg（方键盘含电池）。实际机身重量根据配置、制造工艺、测量方法的不同可能有所差异。屏幕比例3:2。操作系统HarmonyOS 6。本摘录没有具体第三方软件兼容性、价格、优惠、续航时长或性能测试结果。"
+    },
+    {
+      "id": "I1",
+      "type": "image",
+      "product": "HUAWEI MateBook 14（鸿蒙版）",
+      "title": "原野绿多彩配色",
+      "file": "fixtures/images/green-round.png",
+      "original_filename": "hwpc_matebook-14-harmonyos_原野绿多彩配色_04.png",
+      "visual_note": "已查看本地图片：原野绿开屏产品外观，圆形键帽。外观不证明软件兼容或重量实测。"
+    },
+    {
+      "id": "I2",
+      "type": "image",
+      "product": "HUAWEI MateBook 14（鸿蒙版）",
+      "title": "樱粉金产品外观",
+      "file": "fixtures/images/pink-round.png",
+      "original_filename": "hwpc_matebook-14-harmonyos_多彩配色外观_01_7e0eedb6.png",
+      "visual_note": "已查看本地图片：樱粉金开屏产品外观，圆形键帽。不能把它叫作课堂实拍、使用截图或软件运行证据。"
+    },
+    {
+      "id": "I3",
+      "type": "image",
+      "product": "HUAWEI MateBook 14（鸿蒙版）",
+      "title": "深空灰沉稳配色",
+      "file": "fixtures/images/grey-square.png",
+      "original_filename": "hwpc_matebook-14-harmonyos_深空灰沉稳配色_05.png",
+      "visual_note": "已查看本地图片：深空灰开屏产品外观，方形键帽。仅用于明确标注的款式辨别，不与圆键盘重量混写。"
+    }
+  ]
+}
