@@ -69,7 +69,7 @@ export function Handoff({analysis,sceneLabel='按身份与任务展开',platform
  <div className="integration-actions"><button className="primary" disabled={busy} onClick={generate}>{busy?'正在生成…':'按当前候选生成'}</button></div>
  <div role="status" aria-live="polite">{progress}</div>{error?<div role="alert" className="error">{error}</div>:null}
  {result?<div className="generation-results">{result.errors.map(e=><p className="error" key={e.platform}>{e.platform}：{e.message}</p>)}
- {active?<ResultView result={active} onCopy={async()=>{try{await navigator.clipboard.writeText([active.output.content.title,active.output.content.body,active.output.content.call_to_action].join('\n\n'));setProgress('文案已复制');}catch{setError('复制失败，请选择正文手动复制。');}}}/>:null}</div>:null}
+ {active?<ResultView result={active} onCopy={async text=>{try{await navigator.clipboard.writeText(text);setProgress('文案已复制');}catch{setError('复制失败，请选择正文手动复制。');}}}/>:null}</div>:null}
  <details className="developer-details"><summary>连接检查与对接数据</summary><div className="integration-actions"><button disabled={busy} onClick={check}>检查接口连接</button><button disabled={busy} onClick={exportTasks}>导出兼容任务包</button>{result?<button onClick={()=>downloadJson(result,'store-agent-'+analysis.analysisId+'.json')}>下载完整对接数据</button>:null}</div>
  {connection?<p>资料库：{knowledge?.ok?(knowledge.mode==='local'?'本地资料包可用':knowledge.mode==='cached'?'缓存资料可用':'已连接'):knowledge?.error||'未确认'}；DeepSeek：{connection.deepseek?.ok?'已连接':connection.deepseek?.error||'未确认'}</p>:null}</details>
  </section>;

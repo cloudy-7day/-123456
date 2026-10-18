@@ -5,12 +5,33 @@ import assert from 'node:assert/strict';
 const browser=await chromium.launch({...(process.env.CHROME_PATH?{executablePath:process.env.CHROME_PATH}:{}),headless:true});
 const context=await browser.newContext({viewport:{width:1440,height:1000},permissions:['clipboard-read','clipboard-write'],acceptDownloads:true});
 const page=await context.newPage();const errors=[];page.on('pageerror',e=>errors.push(e.message));
+// Offline mode serves only the already-built UI from disk; API responses stay synthetic.
+if(process.env.LOCAL_UI_FROM_DISK==='1')await page.route('**/scenario/**',async route=>{
+ const relative=new URL(route.request().url()).pathname.replace(/^\/scenario\//,'')||'index.html';
+ if(!/^(?:index\.html|assets\/[\w.-]+\.(?:js|css))$/.test(relative))return route.fulfill({status:404,body:''});
+ const body=await fs.readFile(new URL('../../public/scenario/'+relative,import.meta.url));
+ return route.fulfill({body,contentType:relative.endsWith('.js')?'text/javascript':relative.endsWith('.css')?'text/css':'text/html'});
+});
+if(process.env.LOCAL_UI_FROM_DISK==='1')await page.addInitScript(()=>{
+ const blobs=new Map(),create=URL.createObjectURL.bind(URL),click=HTMLAnchorElement.prototype.click;
+ URL.createObjectURL=blob=>{const url=create(blob);blobs.set(url,blob);return url;};
+ HTMLAnchorElement.prototype.click=function(){if(this.download){window.__testDownload={name:this.download,blob:blobs.get(this.href)};return;}return click.call(this);};
+});
+async function saveExport(button,destination){
+ if(process.env.LOCAL_UI_FROM_DISK==='1'){
+  await page.evaluate(()=>window.__testDownload=null);await button.click();
+  const exported=await page.evaluate(async()=>({name:window.__testDownload.name,text:await window.__testDownload.blob.text()}));
+  await fs.writeFile(destination,exported.text);return exported.name;
+ }
+ const pending=page.waitForEvent('download');await button.click();const file=await pending;await file.saveAs(destination);return file.suggestedFilename();
+}
 await fs.mkdir('output',{recursive:true});
 const scenario='合成测试：我要写代码、学一点AI，常去图书馆，软件还未确定，没指定型号。';
 const analysis={analysisId:'00000000-0000-4000-8000-000000000001',input:{sources:[{id:'scenario',type:'scenario',text:scenario}]},understanding:{observations:[{id:'task',category:'task',kind:'fact',value:'阅读课程网页',evidence:[{sourceId:'scenario',quote:'阅读课程网页',start:10,end:16}],rationale:'测试原话',critical:false}],questions:[],conflicts:[],product:{name:null,status:'unspecified',evidence:[]}},gate:{status:'paused',reasons:['洞察尚未人工确认']}};
 const confirmed={...analysis,review:{status:'confirmed'},gate:{status:'ready_for_ima',reasons:[]}};
-const output={customer_insight:'测试需求摘要',strategy:'测试表达策略',content:{title:'测试校园文案',body:'🏠 在寝室，整理创作素材。\n📚 在图书馆，阅读课程资料。\n🏫 在教室，梳理小组作业。合成测试正文[S1]',call_to_action:'到店体验'},image_plan:[],sales_plan:{quote:'测试不报价',demo_script:'0—30秒：店员说：请确认阅读任务。\n店员做：打开脱敏网页。'},follow_up:[],source_refs:['S1'],pending_confirmation:[]};
+const output={customer_insight:'测试需求摘要',strategy:'测试表达策略',content:{title:'测试校园文案[S1]',body:'开场正文[S1]。\n\n🏠 在寝室\n整理**创作素材**【s1】。\n\n📚 在图书馆\n阅读课程资料[S1]。\n\n🏫 在教室\n梳理小组作业。\n\n#校园生活 #华为电脑',call_to_action:'到店体验[S1]'},image_plan:[],sales_plan:{quote:'测试不报价',demo_script:'0—30秒：店员说：请确认阅读任务。\n店员做：打开脱敏网页。'},follow_up:[],source_refs:['S1'],pending_confirmation:[]};
 const saved={complete:true,errors:[],results:[{platform:'小红书',result:{input:{platform:'小红书'},output,sources:[{ref:'S1',kind:'text',title:'明确标注的测试资料',text:'仅供UI测试'}],meta:{retrieval:{mode:'local',archive_name:'合成测试资料'},duration_ms:1},checks:{note:'合成测试'},delivery:{status:'draft',reasons:[]}}}]};
+const expectedPublication='测试校园文案\n\n开场正文。\n\n🏠 在寝室\n整理创作素材。\n\n📚 在图书馆\n阅读课程资料。\n\n🏫 在教室\n梳理小组作业。\n\n#校园生活 #华为电脑\n\n到店体验';
 const legacySaved=structuredClone(saved);
 await page.route('**/api/scenario-latest',r=>r.fulfill({json:legacySaved}));
 await page.route('**/api/health',r=>r.fulfill({json:{configured:true,retrievalMode:'local'}}));
@@ -71,9 +92,9 @@ try {
  assert.equal(await page.getByRole('heading',{name:'完整文案',exact:true}).count(),1);
  assert.equal(await page.getByRole('heading',{name:'需求画像',exact:true}).isVisible(),false);
  assert.equal(await page.getByRole('heading',{name:'店员演示脚本',exact:true}).count(),0);assert.equal(await page.getByRole('button',{name:'复制店员脚本',exact:true}).count(),0);
- await page.getByRole('button',{name:'复制文案',exact:true}).click();const copied=(await page.evaluate(()=>navigator.clipboard.readText())).replace(/\r\n/g,'\n');assert.equal(copied,[output.content.title,output.content.body,output.content.call_to_action].join('\n\n'));assert(!copied.includes(output.sales_plan.demo_script));
- const download=page.waitForEvent('download');await page.getByRole('button',{name:'导出小红书文案',exact:true}).click();const file=await download;assert.equal(file.suggestedFilename(),'小红书文案.txt');await file.saveAs('output/focused-deliverables.txt');
- const content=await fs.readFile('output/focused-deliverables.txt','utf8');assert(content.includes(selected.result.output.content.body));assert(!content.includes(selected.result.output.sales_plan.demo_script));assert(!content.includes('店员演示脚本'));assert(!content.includes(output.strategy));
+ await page.getByRole('button',{name:'复制文案',exact:true}).click();const copied=(await page.evaluate(()=>navigator.clipboard.readText())).replace(/\r\n/g,'\n');assert.equal(copied,expectedPublication);assert.equal(await page.locator('.copy-scene').count(),3);assert.equal(await page.locator('.copy-topics span').count(),2);assert(!/\[S1\]|【s1】/.test(await page.locator('.publication-copy').innerText()));assert.equal(await page.locator('.copy-story strong').innerText(),'创作素材');assert(!copied.includes(output.sales_plan.demo_script));
+ assert.equal(await saveExport(page.getByRole('button',{name:'导出小红书文案',exact:true}),'output/focused-deliverables.txt'),'小红书文案.txt');
+ const content=await fs.readFile('output/focused-deliverables.txt','utf8');assert.equal(content.replace(/^\uFEFF/,''),expectedPublication);assert(!content.includes(selected.result.output.sales_plan.demo_script));assert(!content.includes('店员演示脚本'));assert(!content.includes(output.strategy));
  await page.locator('.supporting-details>summary').click();assert.equal(await page.getByText(output.strategy,{exact:true}).count(),0);assert.equal(await page.getByText(output.sales_plan.quote,{exact:true}).count(),0);await page.locator('.supporting-details>summary').click();
  await page.screenshot({path:'output/focused-desktop.png',fullPage:true});await page.setViewportSize({width:390,height:844});assert.equal(await page.evaluate(()=>document.documentElement.scrollWidth>innerWidth),false);
  await page.screenshot({path:'output/focused-mobile.png',fullPage:true});assert.deepEqual(errors,[]);
@@ -106,8 +127,8 @@ try {
  await page.getByRole('button',{name:'查看上次生成方案',exact:true}).click();
  const history=page.locator('.recent-results');await history.getByRole('heading',{name:'完整文案',exact:true}).waitFor();
  assert.equal(await history.getByRole('heading',{name:'店员演示脚本',exact:true}).count(),0);
- await history.getByRole('button',{name:'复制文案',exact:true}).click();assert(!(await page.evaluate(()=>navigator.clipboard.readText())).includes('店员说'));
- await history.locator('.developer-details>summary').click();const rawDownload=page.waitForEvent('download');await history.getByRole('button',{name:'下载完整对接数据',exact:true}).click();const rawFile=await rawDownload;await rawFile.saveAs('output/focused-history-export.json');
+ await history.getByRole('button',{name:'复制文案',exact:true}).click();assert.equal((await page.evaluate(()=>navigator.clipboard.readText())).replace(/\r\n/g,'\n'),expectedPublication);
+ await history.locator('.developer-details>summary').click();await saveExport(history.getByRole('button',{name:'下载完整对接数据',exact:true}),'output/focused-history-export.json');
  const historicalExport=JSON.parse(await fs.readFile('output/focused-history-export.json','utf8'));assert(!('sales_plan' in historicalExport.results[0].result.output));assert(!('follow_up' in historicalExport.results[0].result.output));assert(!('strategy' in historicalExport.results[0].result.output));assert.equal(historicalExport.results[0].result.output.content.body,legacySaved.results[0].result.output.content.body);
  assert.deepEqual(errors,[]);
  console.log('PASS focused UI: single input/selection, collapsed summary, auto-reanalysis, no confirmation checkboxes, candidate selection, single-platform request, lock, final multi-scene copy only, legacy script excluded, copy/export, stale input, mobile');
