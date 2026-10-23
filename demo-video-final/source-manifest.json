@@ -1,0 +1,20 @@
+{
+  "base_repository": "cloudy-7day/qiuqiuyaoyao",
+  "base_commit": "eb1df5bb280b108e5af0ce787e5851ea3cb8bb26",
+  "base_author": "cloudy-7day",
+  "reference_duration_seconds": 434.333,
+  "reference_sha256": "5d31e86589cb4bd443e30dc762ac765a5c93054299eb6ea9e0406bcb21178eef",
+  "reference_audio": "all zero PCM samples, no narration",
+  "recorded_screen": "User-provided leader demo; edited and reframed",
+  "additional_screen": "Final-code product-selection UI captured at local port 8794",
+  "voice": {
+    "provider": "Microsoft online neural voice via edge-tts",
+    "voice": "zh-CN-XiaoxiaoNeural",
+    "synthesized": true,
+    "cloned_voice": false,
+    "continuous_track": true,
+    "speed_adjustment": false
+  },
+  "application_changes": "none",
+  "runtime_validation": "Final code built and page inspected; no new live model generation performed for this edit"
+}

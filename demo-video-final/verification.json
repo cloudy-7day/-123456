@@ -1,0 +1,220 @@
+{
+  "file": "youwei-final-demo-v2.mp4",
+  "sha256": "517f8ce3134907a496351153fb6bd256c3f5458979228d608c4c6f43260ded0f",
+  "bytes": 31320410,
+  "duration": 180.0,
+  "streams": [
+    {
+      "codec_type": "video",
+      "codec_name": "h264",
+      "width": 1920,
+      "height": 1080,
+      "r_frame_rate": "30/1",
+      "sample_rate": null,
+      "channels": null,
+      "duration": "180.000000"
+    },
+    {
+      "codec_type": "audio",
+      "codec_name": "aac",
+      "width": null,
+      "height": null,
+      "r_frame_rate": "0/0",
+      "sample_rate": "48000",
+      "channels": 2,
+      "duration": "180.000000"
+    }
+  ],
+  "full_decode_errors": "",
+  "audio_source_match": [
+    {
+      "at_seconds": 2,
+      "correlation": 0.999994,
+      "lag_seconds": 0.0
+    },
+    {
+      "at_seconds": 7,
+      "correlation": 0.999868,
+      "lag_seconds": 0.0
+    },
+    {
+      "at_seconds": 12,
+      "correlation": 0.999984,
+      "lag_seconds": 0.0
+    },
+    {
+      "at_seconds": 17,
+      "correlation": 0.999989,
+      "lag_seconds": 0.0
+    },
+    {
+      "at_seconds": 22,
+      "correlation": 0.99999,
+      "lag_seconds": 0.0
+    },
+    {
+      "at_seconds": 27,
+      "correlation": 0.999993,
+      "lag_seconds": 0.0
+    },
+    {
+      "at_seconds": 32,
+      "correlation": 0.999913,
+      "lag_seconds": 0.0
+    },
+    {
+      "at_seconds": 37,
+      "correlation": 0.999996,
+      "lag_seconds": 0.0
+    },
+    {
+      "at_seconds": 42,
+      "correlation": 0.999993,
+      "lag_seconds": 0.0
+    },
+    {
+      "at_seconds": 47,
+      "correlation": 0.999994,
+      "lag_seconds": 0.0
+    },
+    {
+      "at_seconds": 52,
+      "correlation": 0.999988,
+      "lag_seconds": 0.0
+    },
+    {
+      "at_seconds": 57,
+      "correlation": 0.999996,
+      "lag_seconds": 0.0
+    },
+    {
+      "at_seconds": 62,
+      "correlation": 0.999991,
+      "lag_seconds": 0.0
+    },
+    {
+      "at_seconds": 67,
+      "correlation": 0.999995,
+      "lag_seconds": 0.0
+    },
+    {
+      "at_seconds": 72,
+      "correlation": 0.999995,
+      "lag_seconds": 0.0
+    },
+    {
+      "at_seconds": 77,
+      "correlation": 0.999997,
+      "lag_seconds": 0.0
+    },
+    {
+      "at_seconds": 82,
+      "correlation": 0.999987,
+      "lag_seconds": 0.0
+    },
+    {
+      "at_seconds": 87,
+      "correlation": 0.999993,
+      "lag_seconds": 0.0
+    },
+    {
+      "at_seconds": 92,
+      "correlation": 0.999992,
+      "lag_seconds": 0.0
+    },
+    {
+      "at_seconds": 97,
+      "correlation": 0.999933,
+      "lag_seconds": 0.0
+    },
+    {
+      "at_seconds": 102,
+      "correlation": 0.99999,
+      "lag_seconds": 0.0
+    },
+    {
+      "at_seconds": 107,
+      "correlation": 0.999992,
+      "lag_seconds": 0.0
+    },
+    {
+      "at_seconds": 112,
+      "correlation": 0.999995,
+      "lag_seconds": 0.0
+    },
+    {
+      "at_seconds": 117,
+      "correlation": 0.999992,
+      "lag_seconds": 0.0
+    },
+    {
+      "at_seconds": 122,
+      "correlation": 0.99999,
+      "lag_seconds": 0.0
+    },
+    {
+      "at_seconds": 127,
+      "correlation": 0.999977,
+      "lag_seconds": 0.0
+    },
+    {
+      "at_seconds": 132,
+      "correlation": 0.999995,
+      "lag_seconds": 0.0
+    },
+    {
+      "at_seconds": 137,
+      "correlation": 0.999995,
+      "lag_seconds": 0.0
+    },
+    {
+      "at_seconds": 142,
+      "correlation": 0.999997,
+      "lag_seconds": 0.0
+    },
+    {
+      "at_seconds": 147,
+      "correlation": 0.999994,
+      "lag_seconds": 0.0
+    },
+    {
+      "at_seconds": 152,
+      "correlation": 0.999997,
+      "lag_seconds": 0.0
+    },
+    {
+      "at_seconds": 157,
+      "correlation": 0.999954,
+      "lag_seconds": 0.0
+    },
+    {
+      "at_seconds": 162,
+      "correlation": 0.999992,
+      "lag_seconds": 0.0
+    },
+    {
+      "at_seconds": 167,
+      "correlation": 0.99999,
+      "lag_seconds": 0.0
+    },
+    {
+      "at_seconds": 172,
+      "correlation": 0.999981,
+      "lag_seconds": 0.0
+    }
+  ],
+  "min_audio_correlation": 0.999868,
+  "max_audio_lag_seconds": 0.0,
+  "black_segments": [],
+  "silence": [
+    "[Parsed_silencedetect_0 @ 0x81d00da40] silence_start: 178.076188",
+    "[Parsed_silencedetect_0 @ 0x81d00da40] silence_end: 180.010667 | silence_duration: 1.934479"
+  ],
+  "volume": [
+    "[Parsed_volumedetect_1 @ 0x81d00db00] mean_volume: -20.0 dB",
+    "[Parsed_volumedetect_1 @ 0x81d00db00] max_volume: -5.0 dB"
+  ],
+  "visual_check": "Inspected all 11 chapter representative frames and layout; reference operation clips are edited excerpts.",
+  "speech_check": "OriginCut ASR covered all 11 script paragraphs; 60s and 120s boundary candidates rechecked as separate clips; see voice-check.md.",
+  "human_listening": "Not performed; objective speech/waveform/export continuity checks do not substitute for subjective human listening."
+}
