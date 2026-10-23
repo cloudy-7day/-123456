@@ -7,6 +7,11 @@
 !cli.mjs
 !src/
 !src/*.mjs
+!src/retrieval/
+!src/retrieval/*.mjs
+!research/
+!research/semifinal-2026-10-22/
+!research/semifinal-2026-10-22/research.sqlite
 !contracts/
 !contracts/*.json
 !prompts/
@@ -33,5 +38,6 @@
 
 !knowledge/
 !knowledge/catalog.json
+!knowledge/image-diversity.json
 !knowledge/assets/
 !knowledge/assets/**

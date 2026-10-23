@@ -1,0 +1,42 @@
+// Run after the app has been built and served: node tests/browser/guided-scroll.mjs
+const {chromium}=await import(process.env.PLAYWRIGHT_MODULE||'playwright');
+import assert from 'node:assert/strict';
+const browser=await chromium.launch({headless:true,...(process.env.CHROME_PATH?{executablePath:process.env.CHROME_PATH}:{})});
+try{
+ const page=await browser.newPage({viewport:{width:390,height:740},reducedMotion:'reduce'});
+ await page.goto(process.env.APP_URL||'http://localhost:8792/scenario/');
+ await page.waitForTimeout(1800);
+ assert.equal(await page.evaluate(()=>scrollY),0,'before three seconds page stays still');
+ await page.waitForTimeout(1700);
+ assert.ok(await page.evaluate(()=>scrollY>100),'first visit guides to input');
+ assert.ok(await page.evaluate(()=>document.documentElement.scrollWidth<=innerWidth),'mobile has no horizontal overflow');
+ await page.reload();
+ await page.locator('h1').click();
+ await page.waitForTimeout(3400);
+ assert.equal(await page.evaluate(()=>scrollY),0,'interaction cancels delayed guide');
+ await page.reload();
+ await page.locator('#scenario').evaluate(el=>{el.value='客户场景';el.dispatchEvent(new Event('input',{bubbles:true}));});
+ await page.waitForTimeout(3400);
+ assert.equal(await page.evaluate(()=>scrollY),0,'input cancels delayed guide');
+ await page.reload();
+ await page.mouse.wheel(0,150);
+ await page.waitForTimeout(500);
+ const manualY=await page.evaluate(()=>scrollY);
+ await page.waitForTimeout(3000);
+ assert.equal(await page.evaluate(()=>scrollY),manualY,'manual scrolling cancels delayed guide');
+ assert.equal(await page.getByRole('button',{name:/开始创作/}).count(),0,'intro has no redundant entry button');
+ await page.locator('#scenario').scrollIntoViewIfNeeded();
+ assert.ok(await page.evaluate(()=>scrollY>100),'input remains reachable by scrolling');
+ await page.close();
+ const animated=await browser.newPage({viewport:{width:390,height:740},reducedMotion:'no-preference'});
+ await animated.goto(process.env.APP_URL||'http://localhost:8792/scenario/');
+ await animated.waitForTimeout(1800);
+ assert.equal(await animated.evaluate(()=>scrollY),0);
+ await animated.waitForFunction(()=>scrollY>10);
+ await animated.mouse.wheel(0,50);
+ await animated.waitForTimeout(250);
+ const interrupted=await animated.evaluate(()=>scrollY);
+ await animated.waitForTimeout(1200);
+ assert.equal(await animated.evaluate(()=>scrollY),interrupted,'wheel interrupts an active animation');
+ console.log('PASS guided scroll: three-second entry, interaction cancellation, reduced motion, manual entry, animation interruption, mobile');
+}finally{await browser.close();}

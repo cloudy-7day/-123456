@@ -1,3 +1,4 @@
+const noDiagnostics={record:async()=>{},list:async()=>[]};
 import test from 'node:test';
 import assert from 'node:assert/strict';
 import {once} from 'node:events';
@@ -19,7 +20,7 @@ test('local handoff and generation reject manual system conflict before model ca
  const catalog=await localCatalog(),windows=catalog.products.find(p=>p.system==='Windows'),harmony=catalog.products.find(p=>p.system==='HarmonyOS');
  const analysis={analysisId:'00000000-0000-4000-8000-000000000001',input:{sources},understanding:validateUnderstanding(raw(),sources),review:{status:'pending'}};
  let batches=0;
- const server=createApp({settings:{knowledgeSource:'local',baseUrl:'https://api.deepseek.com',port:0},scenarioDependencies:{analyze:async()=>structuredClone(analysis),batch:async()=>{batches++;throw Error('must not generate');}}});
+ const server=createApp({settings:{knowledgeSource:'local',baseUrl:'https://api.deepseek.com',port:0},scenarioDependencies:{diagnostics:noDiagnostics,analyze:async()=>structuredClone(analysis),batch:async()=>{batches++;throw Error('must not generate');}}});
  server.listen(0,'127.0.0.1');await once(server,'listening');
  const base='http://127.0.0.1:'+server.address().port;
  const post=(url,data)=>fetch(base+url,{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify(data)});

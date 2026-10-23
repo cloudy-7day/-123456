@@ -14,3 +14,5 @@ __MACOSX/
 public/scenario/
 modelscope-upload/
 .shadow-local/
+__pycache__/
+*.pyc

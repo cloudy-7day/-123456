@@ -1,6 +1,8 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
 import {suggestProduct as suggest} from '../modules/scenario/shared/product-suggestion.mjs';
+import {localCatalog} from '../src/local-knowledge.mjs';
+import {roleExamples} from '../modules/scenario/shared/role-examples.mjs';
 const feature=id=>({id,label:id,evidence:`verified ${id}`,source_path:'library/product/产品事实.md'});
 const products=[
  {name:'HUAWEI MateBook 14（鸿蒙版）',model:'HUAWEI MateBook 14',system:'HarmonyOS',features:['portable','keyboard','screen'].map(feature)},
@@ -8,6 +10,29 @@ const products=[
  {name:'MateBook D 16（Windows 系列）',model:'MateBook D 16',system:'Windows',features:['large_screen','keyboard'].map(feature)},
 ];
 const analysis=(value,kind='fact',category='task',product={status:'unspecified',name:null})=>({understanding:{product,observations:[{category,kind,value}]}});
+
+test('two fictional examples select different models from task preferences, not role IDs',async()=>{
+ const {products:catalog}=await localCatalog();
+ const student=roleExamples.find(r=>r.id==='student'),meeting=roleExamples.find(r=>r.id==='meeting');
+ const s=suggest(analysis(student.selectionBrief),catalog),m=suggest(analysis(meeting.selectionBrief),catalog);
+ assert(s.name);assert(m.name);assert.notEqual(s.name,m.name);
+ assert(s.candidates[0].reasons.some(r=>r.id==='touch'));
+ assert(m.candidates[0].reasons.some(r=>r.id==='large_screen'));
+ assert(m.candidates[0].reasons.some(r=>r.id==='numpad'));
+ assert(m.candidates.every(c=>catalog.find(p=>p.name===c.name).system==='Windows'));
+ assert.equal(suggest(analysis('我是一名学生'),catalog).name,'');
+ assert.equal(suggest(analysis(meeting.selectionBrief),[...catalog].reverse()).name,m.name);
+});
+
+test('explicit priorities outweigh generic matches and expose comparable evidence scores independent of directory order',()=>{
+ const catalog=[{name:'轻薄阅读款',model:'轻薄阅读款',system:'Windows',features:['portable','screen','keyboard'].map(feature)},{name:'大屏款',model:'大屏款',system:'Windows',features:['large_screen','screen'].map(feature)}];
+ const a=analysis('要携带电脑阅读文档打字，但最看重大屏');
+ const first=suggest(a,catalog),reversed=suggest(a,[...catalog].reverse());
+ assert.equal(first.name,'大屏款');assert.equal(reversed.name,first.name);
+ assert(first.candidates[0].score>first.candidates[1].score);
+ assert(first.requirements.some(r=>r.id==='large_screen'&&r.priority));
+ assert(first.candidates[0].reasons.every(r=>r.requirement&&r.points&&r.evidence));
+});
 test('candidates change with explicit needs and retain fact evidence',()=>{
  const carry=suggest(analysis('每天背电脑去图书馆，希望轻便'),products);
  const screen=suggest(analysis('希望大屏，16英寸'),products);
@@ -20,6 +45,14 @@ test('programming candidate uses keyboard evidence and never assumes software co
  assert.equal(result.name,products[0].name);
  assert.equal(result.candidates[0].reasons[0].label,'keyboard');
  assert(result.limitations.some(x=>/软件|算力/.test(x)));
+});
+
+test('meeting preparation and action-item tasks match factual features without inferring occupation needs',()=>{
+ const r=suggest(analysis('整理项目方案讨论稿，记录讨论结论和待确认的行动项'),products);
+ assert.equal(r.name,products[0].name);
+ assert(r.candidates[0].reasons.some(x=>x.label==='screen'));
+ assert(r.candidates[0].reasons.some(x=>x.label==='keyboard'));
+ for(const text of ['我是职场工作人员','不需要记录行动项','是否需要整理讨论稿'])assert.equal(suggest(analysis(text),products).name,'');
 });
 test('unknown, inferred and negated needs never create positive matches; no hardcoded fallback',()=>{
  for(const a of [analysis('要轻便','unknown'),analysis('要轻便','inference'),analysis('不需要轻薄，也不需要大屏'),analysis('不喜欢大屏'),analysis('没考虑过轻薄'),analysis('预算7000元'),analysis('不了解电脑')])assert.equal(suggest(a,products).name,'');

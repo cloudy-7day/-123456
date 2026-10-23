@@ -18,6 +18,8 @@ export function productFeatures(text,sourcePath){
  if([...screen.matchAll(/(\d+(?:\.\d+)?)\s*英寸/g)].some(m=>Number(m[1])>=16))add('large_screen','大屏显示',excerpt(screen,/英寸/));
  if(/\d+(?:\.\d+)?\s*英寸/.test(screen))add('screen','屏幕尺寸',excerpt(screen,/英寸/));
  if(/全尺寸.*键盘/.test(keyboard))add('keyboard','全尺寸键盘',keyboard);
+ if(/(?:支持.*)?独立数字(?:小)?键盘/.test(keyboard))add('numpad','独立数字键盘',excerpt(keyboard,/独立数字(?:小)?键盘/));
+ if(/支持\s*\d+\s*点触控/.test(screen))add('touch','屏幕触控',excerpt(screen,/支持\s*\d+\s*点触控/));
  if(/OLED/i.test(screen))add('oled','OLED 屏幕',excerpt(screen,/OLED/i));
  const pen=excerpt(keyboard,/M-?PEN|手写笔/i)||excerpt(section('包装清单'),/M-?PEN|手写笔/i);
  if(pen)add('pen','手写笔相关支持',pen);

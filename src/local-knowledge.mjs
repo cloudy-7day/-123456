@@ -3,8 +3,16 @@ import path from 'node:path';
 import { createHash, randomUUID } from 'node:crypto';
 import { ROOT } from './config.mjs';
 import { productFeatures } from './product-profile.mjs';
+import { selectDiverseImages, imageDiversityMetadata } from './image-selection.mjs';
+import { createKnowledgeSearch } from './retrieval/index.mjs';
 
 const defaultDir = path.join(ROOT, 'knowledge');
+const searches = new Map();
+function knowledgeSearch(directory,cacheDir) {
+  const key=path.resolve(directory)+'\n'+path.resolve(cacheDir);
+  if(!searches.has(key))searches.set(key,createKnowledgeSearch({knowledgeDir:directory,cacheDir}));
+  return searches.get(key);
+}
 const hash = bytes => createHash('sha256').update(bytes).digest('hex');
 const normalized = value => String(value).normalize('NFKC').toLowerCase().replace(/^(huawei|华为)\s*/,'').replace(/\s+/g,'');
 // Rank only the already resolved product's images, using index descriptions, not pixels.
@@ -20,7 +28,7 @@ export function rankKnowledgeImages(images, input) {
   const query = [input.scenario, input.audience, input.goal].filter(Boolean).join(' ');
   const seen = new Set();
   return images.map((asset, order) => {
-    const metadata = `${asset.title || ''} ${asset.description || ''}`;
+    const metadata = asset.visual_review?.sha256===asset.sha256?asset.visual_review.label:`${asset.title || ''} ${asset.description || ''}`;
     return { asset, order, blurred: Number(/blur|模糊/i.test(`${metadata} ${asset.source_url || ''}`)),
       score: imageTopics.filter(([task, image]) => task.test(query) && image.test(metadata)).length };
   }).sort((a,b) => a.blurred-b.blurred || b.score-a.score || a.order-b.order)
@@ -47,7 +55,7 @@ export async function loadLocalKnowledge(directory=defaultDir) {
   if(new Set(data.products.map(p=>p.id)).size!==data.products.length)throw Error('本地知识库型号编号重复。');
   return data;
 }
-const provenance = data => ({mode:'local',archive_name:data.archive_name,archive_version:data.archive_version,archive_sha256:data.archive_sha256});
+const provenance = data => ({mode:'local',archive_name:data.archive_name,archive_version:data.archive_version,archive_sha256:data.archive_sha256,supplements:data.supplements||[]});
 export async function localCatalog(directory=defaultDir) {
   const data=await loadLocalKnowledge(directory);
   const client=new LocalKnowledge({knowledgeDir:directory});
@@ -59,15 +67,15 @@ export async function localCatalog(directory=defaultDir) {
       if(document){const bytes=await client.read(document,product);features=productFeatures(new TextDecoder('utf-8',{fatal:true}).decode(bytes),document.path);}
     }catch{/* Unverified facts cannot support a recommendation. */}
     const image=await selectPreview(product,client);
-    return {id,name,model,category,system,features,preview:image?{url:`/api/product-image/${id}`,title:image.asset.title,path:image.asset.path}:null};
+    return {id,name,model,category,system,features,preview:image?{url:`/api/product-image/${id}?v=${image.asset.sha256.slice(0,12)}`,title:image.asset.visual_review.label,path:image.asset.path,source_page:image.asset.source_page}:null};
   }));
   return {knowledge_base:data.knowledge_base,retrieval:provenance(data),products};
 }
 async function selectPreview(product,client){
-  const candidates=(product.images||[]).map((asset,order)=>({asset,order,
-    blurred:/blur|模糊/i.test(`${asset.title} ${asset.description} ${asset.source_url}`),
-    visual:/外观|配色|主视觉|整机|颜色/.test(`${asset.title} ${asset.description}`)}))
-    .filter(x=>!x.blurred).sort((a,b)=>Number(b.visual)-Number(a.visual)||a.order-b.order);
+  // The filename may describe a chip or a person as "product appearance".
+  // Only a SHA-bound, visually checked product image can be a catalogue preview.
+  const candidates=(product.images||[]).filter(asset=>asset.visual_review?.sha256===asset.sha256&&asset.visual_review.role==='product'&&asset.visual_review.allowed&&asset.visual_review.preview)
+    .sort((a,b)=>Number(b.sha256===product.preview_sha256)-Number(a.sha256===product.preview_sha256)).map(asset=>({asset}));
   for(const {asset} of candidates){
     try{const bytes=await client.read(asset,product),extension=imageExtension(bytes);
       if(extension&&extension===asset.extension)return {asset,bytes,extension};
@@ -81,7 +89,9 @@ export async function productPreview(id,directory=defaultDir){
   return product?selectPreview(product,new LocalKnowledge({knowledgeDir:directory})):null;
 }
 export class LocalKnowledge {
-  constructor({knowledgeDir=defaultDir,localOutputRoot=ROOT}={}) {this.directory=knowledgeDir;this.outputRoot=localOutputRoot;}
+  constructor({knowledgeDir=defaultDir,localOutputRoot=ROOT,searchMode=process.env.SEARCH_MODE||'lexical',searchCacheDir=process.env.SEARCH_CACHE_DIR||path.join(ROOT,'output/search-cache'),searchClient}={}) {
+    this.directory=knowledgeDir;this.outputRoot=localOutputRoot;this.searchMode=searchMode;this.searchCacheDir=searchCacheDir;this.searchClient=searchClient;
+  }
   async read(asset,product) {
     if(!asset.path?.startsWith(product.path+'/'))throw Error('本地知识库来源不属于所选完整型号。');
     const bytes=await fs.readFile(assetPath(this.directory,asset.file));
@@ -108,19 +118,39 @@ export class LocalKnowledge {
       // Keep complete qualifiers; local source files are bounded by the importer.
       sources.push({ref:`S${sources.length+1}`,kind:'text',title:document.title,path:document.path,text,truncated:false,sha256:document.sha256});
     }
-    const images=rankKnowledgeImages(product.images,input);
+    let context_retrieval={mode:'not_requested',requested_mode:this.searchMode,results:[],stats:{returned:0},warnings:[]};
+    const taskQuery=[input.scenario,input.audience,input.goal,input.platform].filter(Boolean).join(' ');
+    if(taskQuery.trim()){
+      try {
+        const search=this.searchClient||knowledgeSearch(this.directory,this.searchCacheDir);
+        const result=await search.search(taskQuery,{productId:product.id,types:['product_guidance','scenario','faq','style'],limit:4,mode:this.searchMode,platform:input.platform,diversifyTypes:true});
+        context_retrieval={...context_retrieval,...result,requested_mode:this.searchMode};
+        warnings.push(...context_retrieval.warnings);
+        progress(`已检索本次场景辅助资料：${context_retrieval.results.length} 条（${context_retrieval.mode}）。`);
+      } catch(error){
+        const message=`辅助资料检索未完成，保留完整产品原文：${error.message}`;
+        context_retrieval={...context_retrieval,mode:'unavailable',warnings:[message]};warnings.push(message);
+      }
+    }
+    const eligible=product.images.filter(a=>!data.image_review_required||(a.visual_review?.sha256===a.sha256&&a.visual_review.allowed));
+    const images=rankKnowledgeImages(eligible,input),acceptedImages=[],imageRejected=product.images.filter(a=>!eligible.includes(a)).map(a=>({title:a.title,reason:'visual-content-not-approved'}));
     for(const asset of images){
       if(sources.filter(s=>s.kind==='image').length>=6)break;
+      const selection=selectDiverseImages([...acceptedImages,asset],{productPath:product.path,minimum:0,limit:6});
+      if(!selection.images.includes(asset)){imageRejected.push({title:asset.title,reason:selection.rejected.find(x=>x.image===asset)?.reason||'duplicate'});continue;}
       try {
         const bytes=await this.read(asset,product),extension=imageExtension(bytes);
         if(!extension||extension!==asset.extension)throw Error('图片内容格式与索引不符');
         const name=randomUUID()+'.'+extension,localPath='output/media/'+name;
         await fs.mkdir(path.join(this.outputRoot,'output/media'),{recursive:true});
         await fs.writeFile(path.join(this.outputRoot,localPath),bytes);
-        sources.push({ref:`I${sources.filter(s=>s.kind==='image').length+1}`,kind:'image',title:asset.title,path:asset.path,local_path:localPath,sha256:asset.sha256,description:asset.description,width:asset.width,height:asset.height,index_path:asset.index_path});
+        const label=asset.visual_review?.sha256===asset.sha256?asset.visual_review.label:null;
+        sources.push({ref:`I${sources.filter(s=>s.kind==='image').length+1}`,kind:'image',title:label||asset.title,path:asset.path,local_path:localPath,sha256:asset.sha256,description:label||asset.description,width:asset.width,height:asset.height,index_path:asset.index_path,source_page:asset.source_page,source_url:asset.source_url,origin:asset.origin||'user-archive',visual_review:asset.visual_review,...imageDiversityMetadata(asset)});
+        acceptedImages.push(asset);
       } catch(error){warnings.push(`图片「${asset.title}」已跳过：${error.message}`);}
     }
     if(!sources.some(s=>s.kind==='image'))warnings.push('本地库未取得可用图片，配图待补。');
-    return {knowledgeBase:data.knowledge_base,kb_name:data.knowledge_base,sources,warnings,retrieval:{...provenance(data),product_id:product.id,product_path:product.path,source_created_at:product.source_created_at}};
+    warnings.push(...selectDiverseImages(acceptedImages,{productPath:product.path,minimum:input.platform==='小红书'?3:1}).warnings);
+    return {knowledgeBase:data.knowledge_base,kb_name:data.knowledge_base,sources,warnings,context_retrieval,retrieval:{...provenance(data),product_id:product.id,product_path:product.path,source_created_at:product.source_created_at,image_review:{method:'offline-fingerprint-and-index',rejected:imageRejected}}};
   }
 }

@@ -1,13 +1,91 @@
 {
   "schema_version": "0.1",
   "type": "object",
-  "required": ["product", "audience", "scenario", "platform"],
+  "required": [
+    "product",
+    "audience",
+    "scenario",
+    "platform"
+  ],
   "properties": {
-    "product": { "type": "string", "title": "产品完整名称", "description": "区分鸿蒙、Windows 和具体型号", "maxLength": 120, "default": "HUAWEI MateBook 14（鸿蒙版）" },
-    "audience": { "type": "string", "title": "目标客户", "maxLength": 500, "default": "准备购买第一台电脑的大学新生" },
-    "scenario": { "type": "string", "title": "使用场景与当前困扰", "maxLength": 2000, "default": "每天带电脑上课，整理课堂笔记和小组作业；担心常用软件兼容性，希望先到店体验。" },
-    "platform": { "type": "string", "title": "发布平台", "enum": ["小红书", "公众号", "朋友圈", "门店海报"], "default": "小红书" },
-    "goal": { "type": "string", "title": "本次目标", "maxLength": 500, "default": "引导咨询和到店体验" },
-    "notes": { "type": "string", "title": "补充信息", "maxLength": 2000, "default": "先验证链路，暂不报价；未知信息明确标注。" }
+    "product": {
+      "type": "string",
+      "title": "产品完整名称",
+      "description": "区分鸿蒙、Windows 和具体型号",
+      "maxLength": 120,
+      "default": "HUAWEI MateBook 14（鸿蒙版）"
+    },
+    "audience": {
+      "type": "string",
+      "title": "目标客户",
+      "maxLength": 500,
+      "default": "准备购买第一台电脑的大学新生"
+    },
+    "scenario": {
+      "type": "string",
+      "title": "使用场景与当前困扰",
+      "maxLength": 2000,
+      "default": "每天带电脑上课，整理课堂笔记和小组作业；担心常用软件兼容性，希望先到店体验。"
+    },
+    "platform": {
+      "type": "string",
+      "title": "发布平台",
+      "enum": [
+        "小红书",
+        "公众号",
+        "朋友圈",
+        "门店海报"
+      ],
+      "default": "小红书"
+    },
+    "goal": {
+      "type": "string",
+      "title": "本次目标",
+      "maxLength": 500,
+      "default": "围绕真实任务展开话题互动"
+    },
+    "notes": {
+      "type": "string",
+      "title": "补充信息",
+      "maxLength": 2000,
+      "default": "先验证链路，暂不报价；未知信息明确标注。"
+    },
+    "business_scenario": {
+      "type": "string",
+      "enum": [
+        "auto",
+        "student",
+        "meeting",
+        "creation",
+        "family",
+        "enterprise",
+        "store",
+        "launch",
+        "holiday"
+      ]
+    },
+    "content_goal": {
+      "type": "string",
+      "enum": [
+        "conversation",
+        "save",
+        "consultation"
+      ]
+    },
+    "business_scenario_origin": {
+      "type": "string",
+      "enum": [
+        "operator_selected",
+        "default_suggestion"
+      ]
+    },
+    "content_goal_origin": {
+      "type": "string",
+      "enum": [
+        "input_extracted",
+        "operator_selected",
+        "default_suggestion"
+      ]
+    }
   }
 }

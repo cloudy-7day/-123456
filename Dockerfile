@@ -20,6 +20,7 @@ COPY --chown=node:node package.json server.mjs cli.mjs ./
 COPY --chown=node:node src/ ./src/
 COPY --chown=node:node contracts/ ./contracts/
 COPY --chown=node:node knowledge/ ./knowledge/
+COPY --chown=node:node research/semifinal-2026-10-22/research.sqlite ./research/semifinal-2026-10-22/research.sqlite
 COPY --chown=node:node prompts/ ./prompts/
 COPY --chown=node:node examples/task.json ./examples/task.json
 COPY --chown=node:node public/index.html ./public/index.html

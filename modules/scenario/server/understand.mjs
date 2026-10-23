@@ -18,6 +18,12 @@ export async function understand(input,config,{fetchImpl=fetch,signal,timeoutMs=
    const body=await response.json();const choice=body.choices?.[0];
    if(choice?.finish_reason!=='stop'||!choice.message?.content) throw new ValidationError('模型结果为空或未完整生成');
    let raw;try{raw=JSON.parse(choice.message.content);}catch{throw new ValidationError('模型返回的 JSON 无法解析');}
+   // Facts are displayed as verified source quotes, never a stronger paraphrase.
+   for(const o of Array.isArray(raw.observations)?raw.observations:[]){
+     if(o?.kind!=='fact'||o.evidence?.length!==1)continue;
+     const e=o.evidence[0],text=parsed.data.sources.find(s=>s.id===e.sourceId)?.text;
+     if(typeof e.quote==='string'&&e.quote.trim()&&text?.includes(e.quote)&&o.value!==e.quote){o.value=e.quote;o.rationale='显示已核对的原文引句，未采用模型概括。';}
+   }
    const understanding=validateUnderstanding(raw,parsed.data.sources);
    const sample=samples.find(s=>s.id===parsed.data.sampleId);
    const modified=sample && (parsed.data.sources.find(s=>s.type==='scenario')?.text!==sample.text || parsed.data.sources.some(s=>s.type==='revision' || s.type==='supplement') || (parsed.data.sources.find(s=>s.type==='product')?.text||'') !== (sample.product?'指定产品：'+sample.product:''));

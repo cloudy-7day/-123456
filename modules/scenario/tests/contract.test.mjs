@@ -18,4 +18,10 @@ const response=content=>({ok:true,json:async()=>({id:'mock-test',choices:[{finis
 test('模型结构错误仅重试一次，成功结果带调用记录',async()=>{let n=0;const r=await understand({sources},config,{fetchImpl:async()=>response(++n===1?'{}':JSON.stringify(fixture()))});assert.equal(n,2);assert.equal(r.call.attempts,2);});
 test('反复无效输出明确失败，无硬编码回退',async()=>{await assert.rejects(understand({sources},config,{fetchImpl:async()=>response('{}')}),e=>e.code==='INVALID_MODEL_OUTPUT');});
 test('认证失败不重试，不暴露上游响应',async()=>{let n=0;await assert.rejects(understand({sources},config,{fetchImpl:async()=>{n++;return {ok:false,status:401};}}),e=>e.code==='AUTH_ERROR'&&!e.message.includes('test-only'));assert.equal(n,1);});
+test('输入提取以真实单一引文替代模型改写，不接纳错误概括也无需用户重试',async()=>{
+ const raw=fixture();raw.observations[0].value='必须买高性能电脑';let n=0;
+ const a=await understand({sources},config,{fetchImpl:async()=>{n++;return response(JSON.stringify(raw));}});
+ assert.equal(n,1);assert.equal(a.understanding.observations[0].value,'我要写代码');
+ assert(!JSON.stringify(a.understanding).includes('必须买高性能电脑'));
+});
 test('超时与主动取消有独立状态',async()=>{const fetchImpl=async(_,o)=>new Promise((_,reject)=>{o.signal.addEventListener('abort',()=>reject(new Error('abort')),{once:true});setTimeout(()=>reject(new Error('test fallback')),200);});await assert.rejects(understand({sources},config,{fetchImpl,timeoutMs:10}),e=>e.code==='TIMEOUT');const c=new AbortController();setTimeout(()=>c.abort(),10);await assert.rejects(understand({sources},config,{fetchImpl,signal:c.signal}),e=>e.code==='CANCELLED');});

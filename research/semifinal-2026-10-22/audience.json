@@ -1,0 +1,427 @@
+{
+  "schema_version": 1,
+  "as_of": "2026-10-22",
+  "research_scope": "华为PC实际购买者职业数据优先；缺失后以中国笔记本校园和企业采购研究作明确标注的替代依据。场景与营销情境为待验证设计假设，不构造购机职业排行。",
+  "source_registry": [
+    {
+      "id": "A01",
+      "url": "https://finance.people.com.cn/n1/2024/1227/c1004-40390527.html",
+      "title": "京东发布《京东3C数码校园人群报告》",
+      "publisher": "人民网转载中国网科技；原研究京东3C数码",
+      "published_at": "2024-12-27",
+      "source_type": "secondary_report_of_channel_research",
+      "evidence_scope": "2024校园人群；不是全国概率样本，也不是华为买家",
+      "limitations": [
+        "公开报道未披露样本量、抽样方式、地区分布、调查时间及购机问题原题；全文打开失败，检索返回正文可读取",
+        "原报告及原始数据未取得；不能将校园样本内比例转换为全国购买份额"
+      ],
+      "accessed_at": "2026-10-22"
+    },
+    {
+      "id": "A02",
+      "url": "https://www.hxrcon.com/uploadfile/202512/bf94e4f8400d86c.pdf",
+      "title": "2025年1月~8月笔记本电脑市场洞察报告",
+      "publisher": "华信人咨询",
+      "published_at": "2025-10",
+      "source_type": "excluded_data_quality",
+      "evidence_scope": "自报2025年8月调研N=1370；笔记本消费者与平台销售分章节",
+      "limitations": [
+        "抽样框、问卷、职业分布及加权方法不透明",
+        "第10页出现平台负销售额，第11页报告自己承认份额合计超过100%可能有错误；不采纳其市场规模、品牌排行和份额",
+        "消费者调查仅作低置信背景，不充当实际成交统计"
+      ],
+      "accessed_at": "2026-10-22"
+    },
+    {
+      "id": "A03",
+      "url": "https://pdf.dfcfw.com/pdf/H3_AP202506111688826362_1.pdf?1749654233000.pdf=",
+      "title": "2025年企业办公采购趋势报告",
+      "publisher": "京东；东方财富存档PDF",
+      "published_at": "2025-06",
+      "source_type": "primary_publisher_report_third_party_host",
+      "evidence_scope": "企业办公采购与京东平台行为；非个人笔记本买家全国样本",
+      "limitations": [
+        "未获得京东官方域名原件；PDF品牌署名与媒体发布相符",
+        "样本规模、企业抽样和分母未完整披露；采购意愿、搜索不能等同购买份额",
+        "报告包含供应商营销表达，精确效率与溢价数字不作为场景选择依据"
+      ],
+      "accessed_at": "2026-10-22"
+    },
+    {
+      "id": "A04",
+      "url": "https://www.cnnic.cn/n4/2025/1020/c326-11389.html",
+      "title": "我国生成式人工智能用户规模实现翻一番",
+      "publisher": "中国互联网络信息中心（CNNIC）",
+      "published_at": "2025-10-20",
+      "source_type": "official_research_release",
+      "evidence_scope": "中国生成式AI用户应用；不是PC购买或具体职业任务频率",
+      "limitations": [
+        "只能证明办公和内容创作是AI应用类别，不能证明华为PC购买群体",
+        "本包采用2025年资料，不视作2026年最新事实"
+      ],
+      "accessed_at": "2026-10-22"
+    },
+    {
+      "id": "A05",
+      "url": "https://www.wenjuan.com/lib_detail_full/5fcdd5c8f2b87a712681adfd/",
+      "title": "华为笔记本电脑上海市场调查问卷",
+      "publisher": "问卷网模板",
+      "published_at": null,
+      "source_type": "questionnaire_template_excluded",
+      "evidence_scope": "问题设计模板",
+      "limitations": [
+        "没有样本、回收数据或结果；职业选项不表示实际人群占比，不纳入结论"
+      ],
+      "accessed_at": "2026-10-22"
+    }
+  ],
+  "records": [
+    {
+      "id": "AE01",
+      "record_type": "audience_evidence",
+      "source_ids": [
+        "A05"
+      ],
+      "evidence_status": "observed",
+      "applicability": "华为PC职业购买份额检索审计",
+      "finding": "本轮未获得可核验的华为PC实际购买者职业分布。学生、医生、律师均不能被称作华为PC购买量最大的职业。",
+      "metric": "按职业划分的华为PC实际购买人数/全部华为PC购买人数",
+      "value": null,
+      "sample": null,
+      "geography": null,
+      "channel": null,
+      "period": null,
+      "explanation": "先查华为买家，检出问卷模板和选购营销文章，均不符合实际购买份额证据要求。未检出不代表数据不存在。"
+    },
+    {
+      "id": "AE02",
+      "record_type": "audience_evidence",
+      "source_ids": [
+        "A01"
+      ],
+      "evidence_status": "reported",
+      "applicability": "中国笔记本校园购机触发的有条件替代依据",
+      "finding": "京东校园研究报道将入学准备和后期专业需求列为购机/换机触发。",
+      "metric": "校园受访者报告的高考后暑假购机时间选择",
+      "value": "超过4成（报道表述，非华为份额）",
+      "sample": null,
+      "geography": "中国校园人群，城市分布未披露",
+      "channel": "京东发布的校园调研；不可解释为所有样本仅来自京东或全国代表",
+      "period": "2024年发布；实地调查期未披露",
+      "not_supported": [
+        "学生占全国PC买家的比例",
+        "学生在华为买家中排名",
+        "所有学生都适合轻薄本"
+      ]
+    },
+    {
+      "id": "AE03",
+      "record_type": "audience_evidence",
+      "source_ids": [
+        "A02"
+      ],
+      "evidence_status": "reported",
+      "applicability": "低置信背景；禁止用于市场排行",
+      "finding": "报告销售数据出现负值与份额总和异常；本包排除整份报告的营销检索使用。",
+      "metric": "作者报告的调研样本数",
+      "value": null,
+      "sample": null,
+      "geography": "中国定位；覆盖不明",
+      "channel": "调研渠道未清楚披露；销售章另涉天猫京东抖音，不能混为消费者样本来源",
+      "period": "2025-08",
+      "use_decision": "excluded_data_quality；不得进入可检索营销依据。"
+    },
+    {
+      "id": "AE04",
+      "record_type": "audience_evidence",
+      "source_ids": [
+        "A03"
+      ],
+      "evidence_status": "reported",
+      "applicability": "中国企业办公任务类别替代依据",
+      "finding": "报告区分桌面、差旅、会议和打印需求；差旅更看重便携及续航，会议强调协作。",
+      "metric": "场景需求分类，非职业购买份额",
+      "value": null,
+      "sample": null,
+      "geography": "中国企业采购，非全国个人PC消费者",
+      "channel": "京东企业采购背景",
+      "period": "2025年报告",
+      "not_supported": [
+        "商务人士占华为购买人数比例",
+        "会议整理任务日频率",
+        "某华为机型具备报告中所述AI能力"
+      ]
+    },
+    {
+      "id": "AE05",
+      "record_type": "audience_evidence",
+      "source_ids": [
+        "A04"
+      ],
+      "evidence_status": "reported",
+      "applicability": "办公/内容创作主题合理性背景",
+      "finding": "官方发布将日常办公与内容创作列入生成式AI应用场景。",
+      "metric": "AI应用类别；不是PC使用时长、购机数或职业分布",
+      "value": null,
+      "sample": null,
+      "geography": "中国生成式AI用户",
+      "channel": "官方研究发布",
+      "period": "2025年报告"
+    },
+    {
+      "id": "SC01",
+      "record_type": "scenario_card",
+      "source_ids": [
+        "A01"
+      ],
+      "evidence_status": "research_informed_hypothesis",
+      "applicability": "演示场景候选；不是用户画像事实",
+      "occupation_entry": "大学生 / 研究生（用户自选身份）",
+      "task": "课程资料整理→小组汇报准备",
+      "place": "校图书馆小组讨论区",
+      "purchase_evidence": "有校园购机时点替代证据；无华为职业份额",
+      "task_frequency_evidence": {
+        "value": null,
+        "note": "学期任务具有重复性是设计假设，频率无量化证据"
+      },
+      "task_difference": "资料阅读→提纲→演示文档，突出资料到表达",
+      "selection": "推荐",
+      "huawei_capability_candidate": "只在官方产品证据确认后演示文档处理/跨设备传资料；不预设AI自动写完整论文",
+      "capability_verification_required": true,
+      "quantitative_score": null
+    },
+    {
+      "id": "SC02",
+      "record_type": "scenario_card",
+      "source_ids": [
+        "A03"
+      ],
+      "evidence_status": "research_informed_hypothesis",
+      "applicability": "演示场景候选；不是用户画像事实",
+      "occupation_entry": "项目 / 运营 / 商务协作人员（任务入口可替代职业）",
+      "task": "会议结束→整理行动项→改一页客户方案",
+      "place": "办公室会议室外的共享工位",
+      "purchase_evidence": "企业采购报告有会议/移动办公需求；无个人购买份额",
+      "task_frequency_evidence": {
+        "value": null,
+        "note": "会议后整理是流程假设，未测日周频率"
+      },
+      "task_difference": "口头信息→待办→方案，与学习资料加工不同",
+      "selection": "推荐",
+      "huawei_capability_candidate": "可演示会议信息整理/多设备协作候选；须核对具体系统、机型、软件和授权",
+      "capability_verification_required": true,
+      "quantitative_score": null
+    },
+    {
+      "id": "SC03",
+      "record_type": "scenario_card",
+      "source_ids": [
+        "A04"
+      ],
+      "evidence_status": "research_informed_hypothesis",
+      "applicability": "演示场景候选；不是用户画像事实",
+      "occupation_entry": "创意 / 内容运营人员",
+      "task": "素材收集→短视频粗剪→导出预览",
+      "place": "小型工作室编辑桌",
+      "purchase_evidence": "内容创作为AI应用背景；无创作者PC购买份额",
+      "task_frequency_evidence": {
+        "value": null,
+        "note": "素材处理可能重复，实际频率未知"
+      },
+      "task_difference": "媒体性能与软件兼容要求较高",
+      "selection": "备选",
+      "huawei_capability_candidate": "仅在官方兼容和项目实测通过后演示剪辑，不承诺专业生产级性能",
+      "capability_verification_required": true,
+      "quantitative_score": null
+    },
+    {
+      "id": "SC04",
+      "record_type": "scenario_card",
+      "source_ids": [
+        "A03"
+      ],
+      "evidence_status": "research_informed_hypothesis",
+      "applicability": "演示场景候选；不是用户画像事实",
+      "occupation_entry": "财务 / 数据行政人员",
+      "task": "月报数据核对→表格汇总→发审阅稿",
+      "place": "办公室财务工位",
+      "purchase_evidence": "桌面办公需求背景；无财务职业购买份额",
+      "task_frequency_evidence": {
+        "value": null,
+        "note": "月报按月是任务定义，不代表所有财务人员频率"
+      },
+      "task_difference": "公式、宏、插件及数据安全是关键差异",
+      "selection": "备选",
+      "huawei_capability_candidate": "可演示表格审阅候选；必须确认办公软件版本、宏插件兼容",
+      "capability_verification_required": true,
+      "quantitative_score": null
+    },
+    {
+      "id": "SC05",
+      "record_type": "scenario_card",
+      "source_ids": [
+        "A04"
+      ],
+      "evidence_status": "research_informed_hypothesis",
+      "applicability": "演示场景候选；不是用户画像事实",
+      "occupation_entry": "律师 / 医生（仅显式选择时）",
+      "task": "公开资料阅读→培训/科普提纲",
+      "place": "办公室资料室",
+      "purchase_evidence": "没有取得对应职业购机证据",
+      "task_frequency_evidence": {
+        "value": null,
+        "note": "任务频率未知"
+      },
+      "task_difference": "专业准确性、保密与机构软件限制使演示成本较高",
+      "selection": "暂不优先",
+      "huawei_capability_candidate": "只用公开或合成资料，不宣称临床诊断、法律结论或专用系统可用",
+      "capability_verification_required": true,
+      "quantitative_score": null
+    },
+    {
+      "id": "MC01",
+      "record_type": "marketing_context",
+      "source_ids": [
+        "A01"
+      ],
+      "evidence_status": "research_informed_hypothesis",
+      "applicability": "用户明确入学/换专业；不能因年龄自动触发",
+      "scenario_id": "SC01",
+      "purchase_trigger": "开学前准备第一台适合课程的电脑",
+      "decision_stage": "unknown",
+      "pain_or_concern": "预算不确定；担心买了不适合专业软件",
+      "content_goal": "收藏专业软件检查清单",
+      "narrative_hook": "从下学期要交的第一份作业倒推选机",
+      "avoid_inference": "不推断家长付款、低收入或偏好游戏本",
+      "customer_fact": false,
+      "decision_stage_hypothesis": "初识→建立需求",
+      "stage_confirmation_required": true
+    },
+    {
+      "id": "MC02",
+      "record_type": "marketing_context",
+      "source_ids": [
+        "A01"
+      ],
+      "evidence_status": "research_informed_hypothesis",
+      "applicability": "用户明确旧机问题或毕业任务；证据支持触发类别但具体焦虑是设计假设",
+      "scenario_id": "SC01",
+      "purchase_trigger": "旧电脑跟不上毕业项目，正在看替代机",
+      "decision_stage": "unknown",
+      "pain_or_concern": "专业软件、内存和迁移成本",
+      "content_goal": "评论说明专业与软件；咨询兼容",
+      "narrative_hook": "把一份真实任务清单带去体验",
+      "avoid_inference": "不把毕业设计需要高配置概括到所有专业",
+      "customer_fact": false,
+      "decision_stage_hypothesis": "比较",
+      "stage_confirmation_required": true
+    },
+    {
+      "id": "MC03",
+      "record_type": "marketing_context",
+      "source_ids": [
+        "A03"
+      ],
+      "evidence_status": "research_informed_hypothesis",
+      "applicability": "用户明确移动需求；持有华为手机必须询问或由用户提供",
+      "scenario_id": "SC02",
+      "purchase_trigger": "开始出差或跨地点协作，想减少搬运和资料转存",
+      "decision_stage": "unknown",
+      "pain_or_concern": "便携、续航、现有手机/平板协同条件",
+      "content_goal": "收藏移动办公检查表",
+      "narrative_hook": "一天从会议室到共享工位，材料如何接续",
+      "avoid_inference": "不由职业推断经常出差、不擅自承诺续航小时数",
+      "customer_fact": false,
+      "decision_stage_hypothesis": "初识",
+      "stage_confirmation_required": true
+    },
+    {
+      "id": "MC04",
+      "record_type": "marketing_context",
+      "source_ids": [
+        "A03"
+      ],
+      "evidence_status": "research_informed_hypothesis",
+      "applicability": "用户明确在比较；演示功能先与产品证据表匹配",
+      "scenario_id": "SC02",
+      "purchase_trigger": "正在比较两台电脑，想验证会议后方案整理流程",
+      "decision_stage": "unknown",
+      "pain_or_concern": "软件兼容、信息保密、学习成本、实际可用性",
+      "content_goal": "咨询并预约携带合成资料体验",
+      "narrative_hook": "用同一份脱敏材料试做提纲与待办，记录需要手工复核的步骤",
+      "avoid_inference": "不把搜索AI解释为已购买、不要编造效率提升百分比",
+      "customer_fact": false,
+      "decision_stage_hypothesis": "比较→体验",
+      "stage_confirmation_required": true
+    },
+    {
+      "id": "MC05",
+      "record_type": "marketing_context",
+      "source_ids": [
+        "A04"
+      ],
+      "evidence_status": "research_informed_hypothesis",
+      "applicability": "用户明确内容创作，不从拍照爱好推断职业",
+      "scenario_id": "SC03",
+      "purchase_trigger": "准备开始做短视频内容，需要判断设备是否适用",
+      "decision_stage": "unknown",
+      "pain_or_concern": "剪辑软件、素材格式、导出耗时",
+      "content_goal": "评论具体软件和素材规格",
+      "narrative_hook": "先问工作流，再决定是否推荐产品",
+      "avoid_inference": "不许把市场趋势当作任何机型性能实测",
+      "customer_fact": false,
+      "decision_stage_hypothesis": "需求探索",
+      "stage_confirmation_required": true
+    }
+  ],
+  "limitations": [
+    "未取得华为PC按职业的实际购买份额，因此不能回答销量最大的两个职业",
+    "未取得全国代表性笔记本购机职业调查；校园渠道研究、企业采购研究与AI用户研究的分母不同，禁止合并",
+    "任务频率无直接观测值，均用null；地点和职业入口属于设计判断",
+    "市场资料不能证明华为产品功能、兼容性、续航或效率；必须引用另行核验的具体产品证据",
+    "2024/2025材料为历史范围，不能写成2026购买现状"
+  ],
+  "recommendations": {
+    "selected_scenario_ids": [
+      "SC01",
+      "SC02"
+    ],
+    "decision_type": "design_judgment_informed_by_limited_research",
+    "rationale": "分别覆盖资料到表达、会议到行动两种不同信息工作流；有购机触发/办公需求背景，场景地点明确，易用合成资料演示；不是购买份额前二。",
+    "generation_rules": [
+      "先采用用户明确职业、任务、地点、软件；未知字段保持未知或提供可选项",
+      "不得根据职业自动生成收入、预算、家庭、品牌忠诚和购买阶段",
+      "营销情境需显示为可选创作假设，不能写成客户真实经历",
+      "优先按任务选择卡片，只有用户提供身份时才绑定职业",
+      "决策阶段未知时写unknown；marketing_context的阶段仅为可选脚本假设，未经用户确认不得写入客户事实。"
+    ],
+    "input_examples": [
+      {
+        "input": "最近总要做PPT",
+        "candidate_scenario": "SC01或SC02；先问课程汇报还是工作提案",
+        "must_not_infer": "不能认定大学生、职场新人或即将买电脑"
+      },
+      {
+        "input": "学生，预算不高",
+        "candidate_scenario": "SC01；补问专业软件和任务",
+        "must_not_infer": "不默认大一、父母付款或游戏需求"
+      },
+      {
+        "input": "经常外出开会",
+        "candidate_scenario": "SC02；补问携带设备和使用软件",
+        "must_not_infer": "不默认高收入商务人士或已有华为手机"
+      },
+      {
+        "input": "我是医生，想换电脑",
+        "candidate_scenario": "先问公开资料阅读、科普制作还是院内系统；可选SC05",
+        "must_not_infer": "不默认诊断任务或医院系统兼容"
+      },
+      {
+        "input": "想整理一段会议录音",
+        "candidate_scenario": "SC02的任务入口，无须职业",
+        "must_not_infer": "不认定录音获授权、不假设某机型可直接处理"
+      }
+    ],
+    "label": "首批覆盖建议"
+  }
+}

@@ -1,3 +1,4 @@
+const noDiagnostics={record:async()=>{},list:async()=>[]};
 import { test } from 'node:test';
 import assert from 'node:assert/strict';
 import { once } from 'node:events';
@@ -6,7 +7,7 @@ import { createApp } from '../server.mjs';
 
 test('cloud host and HTTPS proxy requests work; unrelated origins stay blocked', async () => {
   const saved={schema_version:'shadow.1',complete:false,results:[],errors:[{platform:'小红书',message:'test'}]};
-  const server = createApp({ settings: { port: 0, host: "0.0.0.0" }, run: () => assert.fail('invalid input must not generate'), scenarioDependencies:{loadLatest:async()=>saved} });
+  const server = createApp({ settings: { port: 0, host: "0.0.0.0" }, run: () => assert.fail('invalid input must not generate'), scenarioDependencies:{diagnostics:noDiagnostics,loadLatest:async()=>saved} });
   server.listen(0, '0.0.0.0');
   await once(server, 'listening');
   const request = (url, headers = {}, method = 'GET', body) => new Promise((resolve, reject) => {

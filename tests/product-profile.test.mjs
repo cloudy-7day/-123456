@@ -1,3 +1,4 @@
+const noDiagnostics={record:async()=>{},list:async()=>[]};
 import test from 'node:test';
 import assert from 'node:assert/strict';
 import fs from 'node:fs/promises';
@@ -22,13 +23,15 @@ test('catalog profiles keep source evidence, qualify features and preview origin
  assert(fold.features.some(f=>f.id==='screen'&&/展开态.*18 英寸/s.test(f.evidence)));
  for(const p of catalog.products){
   assert(p.features.every(f=>f.evidence&&f.source_path.endsWith('/产品事实.md')));
-  if(!p.preview)continue;
-  assert.equal(p.preview.url,`/api/product-image/${p.id}`);
+  assert(p.preview,`${p.name} needs a product photo`);
+  assert(p.preview.url.startsWith(`/api/product-image/${p.id}?v=`));
   const image=await knowledge.productPreview(p.id);
+  assert.equal(image.asset.visual_review?.preview,true,`${p.name} preview must be visually reviewed`);
+  assert.equal(image.asset.visual_review?.role,'product');
   assert.equal(image.asset.path,p.preview.path);
   assert.equal(createHash('sha256').update(image.bytes).digest('hex'),image.asset.sha256);
   let headers,body;
-  await createScenarioService({})({method:'GET'},{writeHead:(status,value)=>{assert.equal(status,200);headers=value;},end:value=>{body=value;}},p.preview.url,()=>assert.fail('preview should be an image response'));
+  await createScenarioService({}, {diagnostics:noDiagnostics})({method:'GET'},{writeHead:(status,value)=>{assert.equal(status,200);headers=value;},end:value=>{body=value;}},p.preview.url.split('?')[0],()=>assert.fail('preview should be an image response'));
   assert.match(headers['Content-Type'],/^image\//);assert.equal(headers['X-Content-Type-Options'],'nosniff');assert.deepEqual(body,image.bytes);
  }
 });
@@ -39,7 +42,7 @@ test('catalog skips invalid image and fact assets, preview route hides invalid i
   await fs.writeFile(path.join(directory,'catalog.json'),JSON.stringify(catalog));
   const result=await knowledge.localCatalog(directory);
   assert.equal(result.products[0].preview,null);assert.deepEqual(result.products[0].features,[]);
-  const handle=createScenarioService({knowledgeDir:directory});
+  const handle=createScenarioService({knowledgeDir:directory}, {diagnostics:noDiagnostics});
   for(const id of ['pc-1234567890abcdef','unknown','../secret','%2e%2e']){
    let response;await handle({method:'GET'},{},`/api/product-image/${id}`,(status,body)=>{response={status,body};});
    assert.equal(response.status,404);assert.equal(response.body.error,'未找到可用产品图片');

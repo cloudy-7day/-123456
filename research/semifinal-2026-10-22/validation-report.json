@@ -1,0 +1,66 @@
+{
+  "as_of": "2026-10-22",
+  "database": "research.sqlite",
+  "datasets": {
+    "products": {
+      "records": 10,
+      "sources": 43,
+      "eligible_records": 10,
+      "excluded_records": [],
+      "sha256": "f2e1df90109147255de76f369788fe3bc1124fdaadd28365a75a3d9ae1739715"
+    },
+    "audience": {
+      "records": 15,
+      "sources": 5,
+      "eligible_records": 13,
+      "excluded_records": [
+        {
+          "id": "AE01",
+          "reason": "A05: questionnaire_template_excluded"
+        },
+        {
+          "id": "AE03",
+          "reason": "A02: excluded_data_quality"
+        }
+      ],
+      "sha256": "fea255a544a318cbf9c8574bdb5fc15efae85da4208ee56509e914aab08467b7"
+    },
+    "xiaohongshu": {
+      "records": 25,
+      "sources": 6,
+      "eligible_records": 20,
+      "excluded_records": [
+        {
+          "id": "XC04",
+          "reason": "record evidence not verified; X04: award_case_pdf_search_index; X05: public_mirror"
+        },
+        {
+          "id": "XP02",
+          "reason": "X04: award_case_pdf_search_index; X05: public_mirror"
+        },
+        {
+          "id": "XP06",
+          "reason": "X04: award_case_pdf_search_index; X05: public_mirror"
+        },
+        {
+          "id": "XP07",
+          "reason": "X04: award_case_pdf_search_index; X05: public_mirror"
+        },
+        {
+          "id": "XP10",
+          "reason": "X04: award_case_pdf_search_index; X05: public_mirror"
+        }
+      ],
+      "sha256": "6adb86069d25bb63bc41c5bb2d5f7c504686255e087461ce32dbeeea87fe5b52"
+    },
+    "sales-guides": {
+      "records": 6,
+      "sources": 1,
+      "eligible_records": 6,
+      "excluded_records": [],
+      "sha256": "9da347400d968743bd13e9b70c083d3da2130edd3fe5e5a2dac993e1ccc18b31"
+    }
+  },
+  "validation": "passed",
+  "production_integration": false
+}

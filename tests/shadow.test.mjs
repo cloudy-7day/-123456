@@ -1,3 +1,4 @@
+const noDiagnostics={record:async()=>{},list:async()=>[]};
 import test from 'node:test';
 import assert from 'node:assert/strict';
 import {once} from 'node:events';
@@ -18,7 +19,7 @@ const opts=a=>({analysisId:a.analysisId,product:'MateBook 14 酷睿 Ultra',produ
 const draft={customer_insight:'客户经常出差',strategy:'带原有任务到店体验',content:{title:'测试标题',body:'测试原文[S1]',call_to_action:'到店体验'},image_plan:[],sales_plan:{quote:'暂不报价',demo_script:'测试演示'},follow_up:[1,3,7].map(day=>({day,message:"测试跟进草稿"})),source_refs:['S1'],pending_confirmation:[]};
 
 test('confirmed rich understanding converts to three unchanged legacy input contracts without inventing audience',()=>{
- const a=sampleAnalysis(),h=buildHandoff(a,opts(a));assert.equal(h.tasks.length,3);assert.deepEqual(Object.keys(h.tasks[0]),['product','audience','scenario','platform','goal','notes']);assert.match(h.tasks[0].audience,/不推断/);assert.equal(h.customer_context.understanding.product.status,'unspecified');assert.equal(h.customer_context.product_selection.origin,'salesperson_selection');
+ const a=sampleAnalysis(),h=buildHandoff(a,opts(a));assert.equal(h.tasks.length,3);assert.deepEqual(Object.keys(h.tasks[0]),['product','audience','scenario','platform','goal','business_scenario','business_scenario_origin','content_goal','content_goal_origin','notes']);assert.match(h.tasks[0].audience,/不推断/);assert.equal(h.customer_context.understanding.product.status,'unspecified');assert.equal(h.customer_context.product_selection.origin,'salesperson_selection');
 });
 test('unselected model and unreviewed output remain blocked; unknown software permits a bounded draft',()=>{
  const a=sampleAnalysis();assert.throws(()=>buildHandoff(a,{...opts(a),product:''}));assert.throws(()=>buildHandoff(a,{...opts(a),productConfirmed:false}));a.review.status='pending';assert.throws(()=>buildHandoff(a,opts(a)),/确认/);a.review.status='confirmed';a.understanding.questions=[{id:'q',topic:'software',priority:'blocking',question:'软件是什么？',why:'决定适用性',evidence:[]}];a.gate.status='ready_for_ima';assert(buildHandoff(a,opts(a)).customer_context.draft_limitations.includes('软件是什么？'));
@@ -36,7 +37,7 @@ test('modified sample never presents added details as the original post',async()
  const a=await understand({sources,sampleId:samples.find(s=>s.id==='campus').id},{apiKey:'test',endpoint:'https://api.deepseek.com/chat/completions',model:'test'},{fetchImpl:async()=>({ok:true,json:async()=>({choices:[{finish_reason:'stop',message:{content:JSON.stringify(raw)}}]})})});assert.equal(a.provenance.modifiedFromSample,true);assert.match(a.provenance.modificationNotice,/新增内容不属于源帖/);
 });
 test('same-origin service enforces server confirmation, serves both UIs and emits final stream error after HTTP 200',async()=>{
- const a=sampleAnalysis();a.review.status='pending';const server=createApp({settings:{port:0,model:'test',baseUrl:'https://api.deepseek.com',apiKey:'test'},scenarioDependencies:{analyze:async()=>structuredClone(a),batch:async()=>{throw Error('ima 未配置测试');}}});server.listen(0,'127.0.0.1');await once(server,'listening');const base='http://127.0.0.1:'+server.address().port;
+ const a=sampleAnalysis();a.review.status='pending';const server=createApp({settings:{port:0,model:'test',baseUrl:'https://api.deepseek.com',apiKey:'test'},scenarioDependencies:{diagnostics:noDiagnostics,analyze:async()=>structuredClone(a),batch:async()=>{throw Error('ima 未配置测试');}}});server.listen(0,'127.0.0.1');await once(server,'listening');const base='http://127.0.0.1:'+server.address().port;
  const post=(route,data)=>fetch(base+route,{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify(data)});
  try{
   assert.equal((await fetch(base+'/scenario/')).status,200);assert.match(await (await fetch(base+'/')).text(),/门店增长/);

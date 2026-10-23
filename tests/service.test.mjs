@@ -1,3 +1,4 @@
+const noDiagnostics={record:async()=>{},list:async()=>[]};
 import { test } from 'node:test';
 import assert from 'node:assert/strict';
 import { once } from 'node:events';
@@ -19,7 +20,7 @@ test('DeepSeek will not send credentials to an unrecognized remote host', () => 
 });
 test('local page and contracts load; invalid input and cross-origin requests do not generate', async () => {
   assert.ok(web?.createApp);
-  const server = web.createApp({ settings: { port: 0 }, run: () => assert.fail('must not run') });
+  const server = web.createApp({ scenarioDependencies:{diagnostics:noDiagnostics}, settings: { port: 0 }, run: () => assert.fail('must not run') });
   server.listen(0, '127.0.0.1'); await once(server, 'listening');
   const base = `http://127.0.0.1:${server.address().port}`;
   try {
@@ -34,7 +35,7 @@ test('local page and contracts load; invalid input and cross-origin requests do 
 });
 test('HTTP preserves Chinese characters split across request chunks', async () => {
   let received;
-  const server = web.createApp({ settings: { port: 0 }, run: async input => { received = input; throw Error('test finished before output save'); } });
+  const server = web.createApp({ scenarioDependencies:{diagnostics:noDiagnostics}, settings: { port: 0 }, run: async input => { received = input; throw Error('test finished before output save'); } });
   server.listen(0, '127.0.0.1'); await once(server, 'listening');
   const input = { product: '测试电脑', audience: '大学新生', scenario: '课堂笔记', platform: '朋友圈' };
   const body = Buffer.from(JSON.stringify(input));

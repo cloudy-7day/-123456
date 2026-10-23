@@ -10,9 +10,11 @@ const adapt = fixture => read(fixture).sources.map(s => ({ ref:s.id, kind:s.type
 const sources = adapt('source-fixture.json');
 const run = (output, refs=sources) => runPipeline(input, {retrieve:async()=>({sources:refs}),generate:async()=>structuredClone(output)});
 
-test('output handoff is accepted by real pipeline with explicit draft delivery state', async()=>{
+test('output handoff retains text and reports image deficit after repeated colour views are removed', async()=>{
   const result=await run(read('expected-output.json'));
-  assert.equal(result.delivery?.status,'draft');
+  assert.equal(result.delivery?.status,'needs_images');
+  assert.equal(result.delivery.missing_images,1);
+  assert.ok(result.image_review.rejected.some(x=>x.reason==='same-angle'));
   assert.equal(result.checks.semantic_review,'not_performed');
 });
 test('conflicting evidence returns a blocked result without loosening required input',async()=>{
@@ -37,7 +39,8 @@ test('complete copy requires neither timed scripts nor follow-up schedules',asyn
   const used = new Set([...JSON.stringify({...output,source_refs:[]}).matchAll(/\[(S\d+|I\d+)\]/g)].map(m=>m[1]).concat(output.image_plan.map(i=>i.source_ref)));
   output.source_refs=[...used];
   const result=await run(output);
-  assert.equal(result.delivery.status,'draft');
+  assert.equal(result.delivery.status,'needs_images');
+  assert.equal(result.delivery.missing_images,1);
   assert.deepEqual(Object.keys(result.output).sort(),['customer_insight','strategy','content','image_plan','source_refs','pending_confirmation'].sort());
 });
 

@@ -16,6 +16,7 @@ export function config() {
     evidenceCacheFile: process.env.IMA_EVIDENCE_CACHE_FILE ? path.resolve(process.env.IMA_EVIDENCE_CACHE_FILE) : undefined,
     skillPath: path.join(ROOT, 'vendor/ima-skills-1.1.10/ima-skill/ima_api.cjs'),
     model: process.env.DEEPSEEK_MODEL || 'deepseek-flash',
+    modelHttpTransport: process.env.MODEL_HTTP_TRANSPORT || 'native',
     apiKey: process.env.DEEPSEEK_API_KEY || '',
     baseUrl: process.env.DEEPSEEK_BASE_URL || 'https://api.deepseek.com',
     host: process.env.HOST || '127.0.0.1',

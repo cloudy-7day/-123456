@@ -1,0 +1,74 @@
+/* Keep each guided landing focused on one stage. Long content stays in document flow. */
+.focused-main {
+  --stage-inset: 24px;
+  --stage-height: calc(100svh - var(--header-height, 100px) - 2 * var(--stage-inset));
+  --stage-gap: clamp(80px, 14svh, 160px);
+}
+
+.store-header { position:sticky; top:0; z-index:50; background:rgba(255,255,255,.97); backdrop-filter:blur(16px); gap:24px; }
+.header-workflow {display:flex;align-items:center;gap:24px;min-width:0;}
+.store-header .journey {display:flex;gap:24px;margin:0;padding:0;background:none;border:0;box-shadow:none;}
+.store-header .journey li {font-size:12px;gap:8px;white-space:nowrap;}
+.store-header .journey li>span {width:27px;height:27px;font-size:11px;}
+.store-header .journey li[aria-current=step] {color:#bd1b29;font-weight:700;}
+.store-header .journey li[aria-current=step]>span {box-shadow:0 0 0 4px #f9e9eb;}
+.analysis-progress {display:flex;gap:16px;align-items:center;padding:18px 22px;background:#faf3f4;border-radius:16px;margin-bottom:24px;color:#81232e;}
+.analysis-progress strong {font-size:16px;}
+.analysis-progress p {font-size:13px;line-height:1.8;margin:6px 0 0;}
+.analysis-pulse,.analysis-dot {width:12px;height:12px;flex:0 0 12px;border-radius:50%;background:#bf2330;}
+.analysis-pulse {animation:analysis-breathe 1.8s ease-in-out infinite;}
+.analysis-match {margin:24px 0;padding:22px;border:1px solid #eee3e5;border-radius:16px;}
+.analysis-match h3 {font-size:20px;margin:10px 0;}
+.analysis-match p,.analysis-match li {font-size:13px;line-height:1.9;}
+.analysis-placeholder {min-height:300px;display:grid;place-items:center;color:#777;padding:30px;line-height:2;}
+@keyframes analysis-breathe {50% {box-shadow:0 0 0 8px #bd1b2912;opacity:.5;}}
+@media(prefers-reduced-motion:reduce) {.analysis-pulse {animation:none;}}
+@media(max-width:1200px) {.store-header {flex-wrap:wrap;padding:16px 24px;gap:14px;}.header-workflow {width:100%;justify-content:space-between;}.store-header .journey {flex:1;justify-content:space-between;}.header-workflow .connection {margin-left:12px;}}
+@media(max-width:760px) {.store-header {padding:12px 16px;gap:12px;}.header-workflow {gap:6px;}.store-header .journey {gap:9px;}.store-header .journey li {white-space:normal;font-size:10px;gap:5px;align-items:center;}.store-header .journey li>span {width:22px;height:22px;flex:0 0 22px;font-size:9px;}.header-workflow .connection {display:none;}.analysis-progress {padding:15px;}.analysis-match {padding:16px;}}
+
+.focused-main .store-intro {
+  min-height: calc(100svh - 148px); /* 78px header + 46px main padding + 24px inset */
+  margin-bottom: var(--stage-gap);
+}
+.focused-main .journey { margin-bottom: 40px; }
+
+.focused-main .complete-input,
+.focused-main .understanding-panel,
+.focused-main .focused-generation,
+.focused-main .generation-results {
+  min-height: var(--stage-height);
+  scroll-margin-top: var(--stage-inset);
+}
+
+.focused-main .complete-input {
+  margin-bottom: var(--stage-gap);
+  align-items: start;
+}
+.complete-input .product-entry { align-self: stretch; }
+.focused-main .understanding-panel { margin: var(--stage-gap) 0; }
+.focused-main .focused-generation { margin-top: var(--stage-gap); }
+.focused-generation > .generation-results { margin-top: var(--stage-gap); }
+.focused-main .recent-results { margin-top: var(--stage-gap); }
+.recent-results > .generation-results { margin-top: var(--stage-gap); }
+.recommendation-review { margin: 24px 0; padding: 18px; background: #fafafb; border-radius: 14px; }
+.recommendation-review summary { cursor: pointer; color: #a51b25; font-size: 13px; }
+.recommendation-needs { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 14px; }
+.recommendation-needs span { background: #fff0f1; color: #92303a; padding: 6px 10px; border-radius: 6px; font-size: 12px; }
+.recommendation-comparison { display: grid; grid-template-columns: repeat(auto-fit,minmax(min(250px,100%),1fr)); gap: 12px; }
+.recommendation-comparison article { background: white; padding: 16px; border-radius: 12px; min-width: 0; }
+.recommendation-comparison h4 { margin: 0 0 14px; font-size: 14px; line-height: 1.7; }
+.recommendation-comparison h4 span { display: block; color: #b51c27; }
+.recommendation-comparison ul { padding-left: 18px; font-size: 12px; line-height: 1.8; }
+.recommendation-comparison li { margin-bottom: 12px; }
+.recommendation-comparison details { overflow-wrap: anywhere; }
+.recommendation-comparison details p { white-space: pre-wrap; color: #626269; }
+.recommendation-comparison small { color: #7c7c84; }
+.task-starter .example-selection-brief { border-top: 1px solid #e8e8ed; padding-top: 10px; color: #86444b; }
+
+@media (max-width: 1050px) and (min-width: 761px) {
+  .focused-main .store-intro { min-height: calc(100svh - 134px); }
+}
+@media (max-width: 760px) {
+  .focused-main .store-intro { min-height: calc(100svh - 124px); }
+  .focused-main .complete-input { align-items: stretch; }
+}

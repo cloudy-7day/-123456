@@ -1,0 +1,371 @@
+{
+  "schema_version": 1,
+  "method": "Pillow EXIF-normalized, white alpha composite, grayscale 64-bit difference/average hash. Visual roles and angles are SHA-bound reviews in catalog.json; hashes only detect similarity.",
+  "assets": {
+    "9f9470747d7e3c406b87c31ecd5d51f1f3542626001ed8b00b04c5db8973de82": {
+      "dhash": "60e062606080c070",
+      "ahash": "ef8f0f4f070707ff",
+      "product_id": "pc-966626957db350e0"
+    },
+    "e320384c91d75f723fb785fce8505c9ce099980cf4330e37d08d75430f32650d": {
+      "dhash": "70e060706080a060",
+      "ahash": "ef8f0f4747070fff",
+      "product_id": "pc-966626957db350e0"
+    },
+    "85fadb0cbceb8632b00301aa07db8b815469e0107b8c89b5d91baab15a9c281b": {
+      "dhash": "989a868a9a96bcac",
+      "ahash": "81fdffbfbdbda181",
+      "product_id": "pc-966626957db350e0"
+    },
+    "ab085ae7d9fd83af91b68e1b32c9f6f2148ca22e0d656f16f89815b93650f440": {
+      "dhash": "60e0627070e0c071",
+      "ahash": "ef8f4fcfc30103e7",
+      "product_id": "pc-966626957db350e0"
+    },
+    "0bc94b00136a83292b1820a564b48087ddba3125b9852be977b4018e2e030c4f": {
+      "dhash": "00f8709abeaea6a2",
+      "ahash": "ffffff00000000af",
+      "product_id": "pc-966626957db350e0"
+    },
+    "c892487b3077760859991b683017ac96f876e040357aa9aa0ffbf4fa9babe972": {
+      "dhash": "00b8d8e8f0f4c400",
+      "ahash": "ff8181c3c3c3ffff",
+      "product_id": "pc-966626957db350e0"
+    },
+    "b2a991f2763fd7d646e6a362b48536e3949c197137f097ad06b5fcb6fb3e321b": {
+      "dhash": "008000c4c4008000",
+      "ahash": "ffffff8181ffffff",
+      "product_id": "pc-966626957db350e0"
+    },
+    "d36c93bb3309a15889de0c880c67fea59c1dd548e29cb823f84058989bc5076d": {
+      "dhash": "0090a69292c4d000",
+      "ahash": "ffff8181818181ff",
+      "product_id": "pc-966626957db350e0"
+    },
+    "16c1a684146eac925112a8e6cfce48b2da1418348f9dcb67103c98e2e999e996": {
+      "dhash": "00d8d8d8dce0b200",
+      "ahash": "ffc383c381c3ffff",
+      "product_id": "pc-966626957db350e0"
+    },
+    "e68e9e549fea829dd4e899a44148feafdcf4d1f8d9628127ace25256b616d34e": {
+      "dhash": "00dcf0bcf8d878f0",
+      "ahash": "fff3e7f3c1d1c3c7",
+      "product_id": "pc-966626957db350e0"
+    },
+    "3b93b5d25e868c5966e65d8fc1b86cd561781aa616ee55ebb5860941aa855745": {
+      "dhash": "00d8d8d8dce0b200",
+      "ahash": "ffc383c381c3ffff",
+      "product_id": "pc-966626957db350e0"
+    },
+    "793fe65d16b209f47f162537955c4c288be35000916105038b40cf4ebb81ce7d": {
+      "dhash": "00d8d8d8d8e0b200",
+      "ahash": "ffc3c3c381c3ffff",
+      "product_id": "pc-966626957db350e0"
+    },
+    "1eda318e16490f59a945959dea7807be76aebe823e6728cb1e36d1da87da5e53": {
+      "dhash": "00ccccd4ccf0a600",
+      "ahash": "ffdb81998181ffff",
+      "product_id": "pc-966626957db350e0"
+    },
+    "361c5f89cb2bbc269210bf051e33b18a4e516d0536f2ae86067106edf4155458": {
+      "dhash": "008000c8c0008000",
+      "ahash": "ffffff8181ffffff",
+      "product_id": "pc-966626957db350e0"
+    },
+    "67f9d40dba32d929116396390c3402043270665a57cd880d186176cef658ac71": {
+      "dhash": "00000000000084c8",
+      "ahash": "ff3f3f3f3f7f0181",
+      "product_id": "pc-966626957db350e0"
+    },
+    "36e59dd6859b68fc4ab1f0dc8f0d81c9e16cefb283d5bb4fd8fad3d9bab83f61": {
+      "dhash": "0844d8d8dcdc6008",
+      "ahash": "ffff81838181ffff",
+      "product_id": "pc-966626957db350e0"
+    },
+    "dc06ae68921c4bb406b9ea3c5a517521b5f204009dabbcb5721401de5ce74879": {
+      "dhash": "00d8d86971696868",
+      "ahash": "fff783c3c3c3ffdf",
+      "product_id": "pc-966626957db350e0"
+    },
+    "184c7622d78ff75778c6159af6121387b014bfe4e2aa198cdcc2f9dbf2d4446b": {
+      "dhash": "00f83092e6b89ae2",
+      "ahash": "ffffff010080b1ef",
+      "product_id": "pc-966626957db350e0"
+    },
+    "6cd1c887d3624dc55aa6f4d0db1d6deb59f98d766a7f61d3567557e832f7ea1d": {
+      "dhash": "00d8d8d8d8e0b200",
+      "ahash": "ffc3c3c381c1ffff",
+      "product_id": "pc-966626957db350e0"
+    },
+    "fa79555380e2fe0f21150da4e4f0427fbd4eb2d63ba344f1e29a9b21af116552": {
+      "dhash": "33337239bc646070",
+      "ahash": "fff7f7f3e3c1c101",
+      "product_id": "pc-f5c7b748573ff4a6"
+    },
+    "0c899ed8d886279a773ffb2b0e0a92c2cd495b4e2072b5d200349f82a60ea9af": {
+      "dhash": "f7efeff359393072",
+      "ahash": "0080e0e7f3f7e7c7",
+      "product_id": "pc-f5c7b748573ff4a6"
+    },
+    "3f41d3e266e690859fe0b0f134ab596d5bcb7be7f5718f5f8ecf663eafb99638": {
+      "dhash": "332c002171706061",
+      "ahash": "00000f3fefc7e7ef",
+      "product_id": "pc-f5c7b748573ff4a6"
+    },
+    "8a481bfd1c318953484196cdaacd9150643010f6d1e1b52e13e755a2e4a53a7a": {
+      "dhash": "1716164648d1632c",
+      "ahash": "003c3c5f8387d77d",
+      "product_id": "pc-f5c7b748573ff4a6"
+    },
+    "0ca951de6825e588950327be851259c9fe8dff18c9599ca6b9cea2d7765d4144": {
+      "dhash": "71717161697169ed",
+      "ahash": "e7c3e7c7c3c3c3e0",
+      "product_id": "pc-f5c7b748573ff4a6"
+    },
+    "88477e9fb10790da1068abd21fafb341cb79cbd415bb0cc4129bdca3e3ed9c16": {
+      "dhash": "102030190cc64000",
+      "ahash": "ffcfe7f3f981ffff",
+      "product_id": "pc-7a67602a2987e76f"
+    },
+    "8df67bfab9c9d91af866526a5a7e82b74885b5399115202e170593b9e1a88bf1": {
+      "dhash": "0460ccdcc4cc3104",
+      "ahash": "ffff81818181ffff",
+      "product_id": "pc-7a67602a2987e76f"
+    },
+    "8a3b93e9b7df3fe13cb958e14726db8f76d871e6507774c4fec9a45a768f2826": {
+      "dhash": "c0c080f0f0cf3f1f",
+      "ahash": "ffffffc381fcf878",
+      "product_id": "pc-7a67602a2987e76f"
+    },
+    "2d7d2da727f726550085a11d54d0297b6dfd6bd5e5668fb65190f621c37fd3fa": {
+      "dhash": "b9a73536160e2e66",
+      "ahash": "0208646d3c7c7c4c",
+      "product_id": "pc-7a67602a2987e76f"
+    },
+    "d0e45db5dc74d9d42e75eea7aa94224c27a8788d4b238efd8b4dc8466d3b42e8": {
+      "dhash": "8d1666d41c193983",
+      "ahash": "0025cdbf3d7b7f3e",
+      "product_id": "pc-7a67602a2987e76f"
+    },
+    "4fd3d4c0ebc9ff6fae83c74ad4f9f1a335186e599010a36304c7da2c1d64d256": {
+      "dhash": "0000004848400000",
+      "ahash": "ffffffc381c3ffff",
+      "product_id": "pc-7a67602a2987e76f"
+    },
+    "b497feae15d66cb640eb14345f324234243079d18e619ba34a76f6c1fa0c30f6": {
+      "dhash": "6caebb9f979616bf",
+      "ahash": "400820383c3cfcfc",
+      "product_id": "pc-8377e88bb46c1673"
+    },
+    "7e502e7fe969ee70dcbb9c98cbb9f60b903b216f7babb3a707e0f6f6839bfff6": {
+      "dhash": "f9fde5e9f479e1e3",
+      "ahash": "80c0c2cacbc7c7c7",
+      "product_id": "pc-8377e88bb46c1673"
+    },
+    "a6b6265f40892ae5ac767d5885cdc3ba040ff4794f854b8e5e637cdab1bd0945": {
+      "dhash": "2f2f3b3f06161713",
+      "ahash": "606860787c7c7c3e",
+      "product_id": "pc-8377e88bb46c1673"
+    },
+    "c7cda19d0676643e55c639a2585f8bf23f9ffd9ee9771c6064aeaa0158ab51c1": {
+      "dhash": "d4f4f4f0e9c9c9e9",
+      "ahash": "efefffc7c3830303",
+      "product_id": "pc-8377e88bb46c1673"
+    },
+    "147cb4886163000b3f3ed204070f02e2258fb4e7eef2460a99549aaf17dcb115": {
+      "dhash": "d4f4f4f0e9c9c9e9",
+      "ahash": "efefffc7c3830303",
+      "product_id": "pc-8377e88bb46c1673"
+    },
+    "560099251ec0da953461932a3a3a8c4177735a9ef6de76cdc259c1ba04a1847a": {
+      "dhash": "030c0d2f2623080e",
+      "ahash": "0e383e7f7d7f3f10",
+      "product_id": "pc-8377e88bb46c1673"
+    },
+    "b5745be99251fac372a5967a827e43ccd8f8e1c845a8dab470b5a2f6c81bfb11": {
+      "dhash": "aaaa0f6e6a4acd99",
+      "ahash": "1504ffd8d810fe3f",
+      "product_id": "pc-8377e88bb46c1673"
+    },
+    "a4422ab8a507393174e1ab673fd991b6e6e1e497a5640e84e44aec49ed3467fa": {
+      "dhash": "0f172b0d232b3f4d",
+      "ahash": "0000001867ff7c00",
+      "product_id": "pc-8377e88bb46c1673"
+    },
+    "58fc4d2b72b827ea9a6942315067b0e2d3f8a5c908c40bfd0c1c6303e325cb24": {
+      "dhash": "32f29290b9b088d0",
+      "ahash": "f7c7070707078383",
+      "product_id": "pc-53440547941ce8f1"
+    },
+    "42fe5f2856ddddf71d2099e9d2a43a53e100c08ead52d63b7a616a31276bba29": {
+      "dhash": "32f29290b9b08890",
+      "ahash": "f7c7070707078383",
+      "product_id": "pc-53440547941ce8f1"
+    },
+    "fbbaed8b92725dfc7873783c40d458321ec9c88f4e4946bee7f93a122712651c": {
+      "dhash": "5b19b93431113213",
+      "ahash": "0000e0e177377476",
+      "product_id": "pc-53440547941ce8f1"
+    },
+    "8c943ab29658ddaf3dbdcafccc656c66d5c6a3216cdbdf221724334c8f37ade5": {
+      "dhash": "5a39b93431113213",
+      "ahash": "0000e0e177377476",
+      "product_id": "pc-53440547941ce8f1"
+    },
+    "3c1145f841caab0c3b13aef08a825cffb8c36d8d59b8935bc4269639c06485da": {
+      "dhash": "dc8c949cbcf8b8bc",
+      "ahash": "919181b1e1c18381",
+      "product_id": "pc-53440547941ce8f1"
+    },
+    "eee2123a29badc715f9be786d9e3ce9f418ac5daedd7f82a229040402d7cdb86": {
+      "dhash": "f0e5985cecdc1610",
+      "ahash": "00000011c3fb7f27",
+      "product_id": "pc-53440547941ce8f1"
+    },
+    "1287e5a6d1d6fd75e79f2dc4ca19c83e0436253e53b9c11f178be023c2d38981": {
+      "dhash": "b0b262626232b030",
+      "ahash": "e7e7c7c7c7c7e7ff",
+      "product_id": "pc-53440547941ce8f1"
+    },
+    "36b36120c6d3d390d1c2f5465830695fc90d4b99c06074fc94b9ea688d4436da": {
+      "dhash": "b0b262626232b030",
+      "ahash": "e7e7c7c7c7c7e7ff",
+      "product_id": "pc-53440547941ce8f1"
+    },
+    "5a768865a483be382b627eac6f88806e2a098d171a9cd9d7ac8716b9f8579ca1": {
+      "dhash": "0022787161717160",
+      "ahash": "ffffffc3c3c3c3ef",
+      "product_id": "pc-c07e1c9759ea18aa"
+    },
+    "161572cf649f168b342c1d8ee66b2dd98bd0a8ab3f182c0eef9a3e4f7c9fee7e": {
+      "dhash": "3c7c58583a26381a",
+      "ahash": "fbf1e3f3e1edf3f7",
+      "product_id": "pc-c07e1c9759ea18aa"
+    },
+    "bb5dccd7a1f0c440e123a37563c56c67b8756be4dd15a330b87a8aa0d6824307": {
+      "dhash": "303c7c7834b4744e",
+      "ahash": "ffe1f1e1e1e1e1ff",
+      "product_id": "pc-c07e1c9759ea18aa"
+    },
+    "53781651c6f0027c32f9ead10d06c9fc3a2b4269af09fad8aed65e1b9255e6e0": {
+      "dhash": "e8d8c8c0d8dcdc82",
+      "ahash": "838383838383ffff",
+      "product_id": "pc-c07e1c9759ea18aa"
+    },
+    "823cf134fee72fcd929fa03aeb99860a32c7eeb32cc90ef551ef43a04f7be73c": {
+      "dhash": "c4c0ccccccccc401",
+      "ahash": "838381818181ffff",
+      "product_id": "pc-c07e1c9759ea18aa"
+    },
+    "0fb0a6d574d7b5ad3d91605d88f72ca3087ee497d172b8dd84458d36f93ecb53": {
+      "dhash": "d4d4ccccd4d4d400",
+      "ahash": "c38181818181ffff",
+      "product_id": "pc-c07e1c9759ea18aa"
+    },
+    "7fdbb0266f50aacb2001a1ffb3a2cff7b231df5c41e6be30dda169e821c2ae35": {
+      "dhash": "d4828282828cd402",
+      "ahash": "81ffffffff8100ff",
+      "product_id": "pc-c07e1c9759ea18aa"
+    },
+    "06d927ab992db55b6687b27cb5e416559e88d408ceb1cef0ff4308b363db0862": {
+      "dhash": "3c3c58585c3c3c32",
+      "ahash": "fff1f1f1f1f1f1ff",
+      "product_id": "pc-ca2ff7c2f3c07a8e"
+    },
+    "72c8ba4247c7d56624f426a2643f0b69ac5275f20c73c83ae037ae9b529a300e": {
+      "dhash": "f2d258796078f018",
+      "ahash": "c7f7f7c3c3c1e3f7",
+      "product_id": "pc-ca2ff7c2f3c07a8e"
+    },
+    "3e3a201d39a3bc3d47967efdaa3728a9081eb7c82cb0801010fd0620ee5a1ca6": {
+      "dhash": "383c7878787c3838",
+      "ahash": "fbf3f3f3f1f1f1f7",
+      "product_id": "pc-ca2ff7c2f3c07a8e"
+    },
+    "fbd6e8e5e327a8f8c752095fdbbd51fc335bdda968d29ce332cf05caed03d3f7": {
+      "dhash": "d4c4d4d4d4d4c0d4",
+      "ahash": "81818181818181c3",
+      "product_id": "pc-ca2ff7c2f3c07a8e"
+    },
+    "06bebb8fa25c57ca11e24b0f773347ba3de3d7d64f654bc0d3c8d89214a38889": {
+      "dhash": "5a5859595b5b5e78",
+      "ahash": "f0f0f0f0f0f0f0f0",
+      "product_id": "pc-ca2ff7c2f3c07a8e"
+    },
+    "fd0bf112f9a22c1aca23278db4058174b038ba28abb4b8689d286a02cf3f1c99": {
+      "dhash": "08038048d8d83888",
+      "ahash": "ffffff0303030303",
+      "product_id": "pc-ca2ff7c2f3c07a8e"
+    },
+    "763ef27469f2e40fe4f022ea2937d74983805e0aa4b9cbf1e232ea34caddf4ac": {
+      "dhash": "00030c13933831c6",
+      "ahash": "000000fefe7f3700",
+      "product_id": "pc-ca2ff7c2f3c07a8e"
+    },
+    "667d51d8d9e30cd722d57435cc6f1b646ac6de3e36cca72ff8947c545cae9866": {
+      "dhash": "54039b038613130e",
+      "ahash": "00003c3c3c3c3c00",
+      "product_id": "pc-677d0654cef2e7f7"
+    },
+    "292dbabfa8e367cb72f8745812399c75f7b7945f265f8b8448b0ed93f2682ccb": {
+      "dhash": "0f070b4f0d594a8f",
+      "ahash": "000000183bf24000",
+      "product_id": "pc-677d0654cef2e7f7"
+    },
+    "87074bcde08146365bf5ea2d5734e59da7ab983b937bf6ba6263784361743f2b": {
+      "dhash": "40e062d2c0c89080",
+      "ahash": "ffcfc7878f9fbfff",
+      "product_id": "pc-677d0654cef2e7f7"
+    },
+    "3b5b4be5f21117f959f9c3189faa493efe855c911a00db74f7b5ad0db180b85b": {
+      "dhash": "180c0c0c0c0c0c18",
+      "ahash": "001078187878f8f8",
+      "product_id": "pc-677d0654cef2e7f7"
+    },
+    "e07d62713c78b6e8af74e37d1926319fe2653e44ecaecc52a5cf291b0451dd14": {
+      "dhash": "cc86d4d4d486c4e8",
+      "ahash": "ffffffffffff0000",
+      "product_id": "pc-b9e26792d81fdc63"
+    },
+    "d0068293dc022e0d8b4981a6ca0b9cc44abe0058efc2920cc7fa3b7da4b87612": {
+      "dhash": "0010003030002000",
+      "ahash": "ffffff0101ffffff",
+      "product_id": "pc-b9e26792d81fdc63"
+    },
+    "9958e2c2ab5019b207d16c32f96dfd445cba33ad079561008bef7587e84a199b": {
+      "dhash": "d4223634363e27c0",
+      "ahash": "000070787c7c4000",
+      "product_id": "pc-b9e26792d81fdc63"
+    },
+    "30f700a053f66fa5038ea684da260869bfa5b6413668947bb26973fb984013c5": {
+      "dhash": "3fb4b2b6b6f2fcbc",
+      "ahash": "f8e0e0e0e0c0e1ff",
+      "product_id": "pc-b9e26792d81fdc63"
+    },
+    "89dddc4f9bdb7202c19927d576038fc09e58139bb481a6ad91aaa873b170894f": {
+      "dhash": "86038aaaaa02a2cc",
+      "ahash": "81ffffffffffff00",
+      "product_id": "pc-b9e26792d81fdc63"
+    },
+    "1a9693fffa90a90e116a3d2feae80f829d11c26a7756d48dd9dac24fa298da1d": {
+      "dhash": "01000002202060e1",
+      "ahash": "070f1f3f000147ff",
+      "product_id": "pc-b9e26792d81fdc63"
+    },
+    "8988e18241d9aaab213cd8f024038e11d475fba5598f66c8e13f35a819b171ee": {
+      "dhash": "5a5839786c393134",
+      "ahash": "f3f3f3c3c1e3e3e0",
+      "product_id": "pc-0d837843d78c7471"
+    },
+    "b47741b3430582dea4daa2af2c1c5ea24ce356835da60bdd6db3fd82f6cea9cb": {
+      "dhash": "29091919f87270a0",
+      "ahash": "f3f3f3f3c3c7c7e3",
+      "product_id": "pc-0d837843d78c7471"
+    },
+    "1eb7e2d32ff063ad850b89f2e2b6c12b48ad07a8589d90196deafbd1b7ce4b63": {
+      "dhash": "2d9872e8d820c000",
+      "ahash": "fbf3c781ffffffff",
+      "product_id": "pc-0d837843d78c7471"
+    }
+  }
+}

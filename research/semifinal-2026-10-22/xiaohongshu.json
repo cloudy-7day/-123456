@@ -1,0 +1,686 @@
+{
+  "schema_version": 1,
+  "as_of": "2026-10-22",
+  "research_scope": "小红书PC/华为数码及相邻耐用品公开案例；面向职业任务笔记的表达策略，不提供产品事实。基线为当前xiaohongshu.txt与occupation-scenes.txt。",
+  "source_registry": [
+    {
+      "id": "X01",
+      "url": "https://m.adquan.com/case2/detail-345330",
+      "title": "惠普电脑的上新姿态，好city啊",
+      "publisher": "优力／广告门",
+      "published_at": "2024-07-23",
+      "accessed_at": "2026-10-22",
+      "source_type": "agency_self_report",
+      "evidence_scope": "PC新品上新活动机制及操盘方披露指标",
+      "limitations": [
+        "代理商自报，非独立审计；没有投放成本、退款口径及对照组。"
+      ]
+    },
+    {
+      "id": "X02",
+      "url": "https://m.adquan.com/case2/detail-326778",
+      "title": "戴森这波种草，既带货又拿奖",
+      "publisher": "众引传播集团／广告门",
+      "published_at": "2023-05-24",
+      "accessed_at": "2026-10-22",
+      "source_type": "agency_self_report",
+      "evidence_scope": "吹风机种草表达与搜索变化",
+      "limitations": [
+        "搜索增长基期和具体观测窗口未完整披露；搜索不是成交。"
+      ]
+    },
+    {
+      "id": "X03",
+      "url": "https://www.jinwujiang.com/index.php?s=/index/index/detail/worksId/996",
+      "title": "小红书×华为FreeClip2解锁第一眼心动爆品新范式",
+      "publisher": "金梧奖；获奖公司小红书",
+      "published_at": null,
+      "accessed_at": "2026-10-22",
+      "source_type": "award_entry_platform_self_report",
+      "evidence_scope": "平台参赛案例中的联名与共创机制",
+      "limitations": [
+        "未显示明确发布日期；图片文件名不能代替发布日期。",
+        "ROI和GMV含1X、XX脱敏值，不可变成可计算数字；行业第一缺清晰口径，不采用。"
+      ]
+    },
+    {
+      "id": "X04",
+      "url": "https://www.goldenmouse.cn/uploads/soft/240222/1-240222161A5.pdf",
+      "title": "联想拯救者Y系列新品抖音&小红书双平台内容营销",
+      "publisher": "金鼠标案例文件",
+      "published_at": null,
+      "accessed_at": "2026-10-22",
+      "source_type": "award_case_pdf_search_index",
+      "evidence_scope": "检索索引可见的PC场景与平台分工",
+      "limitations": [
+        "正文抓取两次超时；只作索引定位，正文由X05交叉读取。",
+        "路径含240222，不据此认定活动日期。"
+      ]
+    },
+    {
+      "id": "X05",
+      "url": "https://www.scribd.com/document/1039427429/联想拯救者Y系列新品抖音-小红书双平台内容营销",
+      "title": "联想拯救者Y系列新品抖音、小红书双平台内容营销",
+      "publisher": "Scribd公开用户上传镜像",
+      "published_at": null,
+      "accessed_at": "2026-10-22",
+      "source_type": "public_mirror",
+      "evidence_scope": "可公开读取的案例转写正文：小红书场景分层与内容矩阵",
+      "limitations": [
+        "上传者不是可确认的品牌／平台官方；OCR可能有错。",
+        "顶部AI摘要不作证据；跨平台效果不能归到小红书。"
+      ]
+    },
+    {
+      "id": "X06",
+      "url": "https://www.ithome.com/1/006/646.htm",
+      "title": "小红书生态化共建｜当普通人的拍照难题，走进华为研发室",
+      "publisher": "IT之家；文末引导小红书商业动态",
+      "published_at": "2026-09-24",
+      "accessed_at": "2026-10-22",
+      "source_type": "commercial_case_article",
+      "evidence_scope": "华为影像用户任务与内容活动的公开报道",
+      "limitations": [
+        "商业案例口径，非独立效果评估；未直读公众号原文。",
+        "手机／耳机的功能和成效不能转移给华为PC。"
+      ]
+    }
+  ],
+  "records": [
+    {
+      "record_type": "case",
+      "id": "XC01",
+      "source_ids": [
+        "X01"
+      ],
+      "name": "惠普星Book Pro 13小红书上新",
+      "domain": "PC",
+      "evidence_status": "public_agency_self_report",
+      "observed_facts": [
+        "官号征集新配色命名；用实物上秤让轻便可感知；首销由达人内容与薯店优惠承接。"
+      ],
+      "metrics": [
+        {
+          "name": "上市期GMV",
+          "value": 60000,
+          "relation": ">",
+          "unit": "元",
+          "window": "上市3天，具体起止日未披露",
+          "attribution": "代理商自报薯店转化，非增量因果"
+        },
+        {
+          "name": "命名笔记评论创意",
+          "value": 200,
+          "relation": ">",
+          "unit": "条",
+          "window": "预热活动期，日期未披露",
+          "attribution": "自报互动，非销售"
+        }
+      ],
+      "short_excerpt": "起名好蓝",
+      "transfer_note": "可学参与式提问和可见证据；不复制竞品数值或把类比当实测。"
+    },
+    {
+      "record_type": "case",
+      "id": "XC02",
+      "source_ids": [
+        "X02"
+      ],
+      "name": "戴森沉浸式蓬松体验",
+      "domain": "相邻耐用品：吹风机",
+      "evidence_status": "public_agency_self_report",
+      "observed_facts": [
+        "传播拆为体验、品牌、口碑；视频突出头发顺滑与蓬松的可见变化。"
+      ],
+      "metrics": [
+        {
+          "name": "小红书搜索增幅",
+          "value": 45,
+          "unit": "%",
+          "window": "项目期，起止和基期未披露",
+          "attribution": "操盘方自报；不是销量或笔记自然流量"
+        },
+        {
+          "name": "天猫搜索增幅",
+          "value": 30,
+          "unit": "%",
+          "window": "项目期，起止和基期未披露",
+          "attribution": "操盘方自报；未隔离其他营销影响"
+        }
+      ],
+      "short_excerpt": "顺滑蓬松真的是吹出来的",
+      "transfer_note": "只迁移结果可视化；PC不得编造速度对比、任务收益或替代专业决策。"
+    },
+    {
+      "record_type": "case",
+      "id": "XC03",
+      "source_ids": [
+        "X03"
+      ],
+      "name": "华为FreeClip2审美共创",
+      "domain": "相邻数码：耳机",
+      "evidence_status": "platform_award_entry_self_report",
+      "observed_facts": [
+        "案例以用户配饰需求为线索，联名HEFANG并组织设计博主与用户共创。"
+      ],
+      "metrics": [
+        {
+          "name": "C位小星球事件曝光",
+          "value": 1100000000,
+          "relation": ">",
+          "unit": "次",
+          "window": "IP活动期，起止日未披露",
+          "attribution": "平台参赛材料自报；不是独立用户或购买人数"
+        },
+        {
+          "name": "活动笔记数",
+          "value": 80000,
+          "relation": ">",
+          "unit": "篇",
+          "window": "同一IP活动期",
+          "attribution": "聚合内容量，不是单篇爆款指标"
+        }
+      ],
+      "short_excerpt": "让用户一起说美",
+      "transfer_note": "PC可让读者选择任务痛点；不能把审美共创证明为办公性能优势。"
+    },
+    {
+      "record_type": "case",
+      "id": "XC04",
+      "source_ids": [
+        "X04",
+        "X05"
+      ],
+      "name": "联想拯救者Y系列双平台内容营销",
+      "domain": "PC",
+      "evidence_status": "discovered_unverified",
+      "observed_facts": [
+        "小红书沟通分为AI创作、设计、游戏场景；项目将专业内容与日常场景内容分层。"
+      ],
+      "metrics": null,
+      "short_excerpt": "小红书做口碑、做长线",
+      "transfer_note": "借鉴按任务分篇；镜像跨平台效果与AI摘要均不作小红书成功指标。",
+      "generation_use": "仅供人工复核线索；不进入自动生成事实、指标或已验证案例库。"
+    },
+    {
+      "record_type": "case",
+      "id": "XC05",
+      "source_ids": [
+        "X06"
+      ],
+      "name": "华为Pura旅拍任务与用户共建",
+      "domain": "相邻数码：手机",
+      "evidence_status": "commercial_article_expression_reference",
+      "observed_facts": [
+        "报道由用户拍照姿势困扰切入，描述旅拍体验官活动与功能传播衔接。"
+      ],
+      "metrics": null,
+      "short_excerpt": "怎么出片",
+      "transfer_note": "只迁移从任务问题到演示的表达，不搬手机功能或归因GMV。"
+    },
+    {
+      "record_type": "writing_pattern",
+      "id": "XP01",
+      "source_ids": [
+        "X01",
+        "X06"
+      ],
+      "name": "任务卡住的那一刻",
+      "evidence_status": "researcher_design_recommendation",
+      "scene_tags": [
+        "资料整理",
+        "备课",
+        "会议准备",
+        "合同版本对照"
+      ],
+      "stage_tags": [
+        "认知",
+        "考虑"
+      ],
+      "goal_tags": [
+        "共鸣",
+        "停留"
+      ],
+      "recommendation": "开头先给动作、材料和障碍，再接产品。",
+      "example": "如果你也要把几轮批注合成会前一稿，最怕的可能不是写，而是找错版本。",
+      "guardrail": "示例是条件式写作设计，不暗示华为具备版本合并或审查功能。",
+      "product_facts_allowed": false,
+      "metrics": null,
+      "counterexample": "不能将未知病例或案件写成已发生情节。",
+      "task_keywords": [
+        "资料整理",
+        "备课",
+        "会议准备",
+        "合同版本对照"
+      ],
+      "domain_transfer_limit": "仅供表达设计参考，不证明华为PC营销或产品效果。"
+    },
+    {
+      "record_type": "writing_pattern",
+      "id": "XP02",
+      "source_ids": [
+        "X04",
+        "X05"
+      ],
+      "name": "同一交付物串起2—3段",
+      "evidence_status": "researcher_design_recommendation",
+      "scene_tags": [
+        "汇报",
+        "公开科普",
+        "方案展示"
+      ],
+      "stage_tags": [
+        "考虑"
+      ],
+      "goal_tags": [
+        "可理解性",
+        "收藏"
+      ],
+      "recommendation": "让一份成果经过整理、讨论、成稿；每段改变动作或协作者，场所只承担情境。",
+      "example": "备课材料→教研讨论→课堂展示；具体动作仍按用户本次输入选。",
+      "guardrail": "这是任务叙事设计，不是原案例笔记结构的逐字复原。",
+      "product_facts_allowed": false,
+      "metrics": null,
+      "counterexample": "不能只罗列三个地点而没有材料与动作推进。",
+      "task_keywords": [
+        "汇报",
+        "公开科普",
+        "方案展示"
+      ],
+      "domain_transfer_limit": "仅供表达设计参考，不证明华为PC营销或产品效果。"
+    },
+    {
+      "record_type": "writing_pattern",
+      "id": "XP03",
+      "source_ids": [
+        "X02"
+      ],
+      "name": "一段一个可解释的帮助",
+      "evidence_status": "researcher_design_recommendation",
+      "scene_tags": [
+        "阅读",
+        "输入",
+        "资料传递"
+      ],
+      "stage_tags": [
+        "考虑"
+      ],
+      "goal_tags": [
+        "产品理解"
+      ],
+      "recommendation": "正在做什么→麻烦在哪里→有据功能接上哪个动作。每段只承担一个主要理由。",
+      "example": "把功能名称嵌入动作，而不是一口气列轻薄、屏幕、AI、续航。",
+      "guardrail": "所有功能另取当前型号证据；案例只能支持表达思路。",
+      "product_facts_allowed": false,
+      "metrics": null,
+      "counterexample": "不能由屏幕或协同推断专业诊断与全软件兼容。",
+      "task_keywords": [
+        "阅读",
+        "输入",
+        "资料传递"
+      ],
+      "domain_transfer_limit": "仅供表达设计参考，不证明华为PC营销或产品效果。"
+    },
+    {
+      "record_type": "writing_pattern",
+      "id": "XP04",
+      "source_ids": [
+        "X01",
+        "X02"
+      ],
+      "name": "看得见的证据位",
+      "evidence_status": "researcher_design_recommendation",
+      "scene_tags": [
+        "对照阅读",
+        "修改展示",
+        "携带"
+      ],
+      "stage_tags": [
+        "考虑",
+        "决策"
+      ],
+      "goal_tags": [
+        "可信度"
+      ],
+      "recommendation": "图片或演示只证明其真实呈现的内容；让读者看清动作与结果之间的对应。",
+      "example": "本项目仅有产品图时，用图注说明所展示的外观；任务动作由文字解释。",
+      "guardrail": "产品图不伪装职业现场，不从静态图推断软件或协同能力；禁止伪造前后对比。",
+      "product_facts_allowed": false,
+      "metrics": null,
+      "counterexample": "不能用宣传产品图冒充职业现场或已完成操作实录。",
+      "task_keywords": [
+        "对照阅读",
+        "修改展示",
+        "携带"
+      ],
+      "domain_transfer_limit": "仅供表达设计参考，不证明华为PC营销或产品效果。"
+    },
+    {
+      "record_type": "writing_pattern",
+      "id": "XP05",
+      "source_ids": [
+        "X01",
+        "X03"
+      ],
+      "name": "让读者回答一个具体问题",
+      "evidence_status": "researcher_design_recommendation",
+      "scene_tags": [
+        "任务选择",
+        "材料整理",
+        "协作交接"
+      ],
+      "stage_tags": [
+        "认知",
+        "考虑",
+        "决策（需真实入口）"
+      ],
+      "goal_tags": [
+        "有效评论",
+        "咨询意向（后续设计）"
+      ],
+      "recommendation": "CTA随目标设计：互动目标问一个具体任务问题；咨询目标需真实可用入口和明确授权，不能捏造门店、优惠、渠道。当前正文基线采用互动式CTA，其他动作留待后续实现。",
+      "example": "你做会前材料时，更容易卡在找资料，还是把修改意见整理清楚？",
+      "guardrail": "评论意向不是购买；不索取客户或患者资料，不虚构活动或奖品。",
+      "product_facts_allowed": false,
+      "metrics": null,
+      "counterexample": "不能机械套评论问句，也不能捏造门店福利、咨询入口和私信赠品。",
+      "task_keywords": [
+        "任务选择",
+        "材料整理",
+        "协作交接"
+      ],
+      "domain_transfer_limit": "仅供表达设计参考，不证明华为PC营销或产品效果。"
+    },
+    {
+      "record_type": "writing_pattern",
+      "id": "XP06",
+      "source_ids": [
+        "X01",
+        "X04",
+        "X05"
+      ],
+      "name": "营销阶段决定这一篇的工作",
+      "evidence_status": "researcher_design_recommendation",
+      "scene_tags": [
+        "新品认知",
+        "功能理解",
+        "购买比较"
+      ],
+      "stage_tags": [
+        "认知",
+        "考虑",
+        "决策"
+      ],
+      "goal_tags": [
+        "目标一致"
+      ],
+      "recommendation": "认知抓一个任务；考虑解释动作与证据；决策只补已确认的选择依据，缺价格或优惠不编造。",
+      "example": "当前工具默认完整场景笔记，可在strategy标清阶段，正文不露分析标签。",
+      "guardrail": "案例的投流、官号、达人、店铺合力不能压缩为某个标题必然带货。",
+      "product_facts_allowed": false,
+      "metrics": null,
+      "counterexample": "不能把曝光或搜索当增量成交，不能用历史优惠替代当前信息。",
+      "task_keywords": [
+        "新品认知",
+        "功能理解",
+        "购买比较"
+      ],
+      "domain_transfer_limit": "仅供表达设计参考，不证明华为PC营销或产品效果。"
+    },
+    {
+      "record_type": "writing_pattern",
+      "id": "XP07",
+      "source_ids": [
+        "X04",
+        "X05"
+      ],
+      "name": "按职业的任务分流",
+      "evidence_status": "researcher_design_recommendation",
+      "scene_tags": [
+        "医生公开教学",
+        "律师授权材料整理",
+        "教师备课",
+        "工程师文档讨论",
+        "创作者方案沟通"
+      ],
+      "stage_tags": [
+        "认知",
+        "考虑"
+      ],
+      "goal_tags": [
+        "相关性"
+      ],
+      "recommendation": "先检索任务和障碍，再用职业作语言修饰；不能只替换身份词。",
+      "example": "律师的版本批注、教师的课堂展示、创作者的方案反馈应是不同材料和协作动作。",
+      "guardrail": "案例人群画像不覆盖真实用户输入；不推定专业系统、性能或保密能力。",
+      "product_facts_allowed": false,
+      "metrics": null,
+      "counterexample": "不能所有职业都套写报告或凭职位承诺专业性能。",
+      "task_keywords": [
+        "医生公开教学",
+        "律师授权材料整理",
+        "教师备课",
+        "工程师文档讨论",
+        "创作者方案沟通"
+      ],
+      "domain_transfer_limit": "仅供表达设计参考，不证明华为PC营销或产品效果。"
+    },
+    {
+      "record_type": "writing_pattern",
+      "id": "XP08",
+      "source_ids": [
+        "X02",
+        "X06"
+      ],
+      "name": "标题承诺可兑现的任务价值",
+      "evidence_status": "researcher_design_recommendation",
+      "scene_tags": [
+        "资料归拢",
+        "展示准备",
+        "沟通修改"
+      ],
+      "stage_tags": [
+        "认知"
+      ],
+      "goal_tags": [
+        "点击后匹配"
+      ],
+      "recommendation": "标题点明任务与一个摩擦点，正文交代同一个问题。",
+      "example": "会前材料总在最后一刻找不齐？",
+      "guardrail": "自拟示例，不是检索到的爆款标题；禁止保证效率提升或结果。",
+      "product_facts_allowed": false,
+      "metrics": null,
+      "counterexample": "不能写三分钟审完合同、医生必备神器等越证据标题。",
+      "task_keywords": [
+        "资料归拢",
+        "展示准备",
+        "沟通修改"
+      ],
+      "domain_transfer_limit": "仅供表达设计参考，不证明华为PC营销或产品效果。"
+    },
+    {
+      "record_type": "writing_pattern",
+      "id": "XP09",
+      "source_ids": [
+        "X01",
+        "X03"
+      ],
+      "name": "产品出现服从叙事",
+      "evidence_status": "researcher_design_recommendation",
+      "scene_tags": [
+        "多场景任务"
+      ],
+      "stage_tags": [
+        "认知",
+        "考虑"
+      ],
+      "goal_tags": [
+        "自然度"
+      ],
+      "recommendation": "完整型号一次自然出现，后文围绕必要动作；品牌特征不写成无依据的独家能力。",
+      "example": "先解释资料为什么分散，再说明已证实的功能能接哪一步。",
+      "guardrail": "写作建议，不是平台算法或强制规则。",
+      "product_facts_allowed": false,
+      "metrics": null,
+      "counterexample": "不能为口语顺畅而删除必要条件、扩大功能范围。",
+      "task_keywords": [
+        "多场景任务"
+      ],
+      "domain_transfer_limit": "仅供表达设计参考，不证明华为PC营销或产品效果。"
+    },
+    {
+      "record_type": "writing_pattern",
+      "id": "XP10",
+      "source_ids": [
+        "X01",
+        "X02",
+        "X03",
+        "X04",
+        "X05",
+        "X06"
+      ],
+      "name": "转朋友圈要重建关系语境",
+      "evidence_status": "researcher_design_recommendation",
+      "scene_tags": [
+        "熟人关系",
+        "任务交流"
+      ],
+      "stage_tags": [
+        "认知",
+        "考虑"
+      ],
+      "goal_tags": [
+        "可信交流"
+      ],
+      "recommendation": "减少陌生人搜索标签，开头交代分享缘由，保留一项最贴合熟人需求的任务与证据，CTA改成愿意接话的私下交流。",
+      "example": "品牌代写仍用客观或条件式表达；只有用户提供真实经历并授权时才能写个人体验。",
+      "guardrail": "后续渠道适配建议；未经用户要求不发朋友圈、不私信，不把缩短字数等同于适配。",
+      "product_facts_allowed": false,
+      "metrics": null,
+      "counterexample": "不能只删字并凭空改写成我新买的亲测体验。",
+      "task_keywords": [
+        "熟人关系",
+        "任务交流"
+      ],
+      "domain_transfer_limit": "仅供表达设计参考，不证明华为PC营销或产品效果。"
+    },
+    {
+      "record_type": "acceptance_rule",
+      "id": "XA01",
+      "source_ids": [],
+      "evidence_status": "project_acceptance_recommendation",
+      "check_type": "programmatic",
+      "name": "交付结构可解析",
+      "criterion": "六字段齐全，title/body/CTA和图片计划类型合法；引用[S编号]可解析并属于本次检索。",
+      "limitations": "结构通过不代表事实成立。",
+      "metrics": null
+    },
+    {
+      "record_type": "acceptance_rule",
+      "id": "XA02",
+      "source_ids": [],
+      "evidence_status": "project_acceptance_recommendation",
+      "check_type": "programmatic",
+      "name": "长度和形式符合当前项目",
+      "criterion": "标题建议20字内，正文建议400—600字，emoji约2—4个、话题约2—4个；越界提示修订。",
+      "limitations": "项目默认风格，不是小红书平台流量阈值。",
+      "metrics": null
+    },
+    {
+      "record_type": "acceptance_rule",
+      "id": "XA03",
+      "source_ids": [],
+      "evidence_status": "project_acceptance_recommendation",
+      "check_type": "semantic_review",
+      "name": "产品主张有当前型号依据",
+      "criterion": "每项能力、比较、结果与文本证据逐项对应；缺证据删主张或停止生成。",
+      "limitations": "程序可查引用存在，不能单凭存在判定引用蕴含。",
+      "metrics": null
+    },
+    {
+      "record_type": "acceptance_rule",
+      "id": "XA04",
+      "source_ids": [],
+      "evidence_status": "project_acceptance_recommendation",
+      "check_type": "semantic_review",
+      "name": "身份和任务忠实",
+      "criterion": "用户明确任务优先；未知经历用条件式，不冒充购买、亲测或长期使用。",
+      "limitations": "职业不推定软件、机构账号或专业决策能力。",
+      "metrics": null
+    },
+    {
+      "record_type": "acceptance_rule",
+      "id": "XA05",
+      "source_ids": [],
+      "evidence_status": "project_acceptance_recommendation",
+      "check_type": "semantic_review",
+      "name": "叙事连续且职业具体",
+      "criterion": "2—3段围绕同一交付物推进，材料、动作或协作者有变化；换职业词后仍通用则重写。",
+      "limitations": "不同地点不是连续任务的充分条件。",
+      "metrics": null
+    },
+    {
+      "record_type": "acceptance_rule",
+      "id": "XA06",
+      "source_ids": [],
+      "evidence_status": "project_acceptance_recommendation",
+      "check_type": "semantic_review",
+      "name": "功能进入动作而非参数堆砌",
+      "criterion": "每段能指出动作、障碍与有据帮助；去掉空泛效率口号和无证据数字。",
+      "limitations": "功能名称可保留，禁止将通用特点写成独家。",
+      "metrics": null
+    },
+    {
+      "record_type": "acceptance_rule",
+      "id": "XA07",
+      "source_ids": [],
+      "evidence_status": "project_acceptance_recommendation",
+      "check_type": "semantic_review",
+      "name": "使用条件放对位置",
+      "criterion": "pending_confirmation保留相关条件；正文仅用必要短限定确保范围准确，不反复核验提醒。",
+      "limitations": "删掉提醒不能扩大承诺；无法简洁界定就换一项证实能力。",
+      "metrics": null
+    },
+    {
+      "record_type": "acceptance_rule",
+      "id": "XA08",
+      "source_ids": [],
+      "evidence_status": "project_acceptance_recommendation",
+      "check_type": "human_judgment",
+      "name": "视觉真实且可读",
+      "criterion": "当前型号真图、图文对应、无伪职业现场或冒充操作实录；人工检查裁切、清晰度和标注。",
+      "limitations": "自动查型号映射可辅助，不能判断所有视觉误导。",
+      "metrics": null
+    },
+    {
+      "record_type": "acceptance_rule",
+      "id": "XA09",
+      "source_ids": [],
+      "evidence_status": "project_acceptance_recommendation",
+      "check_type": "semantic_review",
+      "name": "CTA服务本篇任务",
+      "criterion": "只问一个具体可回答的问题，不重复已知预算、不强推到店、不索取敏感材料。",
+      "limitations": "有评论不等于有转化，不编造稀缺和优惠。",
+      "metrics": null
+    },
+    {
+      "record_type": "acceptance_rule",
+      "id": "XA10",
+      "source_ids": [],
+      "evidence_status": "project_acceptance_recommendation",
+      "check_type": "human_judgment",
+      "name": "成稿像完整笔记且评价目标明确",
+      "criterion": "通读是否自然、易懂、任务可信；发布测试分别看阅读、收藏/有效评论和可归因咨询，不许保证爆款。",
+      "limitations": "职业高敏内容和商业使用权由适当人员审核；任何案例自报均不作结果担保。",
+      "metrics": null
+    }
+  ],
+  "limitations": [
+    "5个公开案例：PC 2个（其中联想镜像参考）、华为相邻数码2个、相邻耐用品1个。",
+    "具有采用的量化结果3个，均为营销参与方自报；独立审计或因果验证成功案例0个；不称为已证明爆款。",
+    "未取得可核实的华为PC小红书直接成功案例；没有登录读取原笔记、复用会话或抓取私有数据。",
+    "未全面核查笔记配图原稿，视觉结构建议来自公开案例文字与本项目设计，不能冒充逐图拆解。",
+    "有限检索截至2026-10-22，不代表所有行业案例；发布日期未知保持null，活动时间与报道时间区分。",
+    "源文只保留短摘录；所有自拟文案及迁移规则均为研究建议，不是平台官方规范或用户亲测。"
+  ]
+}

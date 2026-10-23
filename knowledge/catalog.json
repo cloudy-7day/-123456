@@ -57,7 +57,17 @@
           "source_url": "https://consumer.huawei.com/content/dam/huawei-cbg-site/cn/mkt/pdp/harmonyos-computer/matebook-14-harmonyos-version/img/design/huawei-matebook-14-color-green.png",
           "source_page": "https://consumer.huawei.com/cn/harmonyos-computer/matebook-14-harmonyos-version/",
           "usage": "按画面含义用于对应段落，发布前核对具体销售版本",
-          "index_path": "华为PC全板块深度知识库_v7/P1-产品参数库/01-鸿蒙电脑/HUAWEI MateBook 14/图片索引.csv"
+          "index_path": "华为PC全板块深度知识库_v7/P1-产品参数库/01-鸿蒙电脑/HUAWEI MateBook 14/图片索引.csv",
+          "visual_review": {
+            "sha256": "9f9470747d7e3c406b87c31ecd5d51f1f3542626001ed8b00b04c5db8973de82",
+            "role": "product",
+            "allowed": true,
+            "preview": true,
+            "angle_group": "open",
+            "label": "绿色机身开合外观",
+            "reviewed_at": "2026-10-22",
+            "method": "visual-inspection"
+          }
         },
         {
           "title": "hwpc_matebook-14-harmonyos_多彩配色外观_01_7e0eedb6.png",
@@ -72,7 +82,17 @@
           "source_url": "https://consumer.huawei.com/content/dam/huawei-cbg-site/cn/mkt/pdp/harmonyos-computer/matebook-14-harmonyos-version/img/design/huawei-matebook-14-color-pink.png",
           "source_page": "https://consumer.huawei.com/cn/harmonyos-computer/matebook-14-harmonyos-version/",
           "usage": "产品介绍配图，使用前核对画面与具体配置",
-          "index_path": "华为PC全板块深度知识库_v7/P1-产品参数库/01-鸿蒙电脑/HUAWEI MateBook 14/图片索引.csv"
+          "index_path": "华为PC全板块深度知识库_v7/P1-产品参数库/01-鸿蒙电脑/HUAWEI MateBook 14/图片索引.csv",
+          "visual_review": {
+            "sha256": "e320384c91d75f723fb785fce8505c9ce099980cf4330e37d08d75430f32650d",
+            "role": "product",
+            "allowed": true,
+            "preview": false,
+            "angle_group": "open",
+            "label": "粉色机身开合外观",
+            "reviewed_at": "2026-10-22",
+            "method": "visual-inspection"
+          }
         },
         {
           "title": "hwpc_matebook-14-harmonyos_手写笔创作场景_07.jpg",
@@ -87,7 +107,17 @@
           "source_url": "https://consumer.huawei.com/content/dam/huawei-cbg-site/cn/mkt/pdp/harmonyos-computer/matebook-14-harmonyos-version/img/design/huawei-matebook-14-accessories-m-pen-3.jpg",
           "source_page": "https://consumer.huawei.com/cn/harmonyos-computer/matebook-14-harmonyos-version/",
           "usage": "按画面含义用于对应段落，发布前核对具体销售版本",
-          "index_path": "华为PC全板块深度知识库_v7/P1-产品参数库/01-鸿蒙电脑/HUAWEI MateBook 14/图片索引.csv"
+          "index_path": "华为PC全板块深度知识库_v7/P1-产品参数库/01-鸿蒙电脑/HUAWEI MateBook 14/图片索引.csv",
+          "visual_review": {
+            "sha256": "85fadb0cbceb8632b00301aa07db8b815469e0107b8c89b5d91baab15a9c281b",
+            "role": "product",
+            "allowed": true,
+            "preview": false,
+            "angle_group": "front",
+            "label": "电脑屏幕正面外观",
+            "reviewed_at": "2026-10-22",
+            "method": "visual-inspection"
+          }
         },
         {
           "title": "hwpc_matebook-14-harmonyos_深空灰沉稳配色_05.png",
@@ -102,7 +132,17 @@
           "source_url": "https://consumer.huawei.com/content/dam/huawei-cbg-site/cn/mkt/pdp/harmonyos-computer/matebook-14-harmonyos-version/img/design/huawei-matebook-14-color-grey.png",
           "source_page": "https://consumer.huawei.com/cn/harmonyos-computer/matebook-14-harmonyos-version/",
           "usage": "按画面含义用于对应段落，发布前核对具体销售版本",
-          "index_path": "华为PC全板块深度知识库_v7/P1-产品参数库/01-鸿蒙电脑/HUAWEI MateBook 14/图片索引.csv"
+          "index_path": "华为PC全板块深度知识库_v7/P1-产品参数库/01-鸿蒙电脑/HUAWEI MateBook 14/图片索引.csv",
+          "visual_review": {
+            "sha256": "ab085ae7d9fd83af91b68e1b32c9f6f2148ca22e0d656f16f89815b93650f440",
+            "role": "product",
+            "allowed": true,
+            "preview": false,
+            "angle_group": "open",
+            "label": "灰色机身开合外观",
+            "reviewed_at": "2026-10-22",
+            "method": "visual-inspection"
+          }
         },
         {
           "title": "vmall_matebook-14-harmonyos_强劲性能释放展示_02.jpg",
@@ -117,7 +157,17 @@
           "source_url": "https://res2.vmallres.com/pimages/FssCdnProxy/vmall_product_uom/pmsSalesFile/428_428_420CAA0FC25BCDC5ED39334331B0B562.jpg",
           "source_page": "https://item.m.vmall.com/product/comdetail/index.html?prdId=10086097339191&sbomCode=2801010196914",
           "usage": "",
-          "index_path": "华为PC全板块深度知识库_v7/P1-产品参数库/01-鸿蒙电脑/HUAWEI MateBook 14/商城款式图片/图片索引.csv"
+          "index_path": "华为PC全板块深度知识库_v7/P1-产品参数库/01-鸿蒙电脑/HUAWEI MateBook 14/商城款式图片/图片索引.csv",
+          "visual_review": {
+            "sha256": "0bc94b00136a83292b1820a564b48087ddba3125b9852be977b4018e2e030c4f",
+            "role": "component",
+            "allowed": false,
+            "preview": false,
+            "angle_group": null,
+            "label": "未用于产品配图：画面以人物、芯片、图标或缺失画面为主",
+            "reviewed_at": "2026-10-22",
+            "method": "visual-inspection"
+          }
         },
         {
           "title": "vmall_matebook-14-harmonyos_原野绿键盘俯视外观_03.png",
@@ -132,7 +182,17 @@
           "source_url": "https://res2.vmallres.com/pimages/FssCdnProxy/vmall_product_uom/pmsSalesFile/428_428_3708F8B2545B169E52F9B3BFEE5DF2F5.png",
           "source_page": "https://item.m.vmall.com/product/comdetail/index.html?prdId=10086097339191&sbomCode=2801010196914",
           "usage": "",
-          "index_path": "华为PC全板块深度知识库_v7/P1-产品参数库/01-鸿蒙电脑/HUAWEI MateBook 14/商城款式图片/图片索引.csv"
+          "index_path": "华为PC全板块深度知识库_v7/P1-产品参数库/01-鸿蒙电脑/HUAWEI MateBook 14/商城款式图片/图片索引.csv",
+          "visual_review": {
+            "sha256": "c892487b3077760859991b683017ac96f876e040357aa9aa0ffbf4fa9babe972",
+            "role": "product",
+            "allowed": true,
+            "preview": false,
+            "angle_group": "keyboard",
+            "label": "键盘俯视外观",
+            "reviewed_at": "2026-10-22",
+            "method": "visual-inspection"
+          }
         },
         {
           "title": "vmall_matebook-14-harmonyos_轻薄原野绿侧面细节_04.png",
@@ -147,7 +207,17 @@
           "source_url": "https://res2.vmallres.com/pimages/FssCdnProxy/vmall_product_uom/pmsSalesFile/428_428_35A94B08C66B2031CE4AF5C901CF37D7.png",
           "source_page": "https://item.m.vmall.com/product/comdetail/index.html?prdId=10086097339191&sbomCode=2801010196914",
           "usage": "",
-          "index_path": "华为PC全板块深度知识库_v7/P1-产品参数库/01-鸿蒙电脑/HUAWEI MateBook 14/商城款式图片/图片索引.csv"
+          "index_path": "华为PC全板块深度知识库_v7/P1-产品参数库/01-鸿蒙电脑/HUAWEI MateBook 14/商城款式图片/图片索引.csv",
+          "visual_review": {
+            "sha256": "b2a991f2763fd7d646e6a362b48536e3949c197137f097ad06b5fcb6fb3e321b",
+            "role": "product",
+            "allowed": true,
+            "preview": false,
+            "angle_group": "side",
+            "label": "机身侧面外观",
+            "reviewed_at": "2026-10-22",
+            "method": "visual-inspection"
+          }
         },
         {
           "title": "vmall_matebook-14-harmonyos_原野绿简洁A面外观_05.png",
@@ -162,7 +232,17 @@
           "source_url": "https://res2.vmallres.com/pimages/FssCdnProxy/vmall_product_uom/pmsSalesFile/428_428_68DFBAF7A08A83ACA14962A1E3F8E407.png",
           "source_page": "https://item.m.vmall.com/product/comdetail/index.html?prdId=10086097339191&sbomCode=2801010196914",
           "usage": "",
-          "index_path": "华为PC全板块深度知识库_v7/P1-产品参数库/01-鸿蒙电脑/HUAWEI MateBook 14/商城款式图片/图片索引.csv"
+          "index_path": "华为PC全板块深度知识库_v7/P1-产品参数库/01-鸿蒙电脑/HUAWEI MateBook 14/商城款式图片/图片索引.csv",
+          "visual_review": {
+            "sha256": "d36c93bb3309a15889de0c880c67fea59c1dd548e29cb823f84058989bc5076d",
+            "role": "product",
+            "allowed": true,
+            "preview": false,
+            "angle_group": "back",
+            "label": "机身顶盖外观",
+            "reviewed_at": "2026-10-22",
+            "method": "visual-inspection"
+          }
         },
         {
           "title": "vmall_matebook-14-harmonyos_樱粉金正面产品展示_06.png",
@@ -177,7 +257,17 @@
           "source_url": "https://res.vmallres.com/pimages/FssCdnProxy/vmall_product_uom/pmsSalesFile/800_800_E49BD5AC662B273E39F5360B8D42951F.png",
           "source_page": "https://item.m.vmall.com/product/comdetail/index.html?prdId=10086097339191&sbomCode=2801010196914",
           "usage": "",
-          "index_path": "华为PC全板块深度知识库_v7/P1-产品参数库/01-鸿蒙电脑/HUAWEI MateBook 14/商城款式图片/图片索引.csv"
+          "index_path": "华为PC全板块深度知识库_v7/P1-产品参数库/01-鸿蒙电脑/HUAWEI MateBook 14/商城款式图片/图片索引.csv",
+          "visual_review": {
+            "sha256": "16c1a684146eac925112a8e6cfce48b2da1418348f9dcb67103c98e2e999e996",
+            "role": "product",
+            "allowed": true,
+            "preview": false,
+            "angle_group": "front",
+            "label": "粉色电脑正面外观",
+            "reviewed_at": "2026-10-22",
+            "method": "visual-inspection"
+          }
         },
         {
           "title": "vmall_matebook-14-harmonyos_樱粉金OLED云晰柔光屏_07.jpg",
@@ -192,7 +282,17 @@
           "source_url": "https://res2.vmallres.com/pimages/FssCdnProxy/vmall_product_uom/pmsSalesFile/428_428_E7E0B9FDEEF4CDE4CE04ECED962067D2.jpg",
           "source_page": "https://item.m.vmall.com/product/comdetail/index.html?prdId=10086097339191&sbomCode=2801010196914",
           "usage": "",
-          "index_path": "华为PC全板块深度知识库_v7/P1-产品参数库/01-鸿蒙电脑/HUAWEI MateBook 14/商城款式图片/图片索引.csv"
+          "index_path": "华为PC全板块深度知识库_v7/P1-产品参数库/01-鸿蒙电脑/HUAWEI MateBook 14/商城款式图片/图片索引.csv",
+          "visual_review": {
+            "sha256": "e68e9e549fea829dd4e899a44148feafdcf4d1f8d9628127ace25256b616d34e",
+            "role": "non-product",
+            "allowed": false,
+            "preview": false,
+            "angle_group": null,
+            "label": "未用于产品配图：画面以人物、芯片、图标或缺失画面为主",
+            "reviewed_at": "2026-10-22",
+            "method": "visual-inspection"
+          }
         },
         {
           "title": "vmall_matebook-14-harmonyos_樱粉金开合产品外观_08.png",
@@ -207,7 +307,17 @@
           "source_url": "https://res3.vmallres.com/pimages/FssCdnProxy/vmall_product_uom/pmsSalesFile/428_428_E49BD5AC662B273E39F5360B8D42951F.png",
           "source_page": "https://item.m.vmall.com/product/comdetail/index.html?prdId=10086097339191&sbomCode=2801010196914",
           "usage": "",
-          "index_path": "华为PC全板块深度知识库_v7/P1-产品参数库/01-鸿蒙电脑/HUAWEI MateBook 14/商城款式图片/图片索引.csv"
+          "index_path": "华为PC全板块深度知识库_v7/P1-产品参数库/01-鸿蒙电脑/HUAWEI MateBook 14/商城款式图片/图片索引.csv",
+          "visual_review": {
+            "sha256": "3b93b5d25e868c5966e65d8fc1b86cd561781aa616ee55ebb5860941aa855745",
+            "role": "product",
+            "allowed": true,
+            "preview": false,
+            "angle_group": "open",
+            "label": "粉色机身开合外观",
+            "reviewed_at": "2026-10-22",
+            "method": "visual-inspection"
+          }
         },
         {
           "title": "vmall_matebook-14-harmonyos_原野绿正面产品展示_09.png",
@@ -222,7 +332,17 @@
           "source_url": "https://res.vmallres.com/pimages/FssCdnProxy/vmall_product_uom/pmsSalesFile/800_800_56508B8BEAF32954A35C4403D56615FA.png",
           "source_page": "https://item.m.vmall.com/product/comdetail/index.html?prdId=10086097339191&sbomCode=2801010196914",
           "usage": "",
-          "index_path": "华为PC全板块深度知识库_v7/P1-产品参数库/01-鸿蒙电脑/HUAWEI MateBook 14/商城款式图片/图片索引.csv"
+          "index_path": "华为PC全板块深度知识库_v7/P1-产品参数库/01-鸿蒙电脑/HUAWEI MateBook 14/商城款式图片/图片索引.csv",
+          "visual_review": {
+            "sha256": "793fe65d16b209f47f162537955c4c288be35000916105038b40cf4ebb81ce7d",
+            "role": "product",
+            "allowed": true,
+            "preview": false,
+            "angle_group": "front",
+            "label": "绿色电脑正面外观",
+            "reviewed_at": "2026-10-22",
+            "method": "visual-inspection"
+          }
         },
         {
           "title": "vmall_matebook-14-harmonyos_柔光金优雅产品外观_11.webp",
@@ -237,7 +357,17 @@
           "source_url": "https://res4.vmallres.com/pimages/FssCdnProxy/vmall_product_uom/pmsSalesFile/800_800_4F45028A9FECC04454E09D36AFF97C63.webp",
           "source_page": "https://item.m.vmall.com/product/comdetail/index.html?prdId=10086097339191&sbomCode=2801010196914",
           "usage": "",
-          "index_path": "华为PC全板块深度知识库_v7/P1-产品参数库/01-鸿蒙电脑/HUAWEI MateBook 14/商城款式图片/图片索引.csv"
+          "index_path": "华为PC全板块深度知识库_v7/P1-产品参数库/01-鸿蒙电脑/HUAWEI MateBook 14/商城款式图片/图片索引.csv",
+          "visual_review": {
+            "sha256": "1eda318e16490f59a945959dea7807be76aebe823e6728cb1e36d1da87da5e53",
+            "role": "product",
+            "allowed": true,
+            "preview": false,
+            "angle_group": "front",
+            "label": "金色电脑正面外观",
+            "reviewed_at": "2026-10-22",
+            "method": "visual-inspection"
+          }
         },
         {
           "title": "vmall_matebook-14-harmonyos_丰富接口轻薄侧面_13.png",
@@ -252,7 +382,17 @@
           "source_url": "https://res2.vmallres.com/pimages/FssCdnProxy/vmall_product_uom/pmsSalesFile/428_428_3C92FE7E5650FF8D088009FD01890B9C.png",
           "source_page": "https://item.m.vmall.com/product/comdetail/index.html?prdId=10086097339191&sbomCode=2801010196914",
           "usage": "",
-          "index_path": "华为PC全板块深度知识库_v7/P1-产品参数库/01-鸿蒙电脑/HUAWEI MateBook 14/商城款式图片/图片索引.csv"
+          "index_path": "华为PC全板块深度知识库_v7/P1-产品参数库/01-鸿蒙电脑/HUAWEI MateBook 14/商城款式图片/图片索引.csv",
+          "visual_review": {
+            "sha256": "361c5f89cb2bbc269210bf051e33b18a4e516d0536f2ae86067106edf4155458",
+            "role": "product",
+            "allowed": true,
+            "preview": false,
+            "angle_group": "side",
+            "label": "机身接口侧面",
+            "reviewed_at": "2026-10-22",
+            "method": "visual-inspection"
+          }
         },
         {
           "title": "vmall_matebook-14-harmonyos_双侧接口机身细节_14.png",
@@ -267,7 +407,17 @@
           "source_url": "https://res2.vmallres.com/pimages/FssCdnProxy/vmall_product_uom/pmsSalesFile/428_428_3BD61DC1DD6170715FBE067AD3031F21.png",
           "source_page": "https://item.m.vmall.com/product/comdetail/index.html?prdId=10086097339191&sbomCode=2801010196914",
           "usage": "",
-          "index_path": "华为PC全板块深度知识库_v7/P1-产品参数库/01-鸿蒙电脑/HUAWEI MateBook 14/商城款式图片/图片索引.csv"
+          "index_path": "华为PC全板块深度知识库_v7/P1-产品参数库/01-鸿蒙电脑/HUAWEI MateBook 14/商城款式图片/图片索引.csv",
+          "visual_review": {
+            "sha256": "67f9d40dba32d929116396390c3402043270665a57cd880d186176cef658ac71",
+            "role": "product",
+            "allowed": true,
+            "preview": false,
+            "angle_group": "side",
+            "label": "展开后的侧面外观",
+            "reviewed_at": "2026-10-22",
+            "method": "visual-inspection"
+          }
         },
         {
           "title": "vmall_matebook-14-harmonyos_手机协同桌面展示_15.png",
@@ -282,7 +432,17 @@
           "source_url": "https://res2.vmallres.com/pimages/FssCdnProxy/vmall_product_uom/pmsSalesFile/428_428_5B962836099EE9FC3256CC3C47F6936D.png",
           "source_page": "https://item.m.vmall.com/product/comdetail/index.html?prdId=10086097339191&sbomCode=2801010196914",
           "usage": "",
-          "index_path": "华为PC全板块深度知识库_v7/P1-产品参数库/01-鸿蒙电脑/HUAWEI MateBook 14/商城款式图片/图片索引.csv"
+          "index_path": "华为PC全板块深度知识库_v7/P1-产品参数库/01-鸿蒙电脑/HUAWEI MateBook 14/商城款式图片/图片索引.csv",
+          "visual_review": {
+            "sha256": "36e59dd6859b68fc4ab1f0dc8f0d81c9e16cefb283d5bb4fd8fad3d9bab83f61",
+            "role": "product",
+            "allowed": true,
+            "preview": false,
+            "angle_group": "front",
+            "label": "电脑正面外观",
+            "reviewed_at": "2026-10-22",
+            "method": "visual-inspection"
+          }
         },
         {
           "title": "vmall_matebook-14-harmonyos_原野绿键盘屏幕展示_16.png",
@@ -297,7 +457,17 @@
           "source_url": "https://res2.vmallres.com/pimages/FssCdnProxy/vmall_product_uom/pmsSalesFile/428_428_6D29BA526EB0923E3062960A9FC1E815.png",
           "source_page": "https://item.m.vmall.com/product/comdetail/index.html?prdId=10086097339191&sbomCode=2801010196914",
           "usage": "",
-          "index_path": "华为PC全板块深度知识库_v7/P1-产品参数库/01-鸿蒙电脑/HUAWEI MateBook 14/商城款式图片/图片索引.csv"
+          "index_path": "华为PC全板块深度知识库_v7/P1-产品参数库/01-鸿蒙电脑/HUAWEI MateBook 14/商城款式图片/图片索引.csv",
+          "visual_review": {
+            "sha256": "dc06ae68921c4bb406b9ea3c5a517521b5f204009dabbcb5721401de5ce74879",
+            "role": "non-product",
+            "allowed": false,
+            "preview": false,
+            "angle_group": null,
+            "label": "未用于产品配图：画面以人物、芯片、图标或缺失画面为主",
+            "reviewed_at": "2026-10-22",
+            "method": "visual-inspection"
+          }
         },
         {
           "title": "vmall_matebook-14-harmonyos_长续航影音场景_17.jpg",
@@ -312,7 +482,17 @@
           "source_url": "https://res2.vmallres.com/pimages/FssCdnProxy/vmall_product_uom/pmsSalesFile/428_428_9047BF89746CDA70B6071F17549356B4.jpg",
           "source_page": "https://item.m.vmall.com/product/comdetail/index.html?prdId=10086097339191&sbomCode=2801010196914",
           "usage": "",
-          "index_path": "华为PC全板块深度知识库_v7/P1-产品参数库/01-鸿蒙电脑/HUAWEI MateBook 14/商城款式图片/图片索引.csv"
+          "index_path": "华为PC全板块深度知识库_v7/P1-产品参数库/01-鸿蒙电脑/HUAWEI MateBook 14/商城款式图片/图片索引.csv",
+          "visual_review": {
+            "sha256": "184c7622d78ff75778c6159af6121387b014bfe4e2aa198cdcc2f9dbf2d4446b",
+            "role": "non-product",
+            "allowed": false,
+            "preview": false,
+            "angle_group": null,
+            "label": "未用于产品配图：画面以人物、芯片、图标或缺失画面为主",
+            "reviewed_at": "2026-10-22",
+            "method": "visual-inspection"
+          }
         },
         {
           "title": "vmall_matebook-14-harmonyos_原野绿经典开合外观_18.png",
@@ -327,9 +507,20 @@
           "source_url": "https://res3.vmallres.com/pimages/FssCdnProxy/vmall_product_uom/pmsSalesFile/428_428_93ED3D552C6CE957D157C032AC99499B.png",
           "source_page": "https://item.m.vmall.com/product/comdetail/index.html?prdId=10086097339191&sbomCode=2801010196914",
           "usage": "",
-          "index_path": "华为PC全板块深度知识库_v7/P1-产品参数库/01-鸿蒙电脑/HUAWEI MateBook 14/商城款式图片/图片索引.csv"
+          "index_path": "华为PC全板块深度知识库_v7/P1-产品参数库/01-鸿蒙电脑/HUAWEI MateBook 14/商城款式图片/图片索引.csv",
+          "visual_review": {
+            "sha256": "6cd1c887d3624dc55aa6f4d0db1d6deb59f98d766a7f61d3567557e832f7ea1d",
+            "role": "product",
+            "allowed": true,
+            "preview": false,
+            "angle_group": "open",
+            "label": "绿色机身开合外观",
+            "reviewed_at": "2026-10-22",
+            "method": "visual-inspection"
+          }
         }
-      ]
+      ],
+      "preview_sha256": "9f9470747d7e3c406b87c31ecd5d51f1f3542626001ed8b00b04c5db8973de82"
     },
     {
       "id": "pc-f5c7b748573ff4a6",
@@ -376,7 +567,17 @@
           "source_url": "https://consumer.huawei.com/content/dam/huawei-cbg-site/cn/mkt/pdp/harmonyos-computer/matebook-fold-ultimate-design-2026/imgs/huawei-matebook-fold-ultimate-design-gold-blur.jpg",
           "source_page": "https://consumer.huawei.com/cn/harmonyos-computer/matebook-fold-ultimate-design/",
           "usage": "产品介绍配图，使用前核对画面与具体配置",
-          "index_path": "华为PC全板块深度知识库_v7/P1-产品参数库/01-鸿蒙电脑/HUAWEI MateBook Fold 非凡大师/图片索引.csv"
+          "index_path": "华为PC全板块深度知识库_v7/P1-产品参数库/01-鸿蒙电脑/HUAWEI MateBook Fold 非凡大师/图片索引.csv",
+          "visual_review": {
+            "sha256": "fa79555380e2fe0f21150da4e4f0427fbd4eb2d63ba344f1e29a9b21af116552",
+            "role": "non-product",
+            "allowed": false,
+            "preview": false,
+            "angle_group": null,
+            "label": "未用于产品配图：画面以人物、芯片、图标或缺失画面为主",
+            "reviewed_at": "2026-10-22",
+            "method": "visual-inspection"
+          }
         },
         {
           "title": "hwpc_matebook-fold-ultimate-design_多彩配色外观_04_8a0efa3c.jpg",
@@ -391,7 +592,17 @@
           "source_url": "https://consumer.huawei.com/content/dam/huawei-cbg-site/cn/mkt/pdp/harmonyos-computer/matebook-fold-ultimate-design-2026/imgs/huawei-matebook-fold-ultimate-design-white-blur.jpg",
           "source_page": "https://consumer.huawei.com/cn/harmonyos-computer/matebook-fold-ultimate-design/",
           "usage": "产品介绍配图，使用前核对画面与具体配置",
-          "index_path": "华为PC全板块深度知识库_v7/P1-产品参数库/01-鸿蒙电脑/HUAWEI MateBook Fold 非凡大师/图片索引.csv"
+          "index_path": "华为PC全板块深度知识库_v7/P1-产品参数库/01-鸿蒙电脑/HUAWEI MateBook Fold 非凡大师/图片索引.csv",
+          "visual_review": {
+            "sha256": "0c899ed8d886279a773ffb2b0e0a92c2cd495b4e2072b5d200349f82a60ea9af",
+            "role": "non-product",
+            "allowed": false,
+            "preview": false,
+            "angle_group": null,
+            "label": "未用于产品配图：画面以人物、芯片、图标或缺失画面为主",
+            "reviewed_at": "2026-10-22",
+            "method": "visual-inspection"
+          }
         },
         {
           "title": "hwpc_matebook-fold-ultimate-design_多彩配色外观_05_98d35730.jpg",
@@ -406,7 +617,17 @@
           "source_url": "https://consumer.huawei.com/content/dam/huawei-cbg-site/cn/mkt/pdp/harmonyos-computer/matebook-fold-ultimate-design-2026/imgs/huawei-matebook-fold-ultimate-design-black-blur.jpg",
           "source_page": "https://consumer.huawei.com/cn/harmonyos-computer/matebook-fold-ultimate-design/",
           "usage": "产品介绍配图，使用前核对画面与具体配置",
-          "index_path": "华为PC全板块深度知识库_v7/P1-产品参数库/01-鸿蒙电脑/HUAWEI MateBook Fold 非凡大师/图片索引.csv"
+          "index_path": "华为PC全板块深度知识库_v7/P1-产品参数库/01-鸿蒙电脑/HUAWEI MateBook Fold 非凡大师/图片索引.csv",
+          "visual_review": {
+            "sha256": "3f41d3e266e690859fe0b0f134ab596d5bcb7be7f5718f5f8ecf663eafb99638",
+            "role": "non-product",
+            "allowed": false,
+            "preview": false,
+            "angle_group": null,
+            "label": "未用于产品配图：画面以人物、芯片、图标或缺失画面为主",
+            "reviewed_at": "2026-10-22",
+            "method": "visual-inspection"
+          }
         },
         {
           "title": "hwpc_matebook-fold-ultimate-design_轻薄精致机身_02_58c0f688.jpg",
@@ -421,7 +642,17 @@
           "source_url": "https://consumer.huawei.com/content/dam/huawei-cbg-site/cn/mkt/pdp/harmonyos-computer/matebook-fold-ultimate-design-2026/imgs/huawei-matebook-fold-ultimate-design-wlan-bridge-blur.jpg",
           "source_page": "https://consumer.huawei.com/cn/harmonyos-computer/matebook-fold-ultimate-design/",
           "usage": "产品介绍配图，使用前核对画面与具体配置",
-          "index_path": "华为PC全板块深度知识库_v7/P1-产品参数库/01-鸿蒙电脑/HUAWEI MateBook Fold 非凡大师/图片索引.csv"
+          "index_path": "华为PC全板块深度知识库_v7/P1-产品参数库/01-鸿蒙电脑/HUAWEI MateBook Fold 非凡大师/图片索引.csv",
+          "visual_review": {
+            "sha256": "8a481bfd1c318953484196cdaacd9150643010f6d1e1b52e13e755a2e4a53a7a",
+            "role": "non-product",
+            "allowed": false,
+            "preview": false,
+            "angle_group": null,
+            "label": "未用于产品配图：画面以人物、芯片、图标或缺失画面为主",
+            "reviewed_at": "2026-10-22",
+            "method": "visual-inspection"
+          }
         },
         {
           "title": "hwpc_matebook-fold-ultimate-design_高质感主视觉_01_34dae805.jpg",
@@ -436,9 +667,20 @@
           "source_url": "https://consumer.huawei.com/content/dam/huawei-cbg-site/cn/mkt/pdp/harmonyos-computer/matebook-fold-ultimate-design-2026/imgs/huawei-matebook-fold-ultimate-design-key-vision-blur.jpg",
           "source_page": "https://consumer.huawei.com/cn/harmonyos-computer/matebook-fold-ultimate-design/",
           "usage": "产品介绍配图，使用前核对画面与具体配置",
-          "index_path": "华为PC全板块深度知识库_v7/P1-产品参数库/01-鸿蒙电脑/HUAWEI MateBook Fold 非凡大师/图片索引.csv"
+          "index_path": "华为PC全板块深度知识库_v7/P1-产品参数库/01-鸿蒙电脑/HUAWEI MateBook Fold 非凡大师/图片索引.csv",
+          "visual_review": {
+            "sha256": "0ca951de6825e588950327be851259c9fe8dff18c9599ca6b9cea2d7765d4144",
+            "role": "product",
+            "allowed": true,
+            "preview": true,
+            "angle_group": "hero",
+            "label": "折叠电脑展开外观",
+            "reviewed_at": "2026-10-22",
+            "method": "visual-inspection"
+          }
         }
-      ]
+      ],
+      "preview_sha256": "0ca951de6825e588950327be851259c9fe8dff18c9599ca6b9cea2d7765d4144"
     },
     {
       "id": "pc-7a67602a2987e76f",
@@ -485,7 +727,17 @@
           "source_url": "https://consumer.huawei.com/content/dam/huawei-cbg-site/cn/mkt/pdp/harmonyos-computer/matebook-pro-s/assets/before/huawei-matebook-pro-s-purple-3.jpg",
           "source_page": "https://consumer.huawei.com/cn/harmonyos-computer/matebook-pro-s/",
           "usage": "产品介绍配图，使用前核对画面与具体配置",
-          "index_path": "华为PC全板块深度知识库_v7/P1-产品参数库/01-鸿蒙电脑/HUAWEI MateBook Pro S/图片索引.csv"
+          "index_path": "华为PC全板块深度知识库_v7/P1-产品参数库/01-鸿蒙电脑/HUAWEI MateBook Pro S/图片索引.csv",
+          "visual_review": {
+            "sha256": "88477e9fb10790da1068abd21fafb341cb79cbd415bb0cc4129bdca3e3ed9c16",
+            "role": "product",
+            "allowed": true,
+            "preview": false,
+            "angle_group": "side",
+            "label": "紫色机身侧面外观",
+            "reviewed_at": "2026-10-22",
+            "method": "visual-inspection"
+          }
         },
         {
           "title": "hwpc_matebook-pro-s_多彩配色外观_06_d792d65d.jpg",
@@ -500,7 +752,17 @@
           "source_url": "https://consumer.huawei.com/content/dam/huawei-cbg-site/cn/mkt/pdp/harmonyos-computer/matebook-pro-s/assets/before/huawei-matebook-pro-s-purple-4-blur.jpg",
           "source_page": "https://consumer.huawei.com/cn/harmonyos-computer/matebook-pro-s/",
           "usage": "产品介绍配图，使用前核对画面与具体配置",
-          "index_path": "华为PC全板块深度知识库_v7/P1-产品参数库/01-鸿蒙电脑/HUAWEI MateBook Pro S/图片索引.csv"
+          "index_path": "华为PC全板块深度知识库_v7/P1-产品参数库/01-鸿蒙电脑/HUAWEI MateBook Pro S/图片索引.csv",
+          "visual_review": {
+            "sha256": "8df67bfab9c9d91af866526a5a7e82b74885b5399115202e170593b9e1a88bf1",
+            "role": "product",
+            "allowed": true,
+            "preview": true,
+            "angle_group": "front",
+            "label": "紫色电脑正面外观",
+            "reviewed_at": "2026-10-22",
+            "method": "visual-inspection"
+          }
         },
         {
           "title": "hwpc_matebook-pro-s_精致产品细节_01_9e99c213.jpg",
@@ -515,7 +777,17 @@
           "source_url": "https://consumer.huawei.com/content/dam/huawei-cbg-site/cn/mkt/pdp/harmonyos-computer/matebook-pro-s/assets/before/huawei-matebook-pro-s-weight-ff-pc.jpg",
           "source_page": "https://consumer.huawei.com/cn/harmonyos-computer/matebook-pro-s/",
           "usage": "产品介绍配图，使用前核对画面与具体配置",
-          "index_path": "华为PC全板块深度知识库_v7/P1-产品参数库/01-鸿蒙电脑/HUAWEI MateBook Pro S/图片索引.csv"
+          "index_path": "华为PC全板块深度知识库_v7/P1-产品参数库/01-鸿蒙电脑/HUAWEI MateBook Pro S/图片索引.csv",
+          "visual_review": {
+            "sha256": "8a3b93e9b7df3fe13cb958e14726db8f76d871e6507774c4fec9a45a768f2826",
+            "role": "product",
+            "allowed": true,
+            "preview": false,
+            "angle_group": "back",
+            "label": "紫色机身顶盖外观",
+            "reviewed_at": "2026-10-22",
+            "method": "visual-inspection"
+          }
         },
         {
           "title": "hwpc_matebook-pro-s_智慧协同功能_03_076021a9.jpg",
@@ -530,7 +802,17 @@
           "source_url": "https://consumer.huawei.com/content/dam/huawei-cbg-site/cn/mkt/pdp/harmonyos-computer/matebook-pro-s/assets/before/huawei-matebook-pro-s-ai-blur.jpg",
           "source_page": "https://consumer.huawei.com/cn/harmonyos-computer/matebook-pro-s/",
           "usage": "产品介绍配图，使用前核对画面与具体配置",
-          "index_path": "华为PC全板块深度知识库_v7/P1-产品参数库/01-鸿蒙电脑/HUAWEI MateBook Pro S/图片索引.csv"
+          "index_path": "华为PC全板块深度知识库_v7/P1-产品参数库/01-鸿蒙电脑/HUAWEI MateBook Pro S/图片索引.csv",
+          "visual_review": {
+            "sha256": "2d7d2da727f726550085a11d54d0297b6dfd6bd5e5668fb65190f621c37fd3fa",
+            "role": "non-product",
+            "allowed": false,
+            "preview": false,
+            "angle_group": null,
+            "label": "未用于产品配图：画面以人物、芯片、图标或缺失画面为主",
+            "reviewed_at": "2026-10-22",
+            "method": "visual-inspection"
+          }
         },
         {
           "title": "hwpc_matebook-pro-s_长续航快充场景_04_6f60ddb8.jpg",
@@ -545,7 +827,17 @@
           "source_url": "https://consumer.huawei.com/content/dam/huawei-cbg-site/cn/mkt/pdp/harmonyos-computer/matebook-pro-s/assets/before/huawei-matebook-pro-s-batterylife-blur.jpg",
           "source_page": "https://consumer.huawei.com/cn/harmonyos-computer/matebook-pro-s/",
           "usage": "产品介绍配图，使用前核对画面与具体配置",
-          "index_path": "华为PC全板块深度知识库_v7/P1-产品参数库/01-鸿蒙电脑/HUAWEI MateBook Pro S/图片索引.csv"
+          "index_path": "华为PC全板块深度知识库_v7/P1-产品参数库/01-鸿蒙电脑/HUAWEI MateBook Pro S/图片索引.csv",
+          "visual_review": {
+            "sha256": "d0e45db5dc74d9d42e75eea7aa94224c27a8788d4b238efd8b4dc8466d3b42e8",
+            "role": "non-product",
+            "allowed": false,
+            "preview": false,
+            "angle_group": null,
+            "label": "未用于产品配图：画面以人物、芯片、图标或缺失画面为主",
+            "reviewed_at": "2026-10-22",
+            "method": "visual-inspection"
+          }
         },
         {
           "title": "hwpc_matebook-pro-s_高清护眼屏幕_02_f55ba57d.jpg",
@@ -560,9 +852,20 @@
           "source_url": "https://consumer.huawei.com/content/dam/huawei-cbg-site/cn/mkt/pdp/harmonyos-computer/matebook-pro-s/assets/before/huawei-matebook-pro-s-privacy-screen-ff-pc.jpg",
           "source_page": "https://consumer.huawei.com/cn/harmonyos-computer/matebook-pro-s/",
           "usage": "产品介绍配图，使用前核对画面与具体配置",
-          "index_path": "华为PC全板块深度知识库_v7/P1-产品参数库/01-鸿蒙电脑/HUAWEI MateBook Pro S/图片索引.csv"
+          "index_path": "华为PC全板块深度知识库_v7/P1-产品参数库/01-鸿蒙电脑/HUAWEI MateBook Pro S/图片索引.csv",
+          "visual_review": {
+            "sha256": "4fd3d4c0ebc9ff6fae83c74ad4f9f1a335186e599010a36304c7da2c1d64d256",
+            "role": "product",
+            "allowed": true,
+            "preview": false,
+            "angle_group": "side",
+            "label": "金色机身侧面外观",
+            "reviewed_at": "2026-10-22",
+            "method": "visual-inspection"
+          }
         }
-      ]
+      ],
+      "preview_sha256": "8df67bfab9c9d91af866526a5a7e82b74885b5399115202e170593b9e1a88bf1"
     },
     {
       "id": "pc-8377e88bb46c1673",
@@ -609,7 +912,17 @@
           "source_url": "https://consumer.huawei.com/content/dam/huawei-cbg-site/cn/mkt/pdp/harmonyos-computer/matebook-pro/new/assets/pc/huawei-matebook-pro-design-1-blur.jpg",
           "source_page": "https://consumer.huawei.com/cn/harmonyos-computer/matebook-pro/",
           "usage": "产品介绍配图，使用前核对画面与具体配置",
-          "index_path": "华为PC全板块深度知识库_v7/P1-产品参数库/01-鸿蒙电脑/HUAWEI MateBook Pro/图片索引.csv"
+          "index_path": "华为PC全板块深度知识库_v7/P1-产品参数库/01-鸿蒙电脑/HUAWEI MateBook Pro/图片索引.csv",
+          "visual_review": {
+            "sha256": "b497feae15d66cb640eb14345f324234243079d18e619ba34a76f6c1fa0c30f6",
+            "role": "non-product",
+            "allowed": false,
+            "preview": false,
+            "angle_group": null,
+            "label": "未用于产品配图：画面以人物、芯片、图标或缺失画面为主",
+            "reviewed_at": "2026-10-22",
+            "method": "visual-inspection"
+          }
         },
         {
           "title": "hwpc_matebook-pro-harmonyos_多彩配色外观_05_46d10ff8.jpg",
@@ -624,7 +937,17 @@
           "source_url": "https://consumer.huawei.com/content/dam/huawei-cbg-site/cn/mkt/pdp/harmonyos-computer/matebook-pro/new/assets/pc/huawei-matebook-pro-design-2-blur.jpg",
           "source_page": "https://consumer.huawei.com/cn/harmonyos-computer/matebook-pro/",
           "usage": "产品介绍配图，使用前核对画面与具体配置",
-          "index_path": "华为PC全板块深度知识库_v7/P1-产品参数库/01-鸿蒙电脑/HUAWEI MateBook Pro/图片索引.csv"
+          "index_path": "华为PC全板块深度知识库_v7/P1-产品参数库/01-鸿蒙电脑/HUAWEI MateBook Pro/图片索引.csv",
+          "visual_review": {
+            "sha256": "7e502e7fe969ee70dcbb9c98cbb9f60b903b216f7babb3a707e0f6f6839bfff6",
+            "role": "non-product",
+            "allowed": false,
+            "preview": false,
+            "angle_group": null,
+            "label": "未用于产品配图：画面以人物、芯片、图标或缺失画面为主",
+            "reviewed_at": "2026-10-22",
+            "method": "visual-inspection"
+          }
         },
         {
           "title": "hwpc_matebook-pro-harmonyos_多彩配色外观_06_f74ed58c.jpg",
@@ -639,7 +962,17 @@
           "source_url": "https://consumer.huawei.com/content/dam/huawei-cbg-site/cn/mkt/pdp/harmonyos-computer/matebook-pro/new/assets/pc/huawei-matebook-pro-design-3-blur.jpg",
           "source_page": "https://consumer.huawei.com/cn/harmonyos-computer/matebook-pro/",
           "usage": "产品介绍配图，使用前核对画面与具体配置",
-          "index_path": "华为PC全板块深度知识库_v7/P1-产品参数库/01-鸿蒙电脑/HUAWEI MateBook Pro/图片索引.csv"
+          "index_path": "华为PC全板块深度知识库_v7/P1-产品参数库/01-鸿蒙电脑/HUAWEI MateBook Pro/图片索引.csv",
+          "visual_review": {
+            "sha256": "a6b6265f40892ae5ac767d5885cdc3ba040ff4794f854b8e5e637cdab1bd0945",
+            "role": "non-product",
+            "allowed": false,
+            "preview": false,
+            "angle_group": null,
+            "label": "未用于产品配图：画面以人物、芯片、图标或缺失画面为主",
+            "reviewed_at": "2026-10-22",
+            "method": "visual-inspection"
+          }
         },
         {
           "title": "hwpc_matebook-pro-harmonyos_多彩配色外观_07_5f7155ab.jpg",
@@ -654,7 +987,17 @@
           "source_url": "https://consumer.huawei.com/content/dam/huawei-cbg-site/cn/mkt/pdp/harmonyos-computer/matebook-pro/new/assets/pc/huawei-matebook-pro-design-4-blur.jpg",
           "source_page": "https://consumer.huawei.com/cn/harmonyos-computer/matebook-pro/",
           "usage": "产品介绍配图，使用前核对画面与具体配置",
-          "index_path": "华为PC全板块深度知识库_v7/P1-产品参数库/01-鸿蒙电脑/HUAWEI MateBook Pro/图片索引.csv"
+          "index_path": "华为PC全板块深度知识库_v7/P1-产品参数库/01-鸿蒙电脑/HUAWEI MateBook Pro/图片索引.csv",
+          "visual_review": {
+            "sha256": "c7cda19d0676643e55c639a2585f8bf23f9ffd9ee9771c6064aeaa0158ab51c1",
+            "role": "non-product",
+            "allowed": false,
+            "preview": false,
+            "angle_group": null,
+            "label": "未用于产品配图：画面以人物、芯片、图标或缺失画面为主",
+            "reviewed_at": "2026-10-22",
+            "method": "visual-inspection"
+          }
         },
         {
           "title": "hwpc_matebook-pro-harmonyos_多彩配色外观_08_1c34dfdb.jpg",
@@ -669,7 +1012,17 @@
           "source_url": "https://consumer.huawei.com/content/dam/huawei-cbg-site/cn/mkt/pdp/harmonyos-computer/matebook-pro/new/assets/pc/huawei-matebook-pro-design-4.jpg",
           "source_page": "https://consumer.huawei.com/cn/harmonyos-computer/matebook-pro/",
           "usage": "产品介绍配图，使用前核对画面与具体配置",
-          "index_path": "华为PC全板块深度知识库_v7/P1-产品参数库/01-鸿蒙电脑/HUAWEI MateBook Pro/图片索引.csv"
+          "index_path": "华为PC全板块深度知识库_v7/P1-产品参数库/01-鸿蒙电脑/HUAWEI MateBook Pro/图片索引.csv",
+          "visual_review": {
+            "sha256": "147cb4886163000b3f3ed204070f02e2258fb4e7eef2460a99549aaf17dcb115",
+            "role": "non-product",
+            "allowed": false,
+            "preview": false,
+            "angle_group": null,
+            "label": "未用于产品配图：画面以人物、芯片、图标或缺失画面为主",
+            "reviewed_at": "2026-10-22",
+            "method": "visual-inspection"
+          }
         },
         {
           "title": "hwpc_matebook-pro-harmonyos_精致产品细节_02_5b5cda90.jpg",
@@ -684,7 +1037,17 @@
           "source_url": "https://consumer.huawei.com/content/dam/huawei-cbg-site/cn/mkt/pdp/harmonyos-computer/matebook-pro/assets/imgs/pc/huawei-matebook-pro-card-interconnect-blur.jpg",
           "source_page": "https://consumer.huawei.com/cn/harmonyos-computer/matebook-pro/",
           "usage": "产品介绍配图，使用前核对画面与具体配置",
-          "index_path": "华为PC全板块深度知识库_v7/P1-产品参数库/01-鸿蒙电脑/HUAWEI MateBook Pro/图片索引.csv"
+          "index_path": "华为PC全板块深度知识库_v7/P1-产品参数库/01-鸿蒙电脑/HUAWEI MateBook Pro/图片索引.csv",
+          "visual_review": {
+            "sha256": "560099251ec0da953461932a3a3a8c4177735a9ef6de76cdc259c1ba04a1847a",
+            "role": "non-product",
+            "allowed": false,
+            "preview": false,
+            "angle_group": null,
+            "label": "未用于产品配图：画面以人物、芯片、图标或缺失画面为主",
+            "reviewed_at": "2026-10-22",
+            "method": "visual-inspection"
+          }
         },
         {
           "title": "hwpc_matebook-pro-harmonyos_轻薄精致机身_03_3ddf67b9.jpg",
@@ -699,7 +1062,17 @@
           "source_url": "https://consumer.huawei.com/content/dam/huawei-cbg-site/cn/mkt/pdp/harmonyos-computer/matebook-pro/new/assets/pc/huawei-matebook-pro-lightweight-blur.jpg",
           "source_page": "https://consumer.huawei.com/cn/harmonyos-computer/matebook-pro/",
           "usage": "产品介绍配图，使用前核对画面与具体配置",
-          "index_path": "华为PC全板块深度知识库_v7/P1-产品参数库/01-鸿蒙电脑/HUAWEI MateBook Pro/图片索引.csv"
+          "index_path": "华为PC全板块深度知识库_v7/P1-产品参数库/01-鸿蒙电脑/HUAWEI MateBook Pro/图片索引.csv",
+          "visual_review": {
+            "sha256": "b5745be99251fac372a5967a827e43ccd8f8e1c845a8dab470b5a2f6c81bfb11",
+            "role": "non-product",
+            "allowed": false,
+            "preview": false,
+            "angle_group": null,
+            "label": "未用于产品配图：画面以人物、芯片、图标或缺失画面为主",
+            "reviewed_at": "2026-10-22",
+            "method": "visual-inspection"
+          }
         },
         {
           "title": "hwpc_matebook-pro-harmonyos_高清护眼屏幕_01_7da16b65.jpg",
@@ -714,9 +1087,20 @@
           "source_url": "https://consumer.huawei.com/content/dam/huawei-cbg-site/cn/mkt/pdp/harmonyos-computer/matebook-pro/assets/imgs/pc/huawei-matebook-pro-card-display-blur.jpg",
           "source_page": "https://consumer.huawei.com/cn/harmonyos-computer/matebook-pro/",
           "usage": "产品介绍配图，使用前核对画面与具体配置",
-          "index_path": "华为PC全板块深度知识库_v7/P1-产品参数库/01-鸿蒙电脑/HUAWEI MateBook Pro/图片索引.csv"
+          "index_path": "华为PC全板块深度知识库_v7/P1-产品参数库/01-鸿蒙电脑/HUAWEI MateBook Pro/图片索引.csv",
+          "visual_review": {
+            "sha256": "a4422ab8a507393174e1ab673fd991b6e6e1e497a5640e84e44aec49ed3467fa",
+            "role": "product",
+            "allowed": true,
+            "preview": true,
+            "angle_group": "front",
+            "label": "电脑屏幕与键盘正面外观",
+            "reviewed_at": "2026-10-22",
+            "method": "visual-inspection"
+          }
         }
-      ]
+      ],
+      "preview_sha256": "a4422ab8a507393174e1ab673fd991b6e6e1e497a5640e84e44aec49ed3467fa"
     },
     {
       "id": "pc-53440547941ce8f1",
@@ -763,7 +1147,17 @@
           "source_url": "https://consumer.huawei.com/content/dam/huawei-cbg-site/cn/mkt/pdp/laptops/matebook-14-2024/images/huawei-matebook-14-2024-top-feactures1-blur.png",
           "source_page": "https://consumer.huawei.com/cn/laptops/matebook-14-2024/",
           "usage": "产品介绍配图，使用前核对画面与具体配置",
-          "index_path": "华为PC全板块深度知识库_v7/P1-产品参数库/02-MateBook-Windows/MateBook 14 酷睿 Ultra/图片索引.csv"
+          "index_path": "华为PC全板块深度知识库_v7/P1-产品参数库/02-MateBook-Windows/MateBook 14 酷睿 Ultra/图片索引.csv",
+          "visual_review": {
+            "sha256": "58fc4d2b72b827ea9a6942315067b0e2d3f8a5c908c40bfd0c1c6303e325cb24",
+            "role": "product",
+            "allowed": true,
+            "preview": false,
+            "angle_group": "keyboard",
+            "label": "电脑屏幕与键盘局部",
+            "reviewed_at": "2026-10-22",
+            "method": "visual-inspection"
+          }
         },
         {
           "title": "hwpc_matebook-14-2024_舒适键盘细节_04_f6154c23.png",
@@ -778,7 +1172,17 @@
           "source_url": "https://consumer.huawei.com/content/dam/huawei-cbg-site/cn/mkt/pdp/laptops/matebook-14-2024/images/huawei-matebook-14-2024-top-feactures1.png",
           "source_page": "https://consumer.huawei.com/cn/laptops/matebook-14-2024/",
           "usage": "产品介绍配图，使用前核对画面与具体配置",
-          "index_path": "华为PC全板块深度知识库_v7/P1-产品参数库/02-MateBook-Windows/MateBook 14 酷睿 Ultra/图片索引.csv"
+          "index_path": "华为PC全板块深度知识库_v7/P1-产品参数库/02-MateBook-Windows/MateBook 14 酷睿 Ultra/图片索引.csv",
+          "visual_review": {
+            "sha256": "42fe5f2856ddddf71d2099e9d2a43a53e100c08ead52d63b7a616a31276bba29",
+            "role": "product",
+            "allowed": true,
+            "preview": false,
+            "angle_group": "keyboard",
+            "label": "电脑屏幕与键盘局部",
+            "reviewed_at": "2026-10-22",
+            "method": "visual-inspection"
+          }
         },
         {
           "title": "hwpc_matebook-14-2024_高清护眼屏幕_05_d640f28e.jpg",
@@ -793,7 +1197,17 @@
           "source_url": "https://consumer.huawei.com/content/dam/huawei-cbg-site/cn/mkt/pdp/laptops/matebook-14-2024/images/huawei-matebook-14-2024-oled-vague-blur.jpg",
           "source_page": "https://consumer.huawei.com/cn/laptops/matebook-14-2024/",
           "usage": "产品介绍配图，使用前核对画面与具体配置",
-          "index_path": "华为PC全板块深度知识库_v7/P1-产品参数库/02-MateBook-Windows/MateBook 14 酷睿 Ultra/图片索引.csv"
+          "index_path": "华为PC全板块深度知识库_v7/P1-产品参数库/02-MateBook-Windows/MateBook 14 酷睿 Ultra/图片索引.csv",
+          "visual_review": {
+            "sha256": "fbbaed8b92725dfc7873783c40d458321ec9c88f4e4946bee7f93a122712651c",
+            "role": "non-product",
+            "allowed": false,
+            "preview": false,
+            "angle_group": null,
+            "label": "未用于产品配图：画面以人物、芯片、图标或缺失画面为主",
+            "reviewed_at": "2026-10-22",
+            "method": "visual-inspection"
+          }
         },
         {
           "title": "hwpc_matebook-14-2024_高清护眼屏幕_06_d9033734.jpg",
@@ -808,7 +1222,17 @@
           "source_url": "https://consumer.huawei.com/content/dam/huawei-cbg-site/cn/mkt/pdp/laptops/matebook-14-2024/images/huawei-matebook-14-2024-oled-high-definition-blur.jpg",
           "source_page": "https://consumer.huawei.com/cn/laptops/matebook-14-2024/",
           "usage": "产品介绍配图，使用前核对画面与具体配置",
-          "index_path": "华为PC全板块深度知识库_v7/P1-产品参数库/02-MateBook-Windows/MateBook 14 酷睿 Ultra/图片索引.csv"
+          "index_path": "华为PC全板块深度知识库_v7/P1-产品参数库/02-MateBook-Windows/MateBook 14 酷睿 Ultra/图片索引.csv",
+          "visual_review": {
+            "sha256": "8c943ab29658ddaf3dbdcafccc656c66d5c6a3216cdbdf221724334c8f37ade5",
+            "role": "non-product",
+            "allowed": false,
+            "preview": false,
+            "angle_group": null,
+            "label": "未用于产品配图：画面以人物、芯片、图标或缺失画面为主",
+            "reviewed_at": "2026-10-22",
+            "method": "visual-inspection"
+          }
         },
         {
           "title": "hwpc_matebook-14-2024_高清护眼屏幕_07_af839e1b.jpg",
@@ -823,7 +1247,17 @@
           "source_url": "https://consumer.huawei.com/content/dam/huawei-cbg-site/cn/mkt/pdp/laptops/matebook-14-2024/images/huawei-matebook-14-2024-display-bg-blur.jpg",
           "source_page": "https://consumer.huawei.com/cn/laptops/matebook-14-2024/",
           "usage": "产品介绍配图，使用前核对画面与具体配置",
-          "index_path": "华为PC全板块深度知识库_v7/P1-产品参数库/02-MateBook-Windows/MateBook 14 酷睿 Ultra/图片索引.csv"
+          "index_path": "华为PC全板块深度知识库_v7/P1-产品参数库/02-MateBook-Windows/MateBook 14 酷睿 Ultra/图片索引.csv",
+          "visual_review": {
+            "sha256": "3c1145f841caab0c3b13aef08a825cffb8c36d8d59b8935bc4269639c06485da",
+            "role": "product",
+            "allowed": true,
+            "preview": false,
+            "angle_group": "front",
+            "label": "电脑正面屏幕外观",
+            "reviewed_at": "2026-10-22",
+            "method": "visual-inspection"
+          }
         },
         {
           "title": "hwpc_matebook-14-2024_高清护眼屏幕_08_b38b9561.jpg",
@@ -838,7 +1272,17 @@
           "source_url": "https://consumer.huawei.com/content/dam/huawei-cbg-site/cn/mkt/pdp/laptops/matebook-14-2024/images/huawei-matebook-14-2024-touch-control-screen-blur.jpg",
           "source_page": "https://consumer.huawei.com/cn/laptops/matebook-14-2024/",
           "usage": "产品介绍配图，使用前核对画面与具体配置",
-          "index_path": "华为PC全板块深度知识库_v7/P1-产品参数库/02-MateBook-Windows/MateBook 14 酷睿 Ultra/图片索引.csv"
+          "index_path": "华为PC全板块深度知识库_v7/P1-产品参数库/02-MateBook-Windows/MateBook 14 酷睿 Ultra/图片索引.csv",
+          "visual_review": {
+            "sha256": "eee2123a29badc715f9be786d9e3ce9f418ac5daedd7f82a229040402d7cdb86",
+            "role": "non-product",
+            "allowed": false,
+            "preview": false,
+            "angle_group": null,
+            "label": "未用于产品配图：画面以人物、芯片、图标或缺失画面为主",
+            "reviewed_at": "2026-10-22",
+            "method": "visual-inspection"
+          }
         },
         {
           "title": "hwpc_matebook-14-2024_高质感主视觉_01_69e09aca.jpg",
@@ -853,7 +1297,17 @@
           "source_url": "https://consumer.huawei.com/content/dam/huawei-cbg-site/cn/mkt/pdp/laptops/matebook-14-2024/images/huawei-matebook-14-2024-kv1-blur.jpg",
           "source_page": "https://consumer.huawei.com/cn/laptops/matebook-14-2024/",
           "usage": "产品介绍配图，使用前核对画面与具体配置",
-          "index_path": "华为PC全板块深度知识库_v7/P1-产品参数库/02-MateBook-Windows/MateBook 14 酷睿 Ultra/图片索引.csv"
+          "index_path": "华为PC全板块深度知识库_v7/P1-产品参数库/02-MateBook-Windows/MateBook 14 酷睿 Ultra/图片索引.csv",
+          "visual_review": {
+            "sha256": "1287e5a6d1d6fd75e79f2dc4ca19c83e0436253e53b9c11f178be023c2d38981",
+            "role": "product",
+            "allowed": true,
+            "preview": true,
+            "angle_group": "hero",
+            "label": "绿色电脑开合外观",
+            "reviewed_at": "2026-10-22",
+            "method": "visual-inspection"
+          }
         },
         {
           "title": "hwpc_matebook-14-2024_高质感主视觉_02_b694be0b.jpg",
@@ -868,9 +1322,20 @@
           "source_url": "https://consumer.huawei.com/content/dam/huawei-cbg-site/cn/mkt/pdp/laptops/matebook-14-2024/images/huawei-matebook-14-2024-kv1.jpg",
           "source_page": "https://consumer.huawei.com/cn/laptops/matebook-14-2024/",
           "usage": "产品介绍配图，使用前核对画面与具体配置",
-          "index_path": "华为PC全板块深度知识库_v7/P1-产品参数库/02-MateBook-Windows/MateBook 14 酷睿 Ultra/图片索引.csv"
+          "index_path": "华为PC全板块深度知识库_v7/P1-产品参数库/02-MateBook-Windows/MateBook 14 酷睿 Ultra/图片索引.csv",
+          "visual_review": {
+            "sha256": "36b36120c6d3d390d1c2f5465830695fc90d4b99c06074fc94b9ea688d4436da",
+            "role": "product",
+            "allowed": true,
+            "preview": false,
+            "angle_group": "hero",
+            "label": "绿色电脑开合外观",
+            "reviewed_at": "2026-10-22",
+            "method": "visual-inspection"
+          }
         }
-      ]
+      ],
+      "preview_sha256": "1287e5a6d1d6fd75e79f2dc4ca19c83e0436253e53b9c11f178be023c2d38981"
     },
     {
       "id": "pc-c07e1c9759ea18aa",
@@ -917,7 +1382,17 @@
           "source_url": "https://consumer.huawei.com/content/dam/huawei-cbg-site/cn/mkt/pdp/laptops/matebook-d-14-2024-13th-gen-core/img/product-highlights/huawei-matebook-d-14-2024-top-ksp-processor.png",
           "source_page": "https://consumer.huawei.com/cn/laptops/matebook-d-14-2024-13th-gen-core/",
           "usage": "产品介绍配图，使用前核对画面与具体配置",
-          "index_path": "华为PC全板块深度知识库_v7/P1-产品参数库/02-MateBook-Windows/MateBook D 14/图片索引.csv"
+          "index_path": "华为PC全板块深度知识库_v7/P1-产品参数库/02-MateBook-Windows/MateBook D 14/图片索引.csv",
+          "visual_review": {
+            "sha256": "5a768865a483be382b627eac6f88806e2a098d171a9cd9d7ac8716b9f8579ca1",
+            "role": "component",
+            "allowed": false,
+            "preview": false,
+            "angle_group": null,
+            "label": "未用于产品配图：画面以人物、芯片、图标或缺失画面为主",
+            "reviewed_at": "2026-10-22",
+            "method": "visual-inspection"
+          }
         },
         {
           "title": "hwpc_matebook-d-14-2024_智慧协同功能_02_1ddd3013.png",
@@ -932,7 +1407,17 @@
           "source_url": "https://consumer.huawei.com/content/dam/huawei-cbg-site/cn/mkt/pdp/laptops/matebook-d-14-2024-13th-gen-core/img/product-highlights/huawei-matebook-d-14-2024-top-ksp-super-device.png",
           "source_page": "https://consumer.huawei.com/cn/laptops/matebook-d-14-2024-13th-gen-core/",
           "usage": "产品介绍配图，使用前核对画面与具体配置",
-          "index_path": "华为PC全板块深度知识库_v7/P1-产品参数库/02-MateBook-Windows/MateBook D 14/图片索引.csv"
+          "index_path": "华为PC全板块深度知识库_v7/P1-产品参数库/02-MateBook-Windows/MateBook D 14/图片索引.csv",
+          "visual_review": {
+            "sha256": "161572cf649f168b342c1d8ee66b2dd98bd0a8ab3f182c0eef9a3e4f7c9fee7e",
+            "role": "non-product",
+            "allowed": false,
+            "preview": false,
+            "angle_group": null,
+            "label": "未用于产品配图：画面以人物、芯片、图标或缺失画面为主",
+            "reviewed_at": "2026-10-22",
+            "method": "visual-inspection"
+          }
         },
         {
           "title": "hwpc_matebook-d-14-2024_高清护眼屏幕_01_9cbdf422.png",
@@ -947,7 +1432,17 @@
           "source_url": "https://consumer.huawei.com/content/dam/huawei-cbg-site/cn/mkt/pdp/laptops/matebook-d-14-2024-13th-gen-core/img/product-highlights/huawei-matebook-d-14-2024-top-ksp-screen.png",
           "source_page": "https://consumer.huawei.com/cn/laptops/matebook-d-14-2024-13th-gen-core/",
           "usage": "产品介绍配图，使用前核对画面与具体配置",
-          "index_path": "华为PC全板块深度知识库_v7/P1-产品参数库/02-MateBook-Windows/MateBook D 14/图片索引.csv"
+          "index_path": "华为PC全板块深度知识库_v7/P1-产品参数库/02-MateBook-Windows/MateBook D 14/图片索引.csv",
+          "visual_review": {
+            "sha256": "bb5dccd7a1f0c440e123a37563c56c67b8756be4dd15a330b87a8aa0d6824307",
+            "role": "product",
+            "allowed": true,
+            "preview": true,
+            "angle_group": "front",
+            "label": "电脑正面外观",
+            "reviewed_at": "2026-10-22",
+            "method": "visual-inspection"
+          }
         },
         {
           "title": "hwpc_matebook-d-14-2024_高清护眼屏幕_04_a03d1eae.png",
@@ -962,7 +1457,17 @@
           "source_url": "https://consumer.huawei.com/content/dam/huawei-cbg-site/cn/mkt/pdp/laptops/matebook-d-14-2024-13th-gen-core/img/screen/huawei-matebook-d-14-2024-screen-ui-last.png",
           "source_page": "https://consumer.huawei.com/cn/laptops/matebook-d-14-2024-13th-gen-core/",
           "usage": "产品介绍配图，使用前核对画面与具体配置",
-          "index_path": "华为PC全板块深度知识库_v7/P1-产品参数库/02-MateBook-Windows/MateBook D 14/图片索引.csv"
+          "index_path": "华为PC全板块深度知识库_v7/P1-产品参数库/02-MateBook-Windows/MateBook D 14/图片索引.csv",
+          "visual_review": {
+            "sha256": "53781651c6f0027c32f9ead10d06c9fc3a2b4269af09fad8aed65e1b9255e6e0",
+            "role": "non-product",
+            "allowed": false,
+            "preview": false,
+            "angle_group": null,
+            "label": "未用于产品配图：画面以人物、芯片、图标或缺失画面为主",
+            "reviewed_at": "2026-10-22",
+            "method": "visual-inspection"
+          }
         },
         {
           "title": "hwpc_matebook-d-14-2024_高清护眼屏幕_05_f84041e5.png",
@@ -977,7 +1482,17 @@
           "source_url": "https://consumer.huawei.com/content/dam/huawei-cbg-site/cn/mkt/pdp/laptops/matebook-d-14-2024-13th-gen-core/img/screen/huawei-matebook-d-14-2024-screen-ui.png",
           "source_page": "https://consumer.huawei.com/cn/laptops/matebook-d-14-2024-13th-gen-core/",
           "usage": "产品介绍配图，使用前核对画面与具体配置",
-          "index_path": "华为PC全板块深度知识库_v7/P1-产品参数库/02-MateBook-Windows/MateBook D 14/图片索引.csv"
+          "index_path": "华为PC全板块深度知识库_v7/P1-产品参数库/02-MateBook-Windows/MateBook D 14/图片索引.csv",
+          "visual_review": {
+            "sha256": "823cf134fee72fcd929fa03aeb99860a32c7eeb32cc90ef551ef43a04f7be73c",
+            "role": "non-product",
+            "allowed": false,
+            "preview": false,
+            "angle_group": null,
+            "label": "未用于产品配图：画面以人物、芯片、图标或缺失画面为主",
+            "reviewed_at": "2026-10-22",
+            "method": "visual-inspection"
+          }
         },
         {
           "title": "hwpc_matebook-d-14-2024_高清护眼屏幕_06_f4903c68.png",
@@ -992,7 +1507,17 @@
           "source_url": "https://consumer.huawei.com/content/dam/huawei-cbg-site/cn/mkt/pdp/laptops/matebook-d-14-2024-13th-gen-core/img/screen/huawei-matebook-d-14-2024-screen-ui-shadow.png",
           "source_page": "https://consumer.huawei.com/cn/laptops/matebook-d-14-2024-13th-gen-core/",
           "usage": "产品介绍配图，使用前核对画面与具体配置",
-          "index_path": "华为PC全板块深度知识库_v7/P1-产品参数库/02-MateBook-Windows/MateBook D 14/图片索引.csv"
+          "index_path": "华为PC全板块深度知识库_v7/P1-产品参数库/02-MateBook-Windows/MateBook D 14/图片索引.csv",
+          "visual_review": {
+            "sha256": "0fb0a6d574d7b5ad3d91605d88f72ca3087ee497d172b8dd84458d36f93ecb53",
+            "role": "non-product",
+            "allowed": false,
+            "preview": false,
+            "angle_group": null,
+            "label": "未用于产品配图：画面以人物、芯片、图标或缺失画面为主",
+            "reviewed_at": "2026-10-22",
+            "method": "visual-inspection"
+          }
         },
         {
           "title": "hwpc_matebook-d-14-2024_高清护眼屏幕_07_8de85af9.png",
@@ -1007,9 +1532,20 @@
           "source_url": "https://consumer.huawei.com/content/dam/huawei-cbg-site/cn/mkt/pdp/laptops/matebook-d-14-2024-13th-gen-core/img/screen/huawei-matebook-d-14-2024-screen-ui-border.png",
           "source_page": "https://consumer.huawei.com/cn/laptops/matebook-d-14-2024-13th-gen-core/",
           "usage": "产品介绍配图，使用前核对画面与具体配置",
-          "index_path": "华为PC全板块深度知识库_v7/P1-产品参数库/02-MateBook-Windows/MateBook D 14/图片索引.csv"
+          "index_path": "华为PC全板块深度知识库_v7/P1-产品参数库/02-MateBook-Windows/MateBook D 14/图片索引.csv",
+          "visual_review": {
+            "sha256": "7fdbb0266f50aacb2001a1ffb3a2cff7b231df5c41e6be30dda169e821c2ae35",
+            "role": "non-product",
+            "allowed": false,
+            "preview": false,
+            "angle_group": null,
+            "label": "未用于产品配图：画面以人物、芯片、图标或缺失画面为主",
+            "reviewed_at": "2026-10-22",
+            "method": "visual-inspection"
+          }
         }
-      ]
+      ],
+      "preview_sha256": "bb5dccd7a1f0c440e123a37563c56c67b8756be4dd15a330b87a8aa0d6824307"
     },
     {
       "id": "pc-ca2ff7c2f3c07a8e",
@@ -1056,7 +1592,17 @@
           "source_url": "https://consumer.huawei.com/content/dam/huawei-cbg-site/cn/mkt/pdp/laptops/matebook-d-16-2024/img/new/huawei-matebook-d-16-2024-love-the-processor.png",
           "source_page": "https://consumer.huawei.com/cn/laptops/matebook-d-16-se-2024/",
           "usage": "产品介绍配图，使用前核对画面与具体配置",
-          "index_path": "华为PC全板块深度知识库_v7/P1-产品参数库/02-MateBook-Windows/MateBook D 16 SE 版/图片索引.csv"
+          "index_path": "华为PC全板块深度知识库_v7/P1-产品参数库/02-MateBook-Windows/MateBook D 16 SE 版/图片索引.csv",
+          "visual_review": {
+            "sha256": "06d927ab992db55b6687b27cb5e416559e88d408ceb1cef0ff4308b363db0862",
+            "role": "component",
+            "allowed": false,
+            "preview": false,
+            "angle_group": null,
+            "label": "未用于产品配图：画面以人物、芯片、图标或缺失画面为主",
+            "reviewed_at": "2026-10-22",
+            "method": "visual-inspection"
+          }
         },
         {
           "title": "hwpc_matebook-d-16-se-2024_轻薄机身细节_03_03dd8731.png",
@@ -1071,7 +1617,17 @@
           "source_url": "https://consumer.huawei.com/content/dam/huawei-cbg-site/cn/mkt/pdp/laptops/matebook-d-16-2024/img/s1/huawei-matebook-d-16-2024-expand-your-horizons.png",
           "source_page": "https://consumer.huawei.com/cn/laptops/matebook-d-16-se-2024/",
           "usage": "产品介绍配图，使用前核对画面与具体配置",
-          "index_path": "华为PC全板块深度知识库_v7/P1-产品参数库/02-MateBook-Windows/MateBook D 16 SE 版/图片索引.csv"
+          "index_path": "华为PC全板块深度知识库_v7/P1-产品参数库/02-MateBook-Windows/MateBook D 16 SE 版/图片索引.csv",
+          "visual_review": {
+            "sha256": "72c8ba4247c7d56624f426a2643f0b69ac5275f20c73c83ae037ae9b529a300e",
+            "role": "product",
+            "allowed": true,
+            "preview": true,
+            "angle_group": "open",
+            "label": "银色电脑开合外观",
+            "reviewed_at": "2026-10-22",
+            "method": "visual-inspection"
+          }
         },
         {
           "title": "hwpc_matebook-d-16-se-2024_智慧协同功能_02_1f89afe9.jpg",
@@ -1086,7 +1642,17 @@
           "source_url": "https://consumer.huawei.com/content/dam/huawei-cbg-site/cn/mkt/pdp/laptops/matebook-d-16-2024/img/new/huawei-matebook-d-16-2024-love-the-super-device.jpg",
           "source_page": "https://consumer.huawei.com/cn/laptops/matebook-d-16-se-2024/",
           "usage": "产品介绍配图，使用前核对画面与具体配置",
-          "index_path": "华为PC全板块深度知识库_v7/P1-产品参数库/02-MateBook-Windows/MateBook D 16 SE 版/图片索引.csv"
+          "index_path": "华为PC全板块深度知识库_v7/P1-产品参数库/02-MateBook-Windows/MateBook D 16 SE 版/图片索引.csv",
+          "visual_review": {
+            "sha256": "3e3a201d39a3bc3d47967efdaa3728a9081eb7c82cb0801010fd0620ee5a1ca6",
+            "role": "non-product",
+            "allowed": false,
+            "preview": false,
+            "angle_group": null,
+            "label": "未用于产品配图：画面以人物、芯片、图标或缺失画面为主",
+            "reviewed_at": "2026-10-22",
+            "method": "visual-inspection"
+          }
         },
         {
           "title": "hwpc_matebook-d-16-se-2024_高清护眼屏幕_04_bf88f38d.png",
@@ -1101,7 +1667,17 @@
           "source_url": "https://consumer.huawei.com/content/dam/huawei-cbg-site/cn/mkt/pdp/laptops/matebook-d-16-2024/img/s1/huawei-matebook-d-16-2024-large-screen-1.png",
           "source_page": "https://consumer.huawei.com/cn/laptops/matebook-d-16-se-2024/",
           "usage": "产品介绍配图，使用前核对画面与具体配置",
-          "index_path": "华为PC全板块深度知识库_v7/P1-产品参数库/02-MateBook-Windows/MateBook D 16 SE 版/图片索引.csv"
+          "index_path": "华为PC全板块深度知识库_v7/P1-产品参数库/02-MateBook-Windows/MateBook D 16 SE 版/图片索引.csv",
+          "visual_review": {
+            "sha256": "fbd6e8e5e327a8f8c752095fdbbd51fc335bdda968d29ce332cf05caed03d3f7",
+            "role": "non-product",
+            "allowed": false,
+            "preview": false,
+            "angle_group": null,
+            "label": "未用于产品配图：画面以人物、芯片、图标或缺失画面为主",
+            "reviewed_at": "2026-10-22",
+            "method": "visual-inspection"
+          }
         },
         {
           "title": "hwpc_matebook-d-16-se-2024_高清护眼屏幕_05_f176cb0b.png",
@@ -1116,9 +1692,74 @@
           "source_url": "https://consumer.huawei.com/content/dam/huawei-cbg-site/cn/mkt/pdp/laptops/matebook-d-16-2024/img/s1/huawei-matebook-d-16-2024-stunning-display.png",
           "source_page": "https://consumer.huawei.com/cn/laptops/matebook-d-16-se-2024/",
           "usage": "产品介绍配图，使用前核对画面与具体配置",
-          "index_path": "华为PC全板块深度知识库_v7/P1-产品参数库/02-MateBook-Windows/MateBook D 16 SE 版/图片索引.csv"
+          "index_path": "华为PC全板块深度知识库_v7/P1-产品参数库/02-MateBook-Windows/MateBook D 16 SE 版/图片索引.csv",
+          "visual_review": {
+            "sha256": "06bebb8fa25c57ca11e24b0f773347ba3de3d7d64f654bc0d3c8d89214a38889",
+            "role": "product",
+            "allowed": true,
+            "preview": false,
+            "angle_group": "front",
+            "label": "电脑正面屏幕外观",
+            "reviewed_at": "2026-10-22",
+            "method": "visual-inspection"
+          }
+        },
+        {
+          "title": "official_se-keyboard.png",
+          "path": "华为PC全板块深度知识库_v7/P1-产品参数库/02-MateBook-Windows/MateBook D 16 SE 版/images/official_se-keyboard.png",
+          "file": "assets/fd0bf112f9a22c1aca23278db4058174b038ba28abb4b8689d286a02cf3f1c99.png",
+          "sha256": "fd0bf112f9a22c1aca23278db4058174b038ba28abb4b8689d286a02cf3f1c99",
+          "size": 105620,
+          "extension": "png",
+          "width": 450,
+          "height": 350,
+          "description": "电脑键盘局部外观",
+          "source_url": "https://consumer.huawei.com/content/dam/huawei-cbg-site/cn/mkt/pdp/laptops/matebook-d-16-2024/img/new/huawei-matebook-d-16-2024-love-the-keyboard.png",
+          "source_page": "https://consumer.huawei.com/cn/laptops/matebook-d-16-se-2024/",
+          "usage": "官方原图；画面不作为功能证据",
+          "index_path": "华为PC全板块深度知识库_v7/P1-产品参数库/02-MateBook-Windows/MateBook D 16 SE 版/图片视觉复核",
+          "visual_review": {
+            "sha256": "fd0bf112f9a22c1aca23278db4058174b038ba28abb4b8689d286a02cf3f1c99",
+            "role": "product",
+            "allowed": true,
+            "preview": false,
+            "angle_group": "keyboard",
+            "label": "电脑键盘局部外观",
+            "reviewed_at": "2026-10-22",
+            "method": "visual-inspection"
+          },
+          "imported_at": "2026-10-22",
+          "origin": "official-supplement"
+        },
+        {
+          "title": "official_se-ports.jpg",
+          "path": "华为PC全板块深度知识库_v7/P1-产品参数库/02-MateBook-Windows/MateBook D 16 SE 版/images/official_se-ports.jpg",
+          "file": "assets/763ef27469f2e40fe4f022ea2937d74983805e0aa4b9cbf1e232ea34caddf4ac.jpg",
+          "sha256": "763ef27469f2e40fe4f022ea2937d74983805e0aa4b9cbf1e232ea34caddf4ac",
+          "size": 83150,
+          "extension": "jpg",
+          "width": 908,
+          "height": 694,
+          "description": "电脑两侧接口外观",
+          "source_url": "https://consumer.huawei.com/content/dam/huawei-cbg-site/cn/mkt/pdp/laptops/matebook-d-16-2024/img/s2/huawei-matebook-d-16-2024-ports.jpg",
+          "source_page": "https://consumer.huawei.com/cn/laptops/matebook-d-16-se-2024/",
+          "usage": "官方原图；画面不作为功能证据",
+          "index_path": "华为PC全板块深度知识库_v7/P1-产品参数库/02-MateBook-Windows/MateBook D 16 SE 版/图片视觉复核",
+          "visual_review": {
+            "sha256": "763ef27469f2e40fe4f022ea2937d74983805e0aa4b9cbf1e232ea34caddf4ac",
+            "role": "product",
+            "allowed": true,
+            "preview": false,
+            "angle_group": "side",
+            "label": "电脑两侧接口外观",
+            "reviewed_at": "2026-10-22",
+            "method": "visual-inspection"
+          },
+          "imported_at": "2026-10-22",
+          "origin": "official-supplement"
         }
-      ]
+      ],
+      "preview_sha256": "72c8ba4247c7d56624f426a2643f0b69ac5275f20c73c83ae037ae9b529a300e"
     },
     {
       "id": "pc-677d0654cef2e7f7",
@@ -1165,7 +1806,17 @@
           "source_url": "https://consumer.huawei.com/content/dam/huawei-cbg-site/cn/mkt/pdp/laptops/matebook-d-16-2024-new/images/reason/huawei-matebook-d-16-2024-high-processor.jpg",
           "source_page": "https://consumer.huawei.com/cn/laptops/matebook-d-16-2024/",
           "usage": "按画面含义用于对应段落，发布前核对具体销售版本",
-          "index_path": "华为PC全板块深度知识库_v7/P1-产品参数库/02-MateBook-Windows/MateBook D 16/图片索引.csv"
+          "index_path": "华为PC全板块深度知识库_v7/P1-产品参数库/02-MateBook-Windows/MateBook D 16/图片索引.csv",
+          "visual_review": {
+            "sha256": "667d51d8d9e30cd722d57435cc6f1b646ac6de3e36cca72ff8947c545cae9866",
+            "role": "component",
+            "allowed": false,
+            "preview": false,
+            "angle_group": null,
+            "label": "未用于产品配图：画面以人物、芯片、图标或缺失画面为主",
+            "reviewed_at": "2026-10-22",
+            "method": "visual-inspection"
+          }
         },
         {
           "title": "hwpc_matebook-d-16-2024_超级终端协同_08.jpg",
@@ -1180,9 +1831,74 @@
           "source_url": "https://consumer.huawei.com/content/dam/huawei-cbg-site/cn/mkt/pdp/laptops/matebook-d-16-2024-new/images/reason/huawei-matebook-d-16-2024-high-device.jpg",
           "source_page": "https://consumer.huawei.com/cn/laptops/matebook-d-16-2024/",
           "usage": "按画面含义用于对应段落，发布前核对具体销售版本",
-          "index_path": "华为PC全板块深度知识库_v7/P1-产品参数库/02-MateBook-Windows/MateBook D 16/图片索引.csv"
+          "index_path": "华为PC全板块深度知识库_v7/P1-产品参数库/02-MateBook-Windows/MateBook D 16/图片索引.csv",
+          "visual_review": {
+            "sha256": "292dbabfa8e367cb72f8745812399c75f7b7945f265f8b8448b0ed93f2682ccb",
+            "role": "non-product",
+            "allowed": false,
+            "preview": false,
+            "angle_group": null,
+            "label": "未用于产品配图：画面以人物、芯片、图标或缺失画面为主",
+            "reviewed_at": "2026-10-22",
+            "method": "visual-inspection"
+          }
+        },
+        {
+          "title": "official_d16-hero.jpg",
+          "path": "华为PC全板块深度知识库_v7/P1-产品参数库/02-MateBook-Windows/MateBook D 16/images/official_d16-hero.jpg",
+          "file": "assets/87074bcde08146365bf5ea2d5734e59da7ab983b937bf6ba6263784361743f2b.jpg",
+          "sha256": "87074bcde08146365bf5ea2d5734e59da7ab983b937bf6ba6263784361743f2b",
+          "size": 238900,
+          "extension": "jpg",
+          "width": 1920,
+          "height": 960,
+          "description": "电脑整机开合外观",
+          "source_url": "https://consumer.huawei.com/content/dam/huawei-cbg-site/cn/mkt/pdp/laptops/matebook-d-16-2024-new/images/kv/huawei-matebook-d-16-2024-high-kv.jpg",
+          "source_page": "https://consumer.huawei.com/cn/laptops/matebook-d-16-2024/",
+          "usage": "官方原图；画面不作为功能证据",
+          "index_path": "华为PC全板块深度知识库_v7/P1-产品参数库/02-MateBook-Windows/MateBook D 16/图片视觉复核",
+          "visual_review": {
+            "sha256": "87074bcde08146365bf5ea2d5734e59da7ab983b937bf6ba6263784361743f2b",
+            "role": "product",
+            "allowed": true,
+            "preview": true,
+            "angle_group": "hero",
+            "label": "电脑整机开合外观",
+            "reviewed_at": "2026-10-22",
+            "method": "visual-inspection"
+          },
+          "imported_at": "2026-10-22",
+          "origin": "official-supplement"
+        },
+        {
+          "title": "official_d16-keyboard.jpg",
+          "path": "华为PC全板块深度知识库_v7/P1-产品参数库/02-MateBook-Windows/MateBook D 16/images/official_d16-keyboard.jpg",
+          "file": "assets/3b5b4be5f21117f959f9c3189faa493efe855c911a00db74f7b5ad0db180b85b.jpg",
+          "sha256": "3b5b4be5f21117f959f9c3189faa493efe855c911a00db74f7b5ad0db180b85b",
+          "size": 42524,
+          "extension": "jpg",
+          "width": 370,
+          "height": 416,
+          "description": "独立数字键盘局部外观",
+          "source_url": "https://consumer.huawei.com/content/dam/huawei-cbg-site/cn/mkt/pdp/laptops/matebook-d-16-2024-new/images/reason/huawei-matebook-d-16-2024-high-keyboard.jpg",
+          "source_page": "https://consumer.huawei.com/cn/laptops/matebook-d-16-2024/",
+          "usage": "官方原图；画面不作为功能证据",
+          "index_path": "华为PC全板块深度知识库_v7/P1-产品参数库/02-MateBook-Windows/MateBook D 16/图片视觉复核",
+          "visual_review": {
+            "sha256": "3b5b4be5f21117f959f9c3189faa493efe855c911a00db74f7b5ad0db180b85b",
+            "role": "product",
+            "allowed": true,
+            "preview": false,
+            "angle_group": "keyboard",
+            "label": "独立数字键盘局部外观",
+            "reviewed_at": "2026-10-22",
+            "method": "visual-inspection"
+          },
+          "imported_at": "2026-10-22",
+          "origin": "official-supplement"
         }
-      ]
+      ],
+      "preview_sha256": "87074bcde08146365bf5ea2d5734e59da7ab983b937bf6ba6263784361743f2b"
     },
     {
       "id": "pc-b9e26792d81fdc63",
@@ -1229,7 +1945,17 @@
           "source_url": "https://consumer.huawei.com/content/dam/huawei-cbg-site/cn/mkt/pdp/laptops/matebook-gt-14/images/display/huawei-matebook-gt-14-14.2-inch-oled-screen.png",
           "source_page": "https://consumer.huawei.com/cn/laptops/matebook-gt-14/",
           "usage": "按画面含义用于对应段落，发布前核对具体销售版本",
-          "index_path": "华为PC全板块深度知识库_v7/P1-产品参数库/02-MateBook-Windows/MateBook GT 系列/图片索引.csv"
+          "index_path": "华为PC全板块深度知识库_v7/P1-产品参数库/02-MateBook-Windows/MateBook GT 系列/图片索引.csv",
+          "visual_review": {
+            "sha256": "e07d62713c78b6e8af74e37d1926319fe2653e44ecaecc52a5cf291b0451dd14",
+            "role": "non-product",
+            "allowed": false,
+            "preview": false,
+            "angle_group": null,
+            "label": "未用于产品配图：画面以人物、芯片、图标或缺失画面为主",
+            "reviewed_at": "2026-10-22",
+            "method": "visual-inspection"
+          }
         },
         {
           "title": "hwpc_matebook-gt-14_专业接口细节_06.png",
@@ -1244,7 +1970,17 @@
           "source_url": "https://consumer.huawei.com/content/dam/huawei-cbg-site/cn/mkt/pdp/laptops/matebook-gt-14/images/system/huawei-matebook-gt-14-interfaces-01.png",
           "source_page": "https://consumer.huawei.com/cn/laptops/matebook-gt-14/",
           "usage": "按画面含义用于对应段落，发布前核对具体销售版本",
-          "index_path": "华为PC全板块深度知识库_v7/P1-产品参数库/02-MateBook-Windows/MateBook GT 系列/图片索引.csv"
+          "index_path": "华为PC全板块深度知识库_v7/P1-产品参数库/02-MateBook-Windows/MateBook GT 系列/图片索引.csv",
+          "visual_review": {
+            "sha256": "d0068293dc022e0d8b4981a6ca0b9cc44abe0058efc2920cc7fa3b7da4b87612",
+            "role": "product",
+            "allowed": true,
+            "preview": false,
+            "angle_group": "side",
+            "label": "电脑侧面接口外观",
+            "reviewed_at": "2026-10-22",
+            "method": "visual-inspection"
+          }
         },
         {
           "title": "hwpc_matebook-gt-14_六大核心卖点_02.jpg",
@@ -1259,7 +1995,17 @@
           "source_url": "https://consumer.huawei.com/content/dam/huawei-cbg-site/cn/mkt/pdp/laptops/matebook-gt-14/images/hero/huawei-matebook-gt-14-highlight-01.jpg",
           "source_page": "https://consumer.huawei.com/cn/laptops/matebook-gt-14/",
           "usage": "按画面含义用于对应段落，发布前核对具体销售版本",
-          "index_path": "华为PC全板块深度知识库_v7/P1-产品参数库/02-MateBook-Windows/MateBook GT 系列/图片索引.csv"
+          "index_path": "华为PC全板块深度知识库_v7/P1-产品参数库/02-MateBook-Windows/MateBook GT 系列/图片索引.csv",
+          "visual_review": {
+            "sha256": "9958e2c2ab5019b207d16c32f96dfd445cba33ad079561008bef7587e84a199b",
+            "role": "product",
+            "allowed": true,
+            "preview": true,
+            "angle_group": "hero",
+            "label": "电脑整机与顶盖外观",
+            "reviewed_at": "2026-10-22",
+            "method": "visual-inspection"
+          }
         },
         {
           "title": "hwpc_matebook-gt-14_智慧AI空间_07.jpg",
@@ -1274,7 +2020,17 @@
           "source_url": "https://consumer.huawei.com/content/dam/huawei-cbg-site/cn/mkt/pdp/laptops/matebook-gt-14/images/system/huawei-matebook-gt-14-ai-space.jpg",
           "source_page": "https://consumer.huawei.com/cn/laptops/matebook-gt-14/",
           "usage": "按画面含义用于对应段落，发布前核对具体销售版本",
-          "index_path": "华为PC全板块深度知识库_v7/P1-产品参数库/02-MateBook-Windows/MateBook GT 系列/图片索引.csv"
+          "index_path": "华为PC全板块深度知识库_v7/P1-产品参数库/02-MateBook-Windows/MateBook GT 系列/图片索引.csv",
+          "visual_review": {
+            "sha256": "30f700a053f66fa5038ea684da260869bfa5b6413668947bb26973fb984013c5",
+            "role": "product",
+            "allowed": true,
+            "preview": false,
+            "angle_group": "front",
+            "label": "电脑正面外观",
+            "reviewed_at": "2026-10-22",
+            "method": "visual-inspection"
+          }
         },
         {
           "title": "hwpc_matebook-gt-14_超能性能释放_04.png",
@@ -1289,7 +2045,17 @@
           "source_url": "https://consumer.huawei.com/content/dam/huawei-cbg-site/cn/mkt/pdp/laptops/matebook-gt-14/images/performance/huawei-matebook-gt-14-performances.png",
           "source_page": "https://consumer.huawei.com/cn/laptops/matebook-gt-14/",
           "usage": "按画面含义用于对应段落，发布前核对具体销售版本",
-          "index_path": "华为PC全板块深度知识库_v7/P1-产品参数库/02-MateBook-Windows/MateBook GT 系列/图片索引.csv"
+          "index_path": "华为PC全板块深度知识库_v7/P1-产品参数库/02-MateBook-Windows/MateBook GT 系列/图片索引.csv",
+          "visual_review": {
+            "sha256": "89dddc4f9bdb7202c19927d576038fc09e58139bb481a6ad91aaa873b170894f",
+            "role": "non-product",
+            "allowed": false,
+            "preview": false,
+            "angle_group": null,
+            "label": "未用于产品配图：画面以人物、芯片、图标或缺失画面为主",
+            "reviewed_at": "2026-10-22",
+            "method": "visual-inspection"
+          }
         },
         {
           "title": "hwpc_matebook-gt-14_高质感主视觉_01_d0476f4d.png",
@@ -1304,9 +2070,20 @@
           "source_url": "https://consumer.huawei.com/content/dam/huawei-cbg-site/cn/mkt/pdp/laptops/matebook-gt-14/images/hero/huawei-matebook-gt-14-kv-01.png",
           "source_page": "https://consumer.huawei.com/cn/laptops/matebook-gt-14/",
           "usage": "产品介绍配图，使用前核对画面与具体配置",
-          "index_path": "华为PC全板块深度知识库_v7/P1-产品参数库/02-MateBook-Windows/MateBook GT 系列/图片索引.csv"
+          "index_path": "华为PC全板块深度知识库_v7/P1-产品参数库/02-MateBook-Windows/MateBook GT 系列/图片索引.csv",
+          "visual_review": {
+            "sha256": "1a9693fffa90a90e116a3d2feae80f829d11c26a7756d48dd9dac24fa298da1d",
+            "role": "product",
+            "allowed": true,
+            "preview": false,
+            "angle_group": "back",
+            "label": "电脑后侧与顶盖外观",
+            "reviewed_at": "2026-10-22",
+            "method": "visual-inspection"
+          }
         }
-      ]
+      ],
+      "preview_sha256": "9958e2c2ab5019b207d16c32f96dfd445cba33ad079561008bef7587e84a199b"
     },
     {
       "id": "pc-0d837843d78c7471",
@@ -1353,7 +2130,17 @@
           "source_url": "https://consumer.huawei.com/content/dam/huawei-cbg-site/cn/mkt/pdp/laptops/matebook-x-pro-ultra-premium-edition/images/design/huawei-matebook-x-pro-colour-02-01.jpg",
           "source_page": "https://consumer.huawei.com/cn/laptops/matebook-x-pro-ultra-premium-edition/",
           "usage": "产品介绍配图，使用前核对画面与具体配置",
-          "index_path": "华为PC全板块深度知识库_v7/P1-产品参数库/02-MateBook-Windows/MateBook X系列/图片索引.csv"
+          "index_path": "华为PC全板块深度知识库_v7/P1-产品参数库/02-MateBook-Windows/MateBook X系列/图片索引.csv",
+          "visual_review": {
+            "sha256": "8988e18241d9aaab213cd8f024038e11d475fba5598f66c8e13f35a819b171ee",
+            "role": "non-product",
+            "allowed": false,
+            "preview": false,
+            "angle_group": null,
+            "label": "未用于产品配图：画面以人物、芯片、图标或缺失画面为主",
+            "reviewed_at": "2026-10-22",
+            "method": "visual-inspection"
+          }
         },
         {
           "title": "hwpc_matebook-x-pro-ultra_多彩配色外观_02_033ceab6.jpg",
@@ -1368,9 +2155,47 @@
           "source_url": "https://consumer.huawei.com/content/dam/huawei-cbg-site/cn/mkt/pdp/laptops/matebook-x-pro-ultra-premium-edition/new/huawei-matebook-x-pro-colour-04-01-thumb.jpg",
           "source_page": "https://consumer.huawei.com/cn/laptops/matebook-x-pro-ultra-premium-edition/",
           "usage": "产品介绍配图，使用前核对画面与具体配置",
-          "index_path": "华为PC全板块深度知识库_v7/P1-产品参数库/02-MateBook-Windows/MateBook X系列/图片索引.csv"
+          "index_path": "华为PC全板块深度知识库_v7/P1-产品参数库/02-MateBook-Windows/MateBook X系列/图片索引.csv",
+          "visual_review": {
+            "sha256": "b47741b3430582dea4daa2af2c1c5ea24ce356835da60bdd6db3fd82f6cea9cb",
+            "role": "non-product",
+            "allowed": false,
+            "preview": false,
+            "angle_group": null,
+            "label": "未用于产品配图：画面以人物、芯片、图标或缺失画面为主",
+            "reviewed_at": "2026-10-22",
+            "method": "visual-inspection"
+          }
+        },
+        {
+          "title": "official_x-hero.jpg",
+          "path": "华为PC全板块深度知识库_v7/P1-产品参数库/02-MateBook-Windows/MateBook X系列/images/official_x-hero.jpg",
+          "file": "assets/1eb7e2d32ff063ad850b89f2e2b6c12b48ad07a8589d90196deafbd1b7ce4b63.jpg",
+          "sha256": "1eb7e2d32ff063ad850b89f2e2b6c12b48ad07a8589d90196deafbd1b7ce4b63",
+          "size": 293593,
+          "extension": "jpg",
+          "width": 1920,
+          "height": 960,
+          "description": "电脑侧向开合外观",
+          "source_url": "https://consumer.huawei.com/content/dam/huawei-cbg-site/cn/mkt/pdp/laptops/matebook-x-pro-ultra-premium-edition/images/hero/huawei-matebook-x-pro-kv.jpg",
+          "source_page": "https://consumer.huawei.com/cn/laptops/matebook-x-pro-ultra-premium-edition/",
+          "usage": "官方原图；画面不作为功能证据",
+          "index_path": "华为PC全板块深度知识库_v7/P1-产品参数库/02-MateBook-Windows/MateBook X系列/图片视觉复核",
+          "visual_review": {
+            "sha256": "1eb7e2d32ff063ad850b89f2e2b6c12b48ad07a8589d90196deafbd1b7ce4b63",
+            "role": "product",
+            "allowed": true,
+            "preview": true,
+            "angle_group": "open",
+            "label": "电脑侧向开合外观",
+            "reviewed_at": "2026-10-22",
+            "method": "visual-inspection"
+          },
+          "imported_at": "2026-10-22",
+          "origin": "official-supplement"
         }
-      ]
+      ],
+      "preview_sha256": "1eb7e2d32ff063ad850b89f2e2b6c12b48ad07a8589d90196deafbd1b7ce4b63"
     }
   ],
   "files": [
@@ -12029,5 +12854,14 @@
       "size": 1453
     }
   ],
-  "skipped_entries": []
+  "skipped_entries": [],
+  "image_review_required": true,
+  "supplements": [
+    {
+      "date": "2026-10-22",
+      "kind": "official-product-images",
+      "count": 5,
+      "note": "原始资料包保留；新增官方图片独立记录来源，逐张视觉复核。"
+    }
+  ]
 }

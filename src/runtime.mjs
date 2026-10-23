@@ -4,12 +4,19 @@ import { DeepSeekClient } from './deepseek.mjs';
 import { runPipeline } from './pipeline.mjs';
 import { knowledgeMode, readEvidenceSnapshot, retrieveEvidence } from './evidence-cache.mjs';
 import { localCatalog } from './local-knowledge.mjs';
+import { retrieveResearchContext } from './research-context.mjs';
+import {checkCopyQuality} from './editorial.mjs';
 
 export async function execute(input, progress, settings = config()) {
   const ima = new ImaClient(settings);
   const ds = new DeepSeekClient(settings);
   const result = await runPipeline(input, {
     retrieve: (task, onProgress) => retrieveEvidence(ima, task, settings, onProgress),
+    retrieveResearch: task => retrieveResearchContext(task),
+    review: args => ds.review(args),
+    polish: args => ds.polish(args),
+    repair: args => ds.repair(args),
+    checkCopy:checkCopyQuality,
     generate: args => ds.generate(args), progress,
   });
   result.meta.model = settings.model;

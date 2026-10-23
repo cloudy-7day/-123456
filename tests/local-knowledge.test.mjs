@@ -1,3 +1,4 @@
+const noDiagnostics={record:async()=>{},list:async()=>[]};
 import test from 'node:test';
 import assert from 'node:assert/strict';
 import fs from 'node:fs/promises';
@@ -99,7 +100,7 @@ test('image signatures reject disguised text and path traversal cannot load asse
 });
 
 test('catalog and local health are available without API credentials',async()=>{
-  const handle=createScenarioService({knowledgeSource:'local',apiKey:'',model:'unused'});
+  const handle=createScenarioService({knowledgeSource:'local',apiKey:'',model:'unused'}, {diagnostics:noDiagnostics});
   for(const route of ['/api/products','/api/health']){
     let response;
     assert.equal(await handle({method:'GET'},{},route,(status,body)=>{response={status,body};}),true);

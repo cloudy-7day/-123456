@@ -9,13 +9,15 @@ if (target !== path.join(ROOT, 'modelscope-upload') || path.dirname(target) !== 
 const files = ['Dockerfile','.dockerignore','.gitattributes','package.json','pnpm-lock.yaml','pnpm-workspace.yaml','server.mjs','cli.mjs',
   'public/index.html','examples/task.json','modules/scenario/index.html','modules/scenario/package.json',
   'vendor/ima-skills-1.1.10/ima-skill/ima_api.cjs','vendor/ima-skills-1.1.10/ima-skill/meta.json'];
-for (const dir of ['src','contracts','prompts','modules/scenario/src','modules/scenario/server','modules/scenario/shared']) {
+for (const dir of ['src','src/retrieval','contracts','prompts','modules/scenario/src','modules/scenario/server','modules/scenario/shared']) {
   for (const entry of await fs.readdir(path.join(ROOT,dir),{withFileTypes:true})) {
+    if(dir==='src'&&entry.isDirectory()&&entry.name==='retrieval')continue;
     if (!entry.isFile() || !/\.(mjs|js|jsx|css|json|txt)$/.test(entry.name)) throw Error('Unexpected file in runtime directory: '+dir+'/'+entry.name);
     files.push(dir+'/'+entry.name);
   }
 }
 files.push('knowledge/catalog.json');
+files.push('knowledge/image-diversity.json','research/semifinal-2026-10-22/research.sqlite');
 for (const entry of await fs.readdir(path.join(ROOT,'knowledge/assets'),{withFileTypes:true})) {
   if (!entry.isFile() || !/^[a-f0-9]{64}\.(md|txt|csv|json|png|jpg|jpeg|webp)$/.test(entry.name)) throw Error('Unexpected knowledge asset: '+entry.name);
   files.push('knowledge/assets/'+entry.name);
