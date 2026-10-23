@@ -2,7 +2,7 @@
 
 基于初赛主线 `b462d798`，复赛试用分支 `codex/semifinal-evidence-search`，入口 `/scenario/`。主分支保留初赛作品；此分支供团队下载运行，未部署到魔搭。
 
-**先看：[本次改进说明](本次改进说明.md) · [通勤图文样例](examples/commute-xiaohongshu/README.md) · [下载完整源码 ZIP](https://github.com/cloudy-7day/qiuqiuyaoyao/archive/refs/heads/codex/semifinal-evidence-search.zip)**
+**先看：[90 秒演示视频与脚本](demo-video/README.md) · [本次改进说明](本次改进说明.md) · [通勤图文样例](examples/commute-xiaohongshu/README.md) · [下载完整源码 ZIP](https://github.com/cloudy-7day/qiuqiuyaoyao/archive/refs/heads/codex/semifinal-evidence-search.zip)**
 
 店员填写客户困扰、选择本轮产品（或按需求推荐）、选择门店能提供的帮助 → 一键生成图文。后台完成需求理解、候选与硬条件检查、资料检索及逐句核验；非阻断问题收进展开区，输入冲突仍需先澄清。
 

@@ -1,0 +1,141 @@
+{
+  "date": "2026-10-23",
+  "source": "OriginCut native export; timeline revision 2",
+  "duration_seconds": 90.0,
+  "video": {
+    "width": 1920,
+    "height": 1080,
+    "fps": "24/1",
+    "frames": "2160",
+    "codec": "h264"
+  },
+  "audio_codec": "aac",
+  "size_bytes": 11353135,
+  "sha256": "e23ef41f2ca4fe0a17153c90bb6010d827921701c545145571bb74101cd76eac",
+  "full_decode_exit_code": 0,
+  "signal_log_summary": [
+    "[Parsed_volumedetect_0 @ 0x8f106db00] mean_volume: -19.4 dB",
+    "[Parsed_volumedetect_0 @ 0x8f106db00] max_volume: -4.4 dB"
+  ],
+  "timeline": {
+    "video_items": 9,
+    "audio_items": 9,
+    "gaps": 0,
+    "overlaps": 0,
+    "tracks": [
+      [
+        {
+          "label": "01-hook.mp4",
+          "start_seconds": 0.0,
+          "duration_seconds": 9.0
+        },
+        {
+          "label": "02-promise.mp4",
+          "start_seconds": 9.0,
+          "duration_seconds": 8.0
+        },
+        {
+          "label": "03-input.mp4",
+          "start_seconds": 17.0,
+          "duration_seconds": 13.0
+        },
+        {
+          "label": "04-understand.mp4",
+          "start_seconds": 30.0,
+          "duration_seconds": 10.0
+        },
+        {
+          "label": "05-evidence.mp4",
+          "start_seconds": 40.0,
+          "duration_seconds": 10.0
+        },
+        {
+          "label": "06-cards.mp4",
+          "start_seconds": 50.0,
+          "duration_seconds": 13.0
+        },
+        {
+          "label": "07-detail.mp4",
+          "start_seconds": 63.0,
+          "duration_seconds": 10.0
+        },
+        {
+          "label": "08-delivery.mp4",
+          "start_seconds": 73.0,
+          "duration_seconds": 9.0
+        },
+        {
+          "label": "09-close.mp4",
+          "start_seconds": 82.0,
+          "duration_seconds": 8.0
+        }
+      ],
+      [
+        {
+          "label": "01-hook.mp4｜原音",
+          "start_seconds": 0.0,
+          "duration_seconds": 9.0
+        },
+        {
+          "label": "02-promise.mp4｜原音",
+          "start_seconds": 9.0,
+          "duration_seconds": 8.0
+        },
+        {
+          "label": "03-input.mp4｜原音",
+          "start_seconds": 17.0,
+          "duration_seconds": 13.0
+        },
+        {
+          "label": "04-understand.mp4｜原音",
+          "start_seconds": 30.0,
+          "duration_seconds": 10.0
+        },
+        {
+          "label": "05-evidence.mp4｜原音",
+          "start_seconds": 40.0,
+          "duration_seconds": 10.0
+        },
+        {
+          "label": "06-cards.mp4｜原音",
+          "start_seconds": 50.0,
+          "duration_seconds": 13.0
+        },
+        {
+          "label": "07-detail.mp4｜原音",
+          "start_seconds": 63.0,
+          "duration_seconds": 10.0
+        },
+        {
+          "label": "08-delivery.mp4｜原音",
+          "start_seconds": 73.0,
+          "duration_seconds": 9.0
+        },
+        {
+          "label": "09-close.mp4｜原音",
+          "start_seconds": 82.0,
+          "duration_seconds": 8.0
+        }
+      ]
+    ]
+  },
+  "visual_review_frames_seconds": [
+    3,
+    12,
+    23,
+    34,
+    46,
+    55,
+    67,
+    77,
+    86
+  ],
+  "scope": "Technical decode, frame inspection and timeline validation. Human review of synthetic voice and pacing is still recommended.",
+  "browser_playback": {
+    "current_time_seconds": 90,
+    "duration_seconds": 90,
+    "ended": true,
+    "error": null,
+    "method": "Actual IAB playback via CUA"
+  }
+}
