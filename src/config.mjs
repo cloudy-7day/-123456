@@ -12,6 +12,8 @@ export function config() {
   return {
     knowledgeSource: process.env.KNOWLEDGE_SOURCE || 'local',
     knowledgeDir: process.env.LOCAL_KNOWLEDGE_DIR ? path.resolve(process.env.LOCAL_KNOWLEDGE_DIR) : path.join(ROOT, 'knowledge'),
+    searchMode: process.env.SEARCH_MODE || 'lexical',
+    searchCacheDir: path.resolve(process.env.SEARCH_CACHE_DIR || path.join(ROOT,'output/search-cache')),
     kbName: process.env.IMA_KB_NAME || '任德耀新建华为PC知识库',
     evidenceCacheFile: process.env.IMA_EVIDENCE_CACHE_FILE ? path.resolve(process.env.IMA_EVIDENCE_CACHE_FILE) : undefined,
     skillPath: path.join(ROOT, 'vendor/ima-skills-1.1.10/ima-skill/ima_api.cjs'),
@@ -19,7 +21,7 @@ export function config() {
     apiKey: process.env.DEEPSEEK_API_KEY || '',
     baseUrl: process.env.DEEPSEEK_BASE_URL || 'https://api.deepseek.com',
     host: process.env.HOST || '127.0.0.1',
-    port: Number(process.env.PORT || 8791),
+    port: Number(process.env.PORT || 8792),
   };
 }
 

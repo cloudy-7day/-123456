@@ -1,6 +1,6 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
-import {suggestProduct as suggest} from '../modules/scenario/shared/product-suggestion.mjs';
+import {suggestProduct as suggest,restrictSystems} from '../modules/scenario/shared/product-suggestion.mjs';
 const feature=id=>({id,label:id,evidence:`verified ${id}`,source_path:'library/product/产品事实.md'});
 const products=[
  {name:'HUAWEI MateBook 14（鸿蒙版）',model:'HUAWEI MateBook 14',system:'HarmonyOS',features:['portable','keyboard','screen'].map(feature)},
@@ -70,4 +70,34 @@ test('professional task wording matches evidence without inferring needs from oc
  }
  for(const text of ['带电脑记录报告要点','差旅途中整理资料'])assert.equal(suggest(analysis(text),products).candidates[0]?.reasons[0].label,'portable');
  for(const text of ['我是一名医生','我是一名律师','不需要带电脑','不用读文献','是否要审阅合同','不同意带电脑'])assert.equal(suggest(analysis(text),products).name,'');
+});
+
+
+test('explicit exclusive software runtime narrows OS even when the OS row is only inferred',()=>{
+ for(const value of ['我使用的软件已经明确只支持 Windows','软件只支持 Windows','软件仅能在Windows运行','这个应用仅兼容Windows','所需程序只能在 Windows 系统上运行']){
+  for(const category of ['software','task','constraint']){
+   const a=analysis('每天背电脑去图书馆');
+   a.understanding.observations.push({kind:'fact',category,value},{kind:'inference',category:'os',value:'可能倾向或需要 Windows 系统环境'});
+   assert.deepEqual(restrictSystems(a.understanding.observations,products).map(p=>p.system),['Windows','Windows'],`${category}: ${value}`);
+   const r=suggest(a,products);assert.equal(r.name,products[1].name);assert(r.candidates.every(c=>!c.name.includes('鸿蒙')));
+   assert(r.limitations.some(t=>/兼容性尚未验证/.test(t)));
+  }
+ }
+});
+
+test('uncertain, inferred, conditional, nonexclusive and unneeded software do not hard-filter systems',()=>{
+ for(const value of ['不确定是否只支持Windows','软件可能只支持Windows','如果软件只支持Windows','软件不是只支持Windows','软件不仅支持Windows','我不使用只支持Windows的软件','我不用仅能在Windows运行的工具','软件只支持Windows或鸿蒙','我用Windows版WPS']){
+  assert.deepEqual(restrictSystems([{kind:'fact',category:'software',value}],products),products,value);
+ }
+ for(const kind of ['inference','unknown'])assert.deepEqual(restrictSystems([{kind,category:'software',value:'软件只支持Windows'}],products),products);
+});
+
+test('explicit alternative execution relaxes software-derived host OS only, not direct system or local requirements',()=>{
+ const software={kind:'fact',category:'software',value:'软件只支持Windows'};
+ for(const value of ['可以使用网页版','接受远程桌面','已有可用的云桌面'])assert.deepEqual(restrictSystems([software,{kind:'fact',category:'software',value}],products),products,value);
+ for(const value of ['不接受远程桌面','不确定是否可以使用网页版','如果可以使用网页版'])assert.deepEqual(restrictSystems([software,{kind:'fact',category:'software',value}],products).map(p=>p.system),['Windows','Windows'],value);
+ for(const requirement of [{kind:'fact',category:'os',value:'必须Windows'},{kind:'fact',category:'software',value:'必须在本机运行'}]){
+  assert.deepEqual(restrictSystems([software,{kind:'fact',category:'software',value:'可以使用网页版'},requirement],products).map(p=>p.system),['Windows','Windows']);
+ }
+ assert.deepEqual(restrictSystems([{...software,value:'软件只支持Windows，但我可以使用网页版'}],products),products);
 });

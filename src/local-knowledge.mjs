@@ -2,9 +2,16 @@ import fs from 'node:fs/promises';
 import path from 'node:path';
 import { createHash, randomUUID } from 'node:crypto';
 import { ROOT } from './config.mjs';
-import { productFeatures } from './product-profile.mjs';
+import { productFeatures, productProfile } from './product-profile.mjs';
+import { createKnowledgeSearch } from './retrieval/index.mjs';
 
 const defaultDir = path.join(ROOT, 'knowledge');
+const searches = new Map();
+function knowledgeSearch(directory, cacheDir) {
+  const key = path.resolve(directory) + '\n' + path.resolve(cacheDir);
+  if (!searches.has(key)) searches.set(key, createKnowledgeSearch({knowledgeDir:directory,cacheDir}));
+  return searches.get(key);
+}
 const hash = bytes => createHash('sha256').update(bytes).digest('hex');
 const normalized = value => String(value).normalize('NFKC').toLowerCase().replace(/^(huawei|华为)\s*/,'').replace(/\s+/g,'');
 // Rank only the already resolved product's images, using index descriptions, not pixels.
@@ -53,13 +60,13 @@ export async function localCatalog(directory=defaultDir) {
   const client=new LocalKnowledge({knowledgeDir:directory});
   const products=await Promise.all(data.products.map(async product=>{
     const {id,name,model,category,system}=product;
-    let features=[];
+    let features=[], profile=null;
     try{
       const document=product.documents.find(d=>d.title==='产品事实.md');
-      if(document){const bytes=await client.read(document,product);features=productFeatures(new TextDecoder('utf-8',{fatal:true}).decode(bytes),document.path);}
+      if(document){const bytes=await client.read(document,product);const text=new TextDecoder('utf-8',{fatal:true}).decode(bytes);features=productFeatures(text,document.path);profile=productProfile(text,document.path);}
     }catch{/* Unverified facts cannot support a recommendation. */}
     const image=await selectPreview(product,client);
-    return {id,name,model,category,system,features,preview:image?{url:`/api/product-image/${id}`,title:image.asset.title,path:image.asset.path}:null};
+    return {id,name,model,category,system,features,profile,preview:image?{url:`/api/product-image/${id}`,title:image.asset.title,path:image.asset.path}:null};
   }));
   return {knowledge_base:data.knowledge_base,retrieval:provenance(data),products};
 }
@@ -81,7 +88,7 @@ export async function productPreview(id,directory=defaultDir){
   return product?selectPreview(product,new LocalKnowledge({knowledgeDir:directory})):null;
 }
 export class LocalKnowledge {
-  constructor({knowledgeDir=defaultDir,localOutputRoot=ROOT}={}) {this.directory=knowledgeDir;this.outputRoot=localOutputRoot;}
+  constructor({knowledgeDir=defaultDir,localOutputRoot=ROOT,searchMode=process.env.SEARCH_MODE||'lexical',searchCacheDir=process.env.SEARCH_CACHE_DIR||path.join(ROOT,'output/search-cache'),searchClient}={}) {this.directory=knowledgeDir;this.outputRoot=localOutputRoot;this.searchMode=searchMode;this.searchCacheDir=searchCacheDir;this.searchClient=searchClient;}
   async read(asset,product) {
     if(!asset.path?.startsWith(product.path+'/'))throw Error('本地知识库来源不属于所选完整型号。');
     const bytes=await fs.readFile(assetPath(this.directory,asset.file));
@@ -106,9 +113,28 @@ export class LocalKnowledge {
       const bytes=await this.read(document,product);
       const text=new TextDecoder('utf-8',{fatal:true}).decode(bytes).replace(/^\uFEFF/,'');
       // Keep complete qualifiers; local source files are bounded by the importer.
-      sources.push({ref:`S${sources.length+1}`,kind:'text',title:document.title,path:document.path,text,truncated:false,sha256:document.sha256});
+      const factual=['产品事实.md','卖点与限制.md'].includes(document.title);
+      sources.push({ref:`S${sources.length+1}`,kind:'text',title:document.title,path:document.path,text,truncated:false,sha256:document.sha256,source_sha256:document.sha256,source_type:factual?'product_fact':'image_index',supports_product_fact:factual,product_id:product.id,model:product.model,system:product.system,section:'完整原文'});
     }
-    const images=rankKnowledgeImages(product.images,input);
+    let searchResult={mode:'not_requested',warnings:[],results:[]};
+    const taskQuery=[input.scenario,input.audience,input.goal,input.platform].filter(Boolean).join(' ');
+    if(taskQuery.trim()){
+      try{
+        const search=this.searchClient||knowledgeSearch(this.directory,this.searchCacheDir);
+        searchResult=await search.search(taskQuery,{productId:product.id,types:['product_guidance','scenario','faq','style'],limit:4,mode:this.searchMode});
+        warnings.push(...searchResult.warnings);
+        for(const hit of searchResult.results){
+          // Guidance is separate from product facts, even when it quotes a specification.
+          sources.push({ref:`S${sources.filter(s=>s.kind==='text').length+1}`,kind:'text',title:hit.title,path:hit.source_path,
+            text:`【辅助资料；不能作为产品能力或真实客户经历的事实证据】\n${hit.usage}\n${hit.text}`,truncated:false,
+            sha256:hit.source_sha256,source_sha256:hit.source_sha256,source_type:hit.source_type,supports_product_fact:false,
+            product_id:hit.product_id,model:hit.model,system:hit.system,section:hit.section,fictional:hit.fictional,
+            qualifiers:hit.qualifiers,usage:hit.usage,retrieval_mode:hit.retrieval_mode,ranks:hit.ranks,scores:hit.scores});
+        }
+        progress(searchResult.mode==='hybrid'?'已完成词法与向量混合检索，补充本次相关场景与表达资料。':searchResult.mode==='vector'?'已按向量检索补充本次相关场景与表达资料。':'已按关键词检索补充本次相关场景与表达资料。');
+      }catch(error){warnings.push(`辅助资料检索未完成，保留完整产品原文：${error.message}`);searchResult={mode:'unavailable',warnings:[],results:[]};}
+    }
+    const images=rankKnowledgeImages(product.images,input).filter(asset=>! /blur|模糊/i.test(`${asset.title} ${asset.description} ${asset.source_url}`));
     for(const asset of images){
       if(sources.filter(s=>s.kind==='image').length>=6)break;
       try {
@@ -121,6 +147,6 @@ export class LocalKnowledge {
       } catch(error){warnings.push(`图片「${asset.title}」已跳过：${error.message}`);}
     }
     if(!sources.some(s=>s.kind==='image'))warnings.push('本地库未取得可用图片，配图待补。');
-    return {knowledgeBase:data.knowledge_base,kb_name:data.knowledge_base,sources,warnings,retrieval:{...provenance(data),product_id:product.id,product_path:product.path,source_created_at:product.source_created_at}};
+    return {knowledgeBase:data.knowledge_base,kb_name:data.knowledge_base,sources,warnings,retrieval:{...provenance(data),product_id:product.id,product_path:product.path,source_created_at:product.source_created_at,search:{mode:searchResult.mode,requested_mode:this.searchMode,guidance_count:searchResult.results.length,warnings:searchResult.warnings}}};
   }
 }

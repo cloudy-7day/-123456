@@ -7,6 +7,7 @@ COPY package.json pnpm-lock.yaml pnpm-workspace.yaml ./
 RUN pnpm install --prod --frozen-lockfile --ignore-scripts
 
 FROM toolchain AS frontend-build
+ENV ONNXRUNTIME_NODE_INSTALL_CUDA=skip
 COPY package.json pnpm-lock.yaml pnpm-workspace.yaml ./
 RUN pnpm install --frozen-lockfile
 COPY modules/scenario/ ./modules/scenario/
@@ -22,6 +23,7 @@ COPY --chown=node:node contracts/ ./contracts/
 COPY --chown=node:node knowledge/ ./knowledge/
 COPY --chown=node:node prompts/ ./prompts/
 COPY --chown=node:node examples/task.json ./examples/task.json
+COPY --chown=node:node scripts/build-search-index.mjs ./scripts/build-search-index.mjs
 COPY --chown=node:node public/index.html ./public/index.html
 COPY --chown=node:node --from=frontend-build /app/public/scenario/ ./public/scenario/
 COPY --chown=node:node modules/scenario/server/ ./modules/scenario/server/

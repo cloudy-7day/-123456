@@ -1,7 +1,7 @@
 param(
     [string]$EnvFile,
     [string]$EvidenceFile,
-    [int]$Port = 8791
+    [int]$Port = 8792
 )
 $ErrorActionPreference = 'Stop'
 $appRoot = [IO.Path]::GetFullPath((Join-Path $PSScriptRoot '..'))

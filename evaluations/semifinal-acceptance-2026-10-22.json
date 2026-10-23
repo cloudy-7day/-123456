@@ -1,0 +1,84 @@
+{
+  "date": "2026-10-22",
+  "baseline": "b462d798cd8229178eabb59b5916d09b49b4b2bd",
+  "branch": "codex/semifinal-evidence-search",
+  "unit_integration_tests": {
+    "passed": 142,
+    "failed": 0
+  },
+  "browser_regression": {
+    "synthetic": true,
+    "suites": [
+      "focused-flow",
+      "semifinal-flow"
+    ],
+    "viewports": [
+      "1440x1000",
+      "390x844"
+    ]
+  },
+  "real_generation": {
+    "provider": "DeepSeek",
+    "model": "deepseek-flash",
+    "synthetic_customer": true,
+    "platform": "小红书",
+    "duration_ms": 25829,
+    "complete": true,
+    "image_count": 3,
+    "generation_review_attempts": 2,
+    "editorial_revision": {
+      "field": "content.title",
+      "before": "宿舍教室图书馆，屏幕键盘陪我写作业",
+      "after": "宿舍教室图书馆，写作业先看屏幕和键盘",
+      "reason": "独立复核发现第一人称使用暗示，改为任务导向标题；随后重新审查全文。",
+      "reviewed_at": "2026-10-22T14:38:19.094Z"
+    },
+    "final_review": {
+      "status": "passed",
+      "coverage": {
+        "total_segments": 21,
+        "reviewed_segments": 21,
+        "product_claims": 4,
+        "supported_claims": 4,
+        "core_product_claims": 3
+      }
+    },
+    "content": {
+      "title": "宿舍教室图书馆，写作业先看屏幕和键盘",
+      "body": "早八前在教室找个位置坐下，打开文档先看今天要交的作业要求，长文档一页页往下翻，眼睛总在找刚才看到的那一段。HUAWEI MateBook 14（鸿蒙版）这块 14.2 英寸 3:2 OLED 抗反射触控屏，分辨率 2880 × 1920，支持 10 点触控[S1][S2]。\n📚 到了图书馆，任务就从“看”变成“写”。作业文档开着，参考文献在另一个窗口，边看边敲字，改完一段再回头补两句。全尺寸背光键盘[S1]\n触控板支持 5 点触控[S1]\n🎒 写完一段收拾东西回宿舍，同一份作业还要接着改。机身厚度 14.5 mm，圆键盘版约 1.33 kg、方键盘版约 1.32 kg，均含电池[S1][S2]。轻便是你的偏好而不是硬指标，那就把它放进包里，感受一下从教室到宿舍这段路带着它是什么感觉。\n🖥️ 回到桌前继续写，屏幕和键盘还是那两样每天陪你最久的东西。与其看参数，不如把自己的文档和作业打开，看看阅读和输入这两件事，哪一件更值得你先去试一试。\n#大学生日常 #写作业 #笔记本电脑 #HarmonyOS",
+      "call_to_action": "你平时是看文档更花时间，还是敲字写作业更花时间？评论区聊聊你最想先试屏幕还是键盘。"
+    },
+    "limitations": "仅验证此样例；标题经独立复核后编辑并重新审核全文。不是无人复核即发布能力或正确率保证。"
+  },
+  "real_decision": {
+    "questions_before": [
+      "collaboration_devices",
+      "weight_limit"
+    ],
+    "candidates_after": [
+      "MateBook X系列（Windows 系列）"
+    ],
+    "questions_after": [],
+    "exclusions": 9,
+    "software_compatibility_unverified": true
+  },
+  "real_browser": {
+    "passed": true,
+    "real_saved_model_result": true,
+    "no_mocked_responses": true,
+    "viewports": [
+      "1440x1000",
+      "390x844"
+    ],
+    "images": 3,
+    "self_contained_html": true,
+    "page_errors": []
+  },
+  "packaging": {
+    "runtime_files": 1585,
+    "credentials_included": false,
+    "docker_built": false,
+    "deployed": false
+  },
+  "retrieval_report": "retrieval-results-2026-10-22.json"
+}

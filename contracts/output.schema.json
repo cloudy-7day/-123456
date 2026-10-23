@@ -1,7 +1,7 @@
 {
   "$schema": "http://json-schema.org/draft-07/schema#",
   "title": "营销图文生成结果",
-  "description": "完整营销文案与配图结果，六个顶层字段。画像和表达依据仅供内部核对，不作为最终文案方向报告展示。",
+  "description": "保留六个必填字段并兼容可选marketing_package。小红书新稿提供封面、三张内容卡和两条咨询答复；旧结果可缺省。所有面客字符串都必须通过同一事实审查。",
   "type": "object",
   "required": [
     "customer_insight",
@@ -21,7 +21,7 @@
     "strategy": {
       "type": "string",
       "title": "内容策略与表达依据",
-      "description": "内部可核对的表达依据摘要：职业/身份及其依据、2—3个生活场景、各场景任务与有来源的华为特点及适用条件。区分明确输入和假设，不输出建议方向报告。",
+      "description": "仅供店员核对：原话中的核心购机矛盾、对读者有用的判断方法、选用的1—2项有据产品事实及适用条件、与store_support相符的下一步。不把写作假设变为客户事实。",
       "maxLength": 3000
     },
     "content": {
@@ -42,13 +42,13 @@
         "body": {
           "type": "string",
           "title": "正文",
-          "description": "生活化完整成稿，用同一项任务串联所选场景：具体麻烦、对应功能与动作。产品事实就近引用。不要参数清单、建议方向、兼容性/续航/核验说明；使用条件完整写入 pending_confirmation，不放大产品能力。",
+          "description": "围绕一个真实购机矛盾给出可操作的判断，再自然连接1—2项有原文依据的产品事实。必要且改变结论的系统、版本和设备条件保留在相邻句中；不靠参数推导舒适、效率或兼容收益。不写内部分析术语、虚构体验或孤立参数清单。",
           "maxLength": 6000
         },
         "call_to_action": {
           "type": "string",
           "title": "行动引导",
-          "description": "围绕本次生活任务的一句自然互动，不重复追问已知信息，不出现到店核验、兼容性或续航说明。",
+          "description": "与task.store_support一致且可兑现的一句咨询下一步。默认只交流选购要点；software_check可邀请提供软件名和版本核对公开资料；仅in_store_demo可邀到店体验。不能承诺测试结果、库存、优惠或已成功预约，不重复索取已知信息。",
           "maxLength": 500
         }
       }
@@ -102,13 +102,95 @@
     "pending_confirmation": {
       "type": "array",
       "title": "待确认与待核验",
-      "description": "页面默认折叠的使用条件与核验依据。完整记录所用功能的设备/账号/系统/应用限制、未知兼容性、配置、图片等；不要将这些说明复制到营销正文。没有事项时空数组。",
+      "description": "店员内部核对清单。完整记录本次实际涉及的资料、版本、图片和服务条件缺口；会改变产品主张含义的必要限定仍须在该句附近出现，不能只藏于此。无关性能或兼容缺口不机械加入。",
       "minItems": 0,
       "items": {
         "type": "string",
         "title": "待确认事项",
         "description": "具体、可执行，区分已知缺口和未知事实。",
         "maxLength": 900
+      }
+    },
+    "marketing_package": {
+      "type": "object",
+      "title": "小红书封面与内容卡",
+      "description": "小红书新稿应提供，旧稿可缺省。面向顾客的全部字段均须事实审查；产品事实就近保留[S编号]，前端展示时处理引用。停止交付时必须移除此字段。",
+      "additionalProperties": false,
+      "required": [
+        "cover_title",
+        "cover_subtitle",
+        "cards",
+        "consultation_replies"
+      ],
+      "properties": {
+        "cover_title": {
+          "type": "string",
+          "title": "封面标题",
+          "description": "抓住本次真实购机矛盾，可见文字不超过18字；不写亲测、虚假结果或伪造权威。",
+          "maxLength": 48
+        },
+        "cover_subtitle": {
+          "type": "string",
+          "title": "封面副标题",
+          "description": "说明读者能得到的判断帮助，可见文字不超过32字。",
+          "maxLength": 72
+        },
+        "cards": {
+          "type": "array",
+          "minItems": 3,
+          "maxItems": 3,
+          "description": "固定三张：第一张给判断方法，第二张用1—2项有据产品事实支持对照，第三张给与store_support一致的具体下一步。不是三个地点或三个新卖点。",
+          "items": {
+            "type": "object",
+            "additionalProperties": false,
+            "required": [
+              "heading",
+              "body"
+            ],
+            "properties": {
+              "heading": {
+                "type": "string",
+                "title": "卡片标题",
+                "description": "每张只说一个判断，可见文字不超过18字。",
+                "maxLength": 48
+              },
+              "body": {
+                "type": "string",
+                "title": "卡片正文",
+                "description": "完整自然短句，目标40—80字，可见文字上限140字。需要引用的事实就近标注；必要限定不得裁掉，若仍放不下就改用另一项有据事实。",
+                "maxLength": 240
+              }
+            }
+          }
+        },
+        "consultation_replies": {
+          "type": "array",
+          "minItems": 2,
+          "maxItems": 2,
+          "description": "两组可供店员使用的具体问答，回应潜在读者的相关顾虑。所述产品事实仍须引用；不能伪造真实评论或承诺未选择的运营帮助。",
+          "items": {
+            "type": "object",
+            "additionalProperties": false,
+            "required": [
+              "question",
+              "reply"
+            ],
+            "properties": {
+              "question": {
+                "type": "string",
+                "title": "读者可能问",
+                "description": "相关且不同的选购问题，可见文字不超过40字。",
+                "maxLength": 80
+              },
+              "reply": {
+                "type": "string",
+                "title": "店员可用答复",
+                "description": "可见文字不超过120字。先回答判断方法或有据事实，再提出所选服务范围内的下一步；不保证兼容或效果。",
+                "maxLength": 220
+              }
+            }
+          }
+        }
       }
     }
   }

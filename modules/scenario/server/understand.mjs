@@ -2,7 +2,8 @@ import {randomUUID} from 'node:crypto';
 import {inputSchema,modelSchema,validateUnderstanding,deriveGate,ValidationError} from '../shared/contract.mjs';
 import {z} from 'zod';
 import {SYSTEM_PROMPT} from './prompt.mjs';
-import {samples,researchSources} from '../shared/samples.mjs';
+import {samples} from '../shared/samples.mjs';
+import {standardVersion,dimensions,understandingResearchSources as researchSources} from '../shared/standards.mjs';
 const OUTPUT_SCHEMA=JSON.stringify(z.toJSONSchema(modelSchema));
 export class ServiceError extends Error{constructor(code,message,status=502){super(message);Object.assign(this,{code,status});}}
 export async function understand(input,config,{fetchImpl=fetch,signal,timeoutMs=55000}={}){
@@ -22,7 +23,7 @@ export async function understand(input,config,{fetchImpl=fetch,signal,timeoutMs=
    const sample=samples.find(s=>s.id===parsed.data.sampleId);
    const modified=sample && (parsed.data.sources.find(s=>s.type==='scenario')?.text!==sample.text || parsed.data.sources.some(s=>s.type==='revision' || s.type==='supplement') || (parsed.data.sources.find(s=>s.type==='product')?.text||'') !== (sample.product?'指定产品：'+sample.product:''));
    const provenance=sample?{kind:sample.sourceId?'simulated_adaptation':'synthetic_sample',modifiedFromSample:Boolean(modified),sampleId:sample.id,originalSampleText:sample.text,modificationNotice:modified?(sample.sourceId?'本次输入已修改；新增内容不属于源帖依据。':'本次输入已修改；原示例和修改内容均不代表真实客户记录。'):null,label:sample.label,basis:sample.basis,inventedDetails:sample.fiction,source:researchSources.find(s=>s.id===sample.sourceId)}:{kind:'user_input',label:'用户提供的输入，未核验为真实客户记录'};
-   return {schemaVersion:'1.0',analysisId:randomUUID(),createdAt:new Date().toISOString(),input:parsed.data,provenance,understanding,review:{status:'pending',edits:[]},gate:deriveGate(understanding),call:{provider:'deepseek',model:config.model,attempts,durationMs:Date.now()-start,requestId:typeof body.id==='string'?body.id:null,usage:body.usage?{promptTokens:body.usage.prompt_tokens,completionTokens:body.usage.completion_tokens}:null}};
+   return {schemaVersion:'1.0',understandingStandard:{version:standardVersion,dimensionIds:dimensions.map(d=>d.id),researchSourceCount:researchSources.length},analysisId:randomUUID(),createdAt:new Date().toISOString(),input:parsed.data,provenance,understanding,review:{status:'pending',edits:[]},gate:deriveGate(understanding),call:{provider:'deepseek',model:config.model,attempts,durationMs:Date.now()-start,requestId:typeof body.id==='string'?body.id:null,usage:body.usage?{promptTokens:body.usage.prompt_tokens,completionTokens:body.usage.completion_tokens}:null}};
   }catch(error){
    if(combined.aborted) throw new ServiceError(signal?.aborted?'CANCELLED':'TIMEOUT',signal?.aborted?'已取消理解。':'理解超过 55 秒，请重试；输入已保留。',504);
    if(error instanceof ServiceError) throw error;

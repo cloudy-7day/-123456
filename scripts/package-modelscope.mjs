@@ -9,12 +9,15 @@ if (target !== path.join(ROOT, 'modelscope-upload') || path.dirname(target) !== 
 const files = ['Dockerfile','.dockerignore','.gitattributes','package.json','pnpm-lock.yaml','pnpm-workspace.yaml','server.mjs','cli.mjs',
   'public/index.html','examples/task.json','modules/scenario/index.html','modules/scenario/package.json',
   'vendor/ima-skills-1.1.10/ima-skill/ima_api.cjs','vendor/ima-skills-1.1.10/ima-skill/meta.json'];
-for (const dir of ['src','contracts','prompts','modules/scenario/src','modules/scenario/server','modules/scenario/shared']) {
+async function collectRuntime(dir) {
   for (const entry of await fs.readdir(path.join(ROOT,dir),{withFileTypes:true})) {
+    if (entry.isDirectory() && /^[a-z][a-z0-9-]*$/.test(entry.name)) { await collectRuntime(dir+'/'+entry.name); continue; }
     if (!entry.isFile() || !/\.(mjs|js|jsx|css|json|txt)$/.test(entry.name)) throw Error('Unexpected file in runtime directory: '+dir+'/'+entry.name);
     files.push(dir+'/'+entry.name);
   }
 }
+for (const dir of ['src','contracts','prompts','modules/scenario/src','modules/scenario/server','modules/scenario/shared']) await collectRuntime(dir);
+files.push('scripts/build-search-index.mjs');
 files.push('knowledge/catalog.json');
 for (const entry of await fs.readdir(path.join(ROOT,'knowledge/assets'),{withFileTypes:true})) {
   if (!entry.isFile() || !/^[a-f0-9]{64}\.(md|txt|csv|json|png|jpg|jpeg|webp)$/.test(entry.name)) throw Error('Unexpected knowledge asset: '+entry.name);
@@ -37,6 +40,8 @@ await fs.writeFile(path.join(target,'README.md'),`# 门店增长智能体 · 整
 
 必填私密环境变量：DEEPSEEK_API_KEY。默认 KNOWLEDGE_SOURCE=local，读取随包提供的 knowledge/，不调用 ima。
 建议明确填写 DEEPSEEK_MODEL=deepseek-flash。仅主动切回 KNOWLEDGE_SOURCE=ima 时才需要配置 ima 凭证。
+默认 SEARCH_MODE=lexical；本地冻结样例评测暂未显示向量整体更优。向量和混合为实验选项。
+如需使用 SEARCH_MODE=vector 或 hybrid，先在目标环境执行 node scripts/build-search-index.mjs，并给 output/search-cache 配置持久化存储；索引和模型缓存不随本包上传。缺少有效索引会明确降级到关键词检索。
 DEEPSEEK_BASE_URL 默认 https://api.deepseek.com，HOST/PORT 已在 Dockerfile 中设置。
 不要上传 .env.local 或将 SHADOW_ENV_FILE 设为你电脑上的路径。
 

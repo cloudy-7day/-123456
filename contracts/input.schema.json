@@ -1,13 +1,65 @@
 {
   "schema_version": "0.1",
   "type": "object",
-  "required": ["product", "audience", "scenario", "platform"],
+  "required": [
+    "product",
+    "audience",
+    "scenario",
+    "platform"
+  ],
   "properties": {
-    "product": { "type": "string", "title": "产品完整名称", "description": "区分鸿蒙、Windows 和具体型号", "maxLength": 120, "default": "HUAWEI MateBook 14（鸿蒙版）" },
-    "audience": { "type": "string", "title": "目标客户", "maxLength": 500, "default": "准备购买第一台电脑的大学新生" },
-    "scenario": { "type": "string", "title": "使用场景与当前困扰", "maxLength": 2000, "default": "每天带电脑上课，整理课堂笔记和小组作业；担心常用软件兼容性，希望先到店体验。" },
-    "platform": { "type": "string", "title": "发布平台", "enum": ["小红书", "公众号", "朋友圈", "门店海报"], "default": "小红书" },
-    "goal": { "type": "string", "title": "本次目标", "maxLength": 500, "default": "引导咨询和到店体验" },
-    "notes": { "type": "string", "title": "补充信息", "maxLength": 2000, "default": "先验证链路，暂不报价；未知信息明确标注。" }
+    "product": {
+      "type": "string",
+      "title": "产品完整名称",
+      "description": "区分鸿蒙、Windows 和具体型号",
+      "maxLength": 120,
+      "default": "HUAWEI MateBook 14（鸿蒙版）"
+    },
+    "audience": {
+      "type": "string",
+      "title": "目标客户",
+      "maxLength": 500,
+      "default": "准备购买第一台电脑的大学新生"
+    },
+    "scenario": {
+      "type": "string",
+      "title": "使用场景与当前困扰",
+      "maxLength": 2000,
+      "default": "每天带电脑上课，整理课堂笔记和小组作业；担心常用软件兼容性，希望先到店体验。"
+    },
+    "platform": {
+      "type": "string",
+      "title": "发布平台",
+      "enum": [
+        "小红书",
+        "公众号",
+        "朋友圈",
+        "门店海报"
+      ],
+      "default": "小红书"
+    },
+    "goal": {
+      "type": "string",
+      "title": "本次目标",
+      "maxLength": 500,
+      "default": "帮助读者做出选购判断并引导有效咨询"
+    },
+    "notes": {
+      "type": "string",
+      "title": "补充信息",
+      "maxLength": 2000,
+      "default": "先验证链路，暂不报价；未知信息明确标注。"
+    },
+    "store_support": {
+      "type": "string",
+      "title": "店员本轮可提供的帮助",
+      "description": "店员运营条件，独立于客户事实。缺省selection_guidance；客户希望到店或goal提到到店不等于店员已承诺。software_check只核对公开软件资料，in_store_demo只允许邀请到店，不证明库存、预约或实测结果。",
+      "enum": [
+        "selection_guidance",
+        "software_check",
+        "in_store_demo"
+      ],
+      "default": "selection_guidance"
+    }
   }
 }

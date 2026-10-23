@@ -15,6 +15,8 @@ export async function runShadowBatch(handoff, settings, send, dependencies = {})
       const result = await runPipeline(task, {
         retrieve: async () => evidence,
         generate: args => ds.generate({ ...args, customerContext: handoff.customer_context }),
+        review: typeof ds.review==='function' ? args=>ds.review(args) : undefined,
+        repair: typeof ds.repair==='function' ? args=>ds.repair({...args,customerContext:handoff.customer_context}) : undefined,
         progress: message => send({ type: 'progress', platform: task.platform, message }),
       });
       result.meta.model = settings.model;

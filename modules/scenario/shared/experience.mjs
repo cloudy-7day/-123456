@@ -7,6 +7,7 @@ export const sceneOptions = [
 ];
 export const channelOptions = [
   {id:'xiaohongshu',label:'小红书',enabled:true},
-  {id:'wechat',label:'公众号',enabled:false},
-  {id:'moments',label:'朋友圈',enabled:false},
+  {id:'wechat',label:'公众号',enabled:true},
+  {id:'moments',label:'朋友圈',enabled:true},
+  {id:'poster',label:'门店海报',enabled:true},
 ];

@@ -1,0 +1,454 @@
+{
+  "schema_version": 1,
+  "metadata": {
+    "title": "华为PC检索小型规则评测集",
+    "created_at": "2026-10-22",
+    "annotation_method": "依据已阅读原文先写查询、期望路径/段落和逐字摘录；禁止从检索排名反推期望答案。",
+    "authored_by": "Codex",
+    "human_reviewed": false,
+    "corpus_archive": "华为PC知识库(2).zip",
+    "corpus_archive_version": "v7",
+    "limitations": [
+      "仅20条目的性样例，未双人盲审，不代表真实业务需求分布或总体准确率。",
+      "路径与段落规则不穷尽所有可接受答案；漏标的同义资料可能记为未命中。",
+      "本评测只衡量资料检索，不验证产品兼容、采购适配、营销成稿事实正确性。",
+      "未就此集合调参；后续算法调整必须新增未参与调参的留出集。"
+    ],
+    "metrics": {
+      "recall_at_5": "每个正例在前5名命中的期望目标数/该例期望目标总数，再对正例取平均。",
+      "mrr_at_5": "正例首个正确目标的排名倒数（前5名未命中为0），再取平均。",
+      "negative_abstention": "无依据/未知型号负例前5返回空的比例，单独报告，不计入正例召回。",
+      "mode_integrity": "实际mode必须等于请求mode才计入该模式指标；词法降级不算向量或混合成功。",
+      "wrong_model": "已指定产品时，返回结果绑定其他产品、引用其他产品ID或明确另一系统的数量。",
+      "latency": "每个请求墙钟耗时；首次查询模型加载包含在查询耗时，语料初始化另列。"
+    }
+  },
+  "cases": [
+    {
+      "id": "legal-colloquial",
+      "category": "colloquial_scene",
+      "query": "我是律师，经常往法院跑，合同要来回改批注，还得扫一堆材料，先问清楚哪些东西？",
+      "types": [
+        "scenario",
+        "faq"
+      ],
+      "expected": [
+        {
+          "source_path": "华为PC全板块深度知识库_v7/P8-客户场景库/12-行业场景/17-法律服务/问题清单.md",
+          "source_sha256": "3f9c5adb3b0cba15da5148793f20d92861f9b35c2709ef807ca0a8e5ad5d7ec5",
+          "title": "问题清单",
+          "section_any": [
+            "必问问题",
+            "访谈顺序"
+          ],
+          "evidence_quote": "常用合同和批注工具是什么"
+        }
+      ],
+      "expect_empty": false,
+      "annotation_note": ""
+    },
+    {
+      "id": "campus-carry",
+      "category": "colloquial_scene",
+      "query": "学生每天从宿舍背着本子跑教室，包已经挺沉了，课上要用的软件还没核对。",
+      "types": [
+        "product_guidance",
+        "scenario"
+      ],
+      "expected": [
+        {
+          "source_path": "华为PC全板块深度知识库_v7/P2-卖点话术库/07-按型号角色/HUAWEI MateBook 14/学生用户沟通卡.md",
+          "source_sha256": "e150d4074e466482558548880d5a30d5153be275c83e8d4d0a9b08c875da80ae",
+          "title": "学生用户沟通卡",
+          "section_any": [
+            "先核课程清单"
+          ],
+          "evidence_quote": "每天往返宿舍和教室多远，是否需要带充电器？"
+        }
+      ],
+      "expect_empty": false,
+      "annotation_note": "",
+      "product_id": "pc-966626957db350e0"
+    },
+    {
+      "id": "same-name-harmony-os",
+      "category": "model_system",
+      "query": "MateBook 14 鸿蒙版到底是什么操作系统？",
+      "types": [
+        "product_fact"
+      ],
+      "expected": [
+        {
+          "source_path": "华为PC全板块深度知识库_v7/P1-产品参数库/01-鸿蒙电脑/HUAWEI MateBook 14/产品事实.md",
+          "source_sha256": "5101ff448d12cc7c70319845c3f74923656426dce7ab18fb150fda5bd17cab1f",
+          "title": "产品事实",
+          "section_any": [
+            "操作系统"
+          ],
+          "evidence_quote": "HarmonyOS 6"
+        }
+      ],
+      "expect_empty": false,
+      "annotation_note": "",
+      "product_id": "pc-966626957db350e0"
+    },
+    {
+      "id": "same-name-windows-os",
+      "category": "model_system",
+      "query": "MateBook 14 酷睿 Ultra Windows 系列操作系统有哪些版本？",
+      "types": [
+        "product_fact"
+      ],
+      "expected": [
+        {
+          "source_path": "华为PC全板块深度知识库_v7/P1-产品参数库/02-MateBook-Windows/MateBook 14 酷睿 Ultra/产品事实.md",
+          "source_sha256": "c6aea730841021636b85bfcaaed4e722f277b5d9c03d06d4c92be5b6a91f5f93",
+          "title": "产品事实",
+          "section_any": [
+            "操作系统"
+          ],
+          "evidence_quote": "Windows 11 家庭版"
+        }
+      ],
+      "expect_empty": false,
+      "annotation_note": "",
+      "product_id": "pc-53440547941ce8f1"
+    },
+    {
+      "id": "same-name-harmony-cpu",
+      "category": "model_exact_term",
+      "query": "MateBook 14 鸿蒙版的 CPU 处理器型号",
+      "types": [
+        "product_fact"
+      ],
+      "expected": [
+        {
+          "source_path": "华为PC全板块深度知识库_v7/P1-产品参数库/01-鸿蒙电脑/HUAWEI MateBook 14/产品事实.md",
+          "source_sha256": "5101ff448d12cc7c70319845c3f74923656426dce7ab18fb150fda5bd17cab1f",
+          "title": "产品事实",
+          "section_any": [
+            "处理器"
+          ],
+          "evidence_quote": "麒麟 X90"
+        }
+      ],
+      "expect_empty": false,
+      "annotation_note": "",
+      "product_id": "pc-966626957db350e0"
+    },
+    {
+      "id": "same-name-windows-cpu",
+      "category": "model_exact_term",
+      "query": "MateBook 14 酷睿 Ultra 7 155H 处理器的销售版本限制",
+      "types": [
+        "product_fact"
+      ],
+      "expected": [
+        {
+          "source_path": "华为PC全板块深度知识库_v7/P1-产品参数库/02-MateBook-Windows/MateBook 14 酷睿 Ultra/产品事实.md",
+          "source_sha256": "c6aea730841021636b85bfcaaed4e722f277b5d9c03d06d4c92be5b6a91f5f93",
+          "title": "产品事实",
+          "section_any": [
+            "处理器"
+          ],
+          "evidence_quote": "仅限 Windows 版本产品搭载。"
+        }
+      ],
+      "expect_empty": false,
+      "annotation_note": "",
+      "product_id": "pc-53440547941ce8f1"
+    },
+    {
+      "id": "fold-weight-qualifier",
+      "category": "configuration_limit",
+      "query": "MateBook Fold 标的重量包含键盘吗？带着整套出门时需要核对什么？",
+      "types": [
+        "product_fact"
+      ],
+      "expected": [
+        {
+          "source_path": "华为PC全板块深度知识库_v7/P1-产品参数库/01-鸿蒙电脑/HUAWEI MateBook Fold 非凡大师/产品事实.md",
+          "source_sha256": "c5e586e1c5e984c7e7b27a76ae8373f355082ccb69b73ed932047cdd3ffad368",
+          "title": "产品事实",
+          "section_any": [
+            "尺寸与重量"
+          ],
+          "evidence_quote": "约 1.16 kg（含电池,不含键盘）"
+        }
+      ],
+      "expect_empty": false,
+      "annotation_note": "",
+      "product_id": "pc-f5c7b748573ff4a6"
+    },
+    {
+      "id": "privacy-switch-edition",
+      "category": "configuration_limit",
+      "query": "Pro S 的隐私开关是不是每个版本都能一键防窥？",
+      "types": [
+        "product_fact"
+      ],
+      "expected": [
+        {
+          "source_path": "华为PC全板块深度知识库_v7/P1-产品参数库/01-鸿蒙电脑/HUAWEI MateBook Pro S/产品事实.md",
+          "source_sha256": "b2c07e62dcaa1e4568d58e4c27acc7b346031333c195d6c3f490993625768d06",
+          "title": "产品事实",
+          "section_any": [
+            "接口"
+          ],
+          "evidence_quote": "标准屏版、柔光屏版机型支持一键开启/关闭摄像头、麦克风及定位权限"
+        }
+      ],
+      "expect_empty": false,
+      "annotation_note": "",
+      "product_id": "pc-7a67602a2987e76f"
+    },
+    {
+      "id": "software-plugin-boundary",
+      "category": "software_limit",
+      "query": "专业软件能下载就算兼容吗？我的 CAD 还有插件和 USB 加密狗，要核对哪些条件？",
+      "types": [
+        "faq"
+      ],
+      "expected": [
+        {
+          "source_path": "华为PC全板块深度知识库_v7/P7-常见问题库/06-高频问答/04-专业软件能否安装.md",
+          "source_sha256": "dfd8b8e654dadc25f585f835bfb60acfdc30dc843c572c54ab02788611982896",
+          "title": "04-专业软件能否安装",
+          "section_any": [
+            "简短结论",
+            "按原短答给出的低风险顺序核验",
+            "适用范围"
+          ],
+          "evidence_quote": "不能仅凭电脑性能判断“能否安装”。"
+        }
+      ],
+      "expect_empty": false,
+      "annotation_note": ""
+    },
+    {
+      "id": "phone-collaboration",
+      "category": "cross_device",
+      "query": "手机协同需要什么条件？手机和电脑是不是华为的就一定能互传？",
+      "types": [
+        "faq"
+      ],
+      "expected": [
+        {
+          "source_path": "华为PC全板块深度知识库_v7/P7-常见问题库/06-高频问答/06-手机协同需要什么条件.md",
+          "source_sha256": "b571ef008b45dd53dd524a480d55b83c785b1c3cb6c0f0a9f38acf01d0aa93f6",
+          "title": "06-手机协同需要什么条件",
+          "section_any": [
+            "简短结论",
+            "适用范围",
+            "先确认"
+          ],
+          "evidence_quote": "要同时核对双方型号、系统/电脑管家版本、账号状态，以及 WLAN、蓝牙和相关权限。"
+        }
+      ],
+      "expect_empty": false,
+      "annotation_note": ""
+    },
+    {
+      "id": "tablet-collaboration",
+      "category": "cross_device",
+      "query": "我想把电脑的东西挪到平板上接着干，平板协同能不能直接用？",
+      "types": [
+        "faq"
+      ],
+      "expected": [
+        {
+          "source_path": "华为PC全板块深度知识库_v7/P7-常见问题库/06-高频问答/07-平板协同需要什么条件.md",
+          "source_sha256": "0f03870fe00861cc492064af076563ecf56049c55b223a8549f373407f0cf1ea",
+          "title": "07-平板协同需要什么条件",
+          "section_any": [
+            "简短结论",
+            "适用范围",
+            "先确认"
+          ],
+          "evidence_quote": "不能由“都属于华为设备”直接推断全部模式可用。"
+        }
+      ],
+      "expect_empty": false,
+      "annotation_note": ""
+    },
+    {
+      "id": "nas-network-neighbor",
+      "category": "rare_term",
+      "query": "鸿蒙电脑访问 NAS 网络邻居，需要确认共享方向、协议和账号权限。",
+      "types": [
+        "faq"
+      ],
+      "expected": [
+        {
+          "source_path": "华为PC全板块深度知识库_v7/P7-常见问题库/07-华为官方支持条目/66-华为鸿蒙电脑如何使用网络邻居访问其他电脑、NAS等设备.md",
+          "source_sha256": "da12ca5e0a6fc66c450d9f7495531c617cdc741e354bb134e9cea43cb2d22855",
+          "title": "66-华为鸿蒙电脑如何使用网络邻居访问其他电脑、NAS等设备",
+          "section_any": [
+            "一、适用范围",
+            "二、现象或用户问题"
+          ],
+          "evidence_quote": "访问 NAS 和共享本机是不同方向。"
+        }
+      ],
+      "expect_empty": false,
+      "annotation_note": ""
+    },
+    {
+      "id": "migration-limit",
+      "category": "cross_system",
+      "query": "旧 Windows 电脑换成鸿蒙电脑，数据克隆是不是连所有软件都可以完整搬过去？",
+      "types": [
+        "faq"
+      ],
+      "expected": [
+        {
+          "source_path": "华为PC全板块深度知识库_v7/P7-常见问题库/07-华为官方支持条目/68-使用数据克隆，将 Windows 电脑数据迁移至鸿蒙电脑.md",
+          "source_sha256": "6c1e0b3a2936c5a2433486667689a16b3a0944206b3c6f70cba9834f5d48320f",
+          "title": "68-使用数据克隆，将 Windows 电脑数据迁移至鸿蒙电脑",
+          "section_any": [
+            "一、适用范围",
+            "二、现象或用户问题",
+            "第2步：复核官方摘要中的已知事实"
+          ],
+          "evidence_quote": "文档、图片、应用等并非全部数据和应用都能迁移。"
+        }
+      ],
+      "expect_empty": false,
+      "annotation_note": ""
+    },
+    {
+      "id": "usb-c-power",
+      "category": "exact_term",
+      "query": "USB-C 不能充电，同样的接口外形为什么插上电量不增加？",
+      "types": [
+        "faq"
+      ],
+      "expected": [
+        {
+          "source_path": "华为PC全板块深度知识库_v7/P7-常见问题库/06-高频问答/30-USB-C不能充电.md",
+          "source_sha256": "7f9a80a7b0dcbe461395c8a4924dfea0371657f6f95efd209ffd459376a02336",
+          "title": "30-USB-C不能充电",
+          "section_any": [
+            "简短结论",
+            "适用范围",
+            "先确认"
+          ],
+          "evidence_quote": "USB-C 外形相同不代表每个端口都支持充电。"
+        }
+      ],
+      "expect_empty": false,
+      "annotation_note": ""
+    },
+    {
+      "id": "battery-marketing",
+      "category": "performance_limit",
+      "query": "广告里的最长续航，我一边开会一边处理文件是不是也能用那么久？",
+      "types": [
+        "faq"
+      ],
+      "expected": [
+        {
+          "source_path": "华为PC全板块深度知识库_v7/P7-常见问题库/06-高频问答/14-续航为何与宣传不同.md",
+          "source_sha256": "a872af122f638e99e5a00b90a69772926cd367b6e061713cd2b6da6c96f622f2",
+          "title": "14-续航为何与宣传不同",
+          "section_any": [
+            "简短结论",
+            "适用范围"
+          ],
+          "evidence_quote": "不能直接把“最长”数值当作所有用户的固定时长。"
+        }
+      ],
+      "expect_empty": false,
+      "annotation_note": ""
+    },
+    {
+      "id": "bitlocker-key",
+      "category": "rare_term",
+      "query": "BitLocker 恢复密钥应该怎么保管，可以贴在电脑上吗？",
+      "types": [
+        "faq"
+      ],
+      "expected": [
+        {
+          "source_path": "华为PC全板块深度知识库_v7/P7-常见问题库/06-高频问答/35-恢复密钥如何保管.md",
+          "source_sha256": "2c7e80a35a04aad87f19cef7441cf3f78471970ee823ec0e7d1746d6d6123ee8",
+          "title": "35-恢复密钥如何保管",
+          "section_any": [
+            "简短结论",
+            "适用范围"
+          ],
+          "evidence_quote": "不要贴在电脑上、放在同一未加密磁盘里或通过公开聊天发送。"
+        }
+      ],
+      "expect_empty": false,
+      "annotation_note": ""
+    },
+    {
+      "id": "printer-colloquial",
+      "category": "colloquial_device",
+      "query": "办公室打印机不是华为的，电脑明明显示连上了，发过去的东西就是打不出来。",
+      "types": [
+        "faq"
+      ],
+      "expected": [
+        {
+          "source_path": "华为PC全板块深度知识库_v7/P7-常见问题库/07-华为官方支持条目/24-华为计算机无法连接其它品牌打印机或连接后无法打印.md",
+          "source_sha256": "c6f9c58fa8cc3292b692a6be459df1ee98901e022e5f356cb09efe246e412d0d",
+          "title": "24-华为计算机无法连接其它品牌打印机或连接后无法打印",
+          "section_any": [
+            "一、适用范围",
+            "二、现象或用户问题"
+          ],
+          "evidence_quote": "区分“发现不到”“连接成功但任务失败”和“队列卡住”。"
+        }
+      ],
+      "expect_empty": false,
+      "annotation_note": ""
+    },
+    {
+      "id": "xiaohongshu-style",
+      "category": "style_reference",
+      "query": "小红书图文文案不要空泛形容词，要按真实生活过程说清楚问题、动作和证据。",
+      "types": [
+        "style"
+      ],
+      "expected": [
+        {
+          "source_path": "华为PC全板块深度知识库_v7/P6-营销素材库/02-平台模板/小红书图文模板.md",
+          "source_sha256": "588f45257097aafcd97d0cbbee0aea58f1e87c849fe60814198d23c5815c36a2",
+          "title": "小红书图文模板",
+          "section_any": [
+            "一、用途与边界",
+            "三、写作流程"
+          ],
+          "evidence_quote": "不能回答这些问题的形容词、口号和重复参数应删除。"
+        }
+      ],
+      "expect_empty": false,
+      "annotation_note": "只评估写作流程资料相关性；该参考模板的图片数量等不得覆盖赛事规则。"
+    },
+    {
+      "id": "unknown-model",
+      "category": "unknown_intent",
+      "query": "我就记得叫 MateBook 14，系统和年份不知道，给我确切处理器参数。",
+      "types": [
+        "product_fact"
+      ],
+      "expected": [],
+      "expect_empty": true,
+      "annotation_note": "未选择完整型号时事实检索应为空；应追问系统/完整型号，不能凭同名系列猜测。"
+    },
+    {
+      "id": "unsupported-quantum",
+      "category": "unsupported_need",
+      "query": "这台电脑的量子纠缠无线充电功率是多少？",
+      "types": [
+        "product_fact"
+      ],
+      "expected": [],
+      "expect_empty": true,
+      "annotation_note": "该选定型号原文无量子纠缠无线充电能力。此项评估无依据需求是否仍返回貌似相关事实；不代表已实现语义拒答。",
+      "product_id": "pc-966626957db350e0"
+    }
+  ]
+}

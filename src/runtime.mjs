@@ -11,6 +11,8 @@ export async function execute(input, progress, settings = config()) {
   const result = await runPipeline(input, {
     retrieve: (task, onProgress) => retrieveEvidence(ima, task, settings, onProgress),
     generate: args => ds.generate(args), progress,
+    review: args => ds.review(args),
+    repair: args => ds.repair(args),
   });
   result.meta.model = settings.model;
   return result;

@@ -8,6 +8,8 @@ import { ROOT, safeError } from './config.mjs';
 import { localCatalog, productPreview } from './local-knowledge.mjs';
 import { knowledgeMode } from './evidence-cache.mjs';
 import { restrictSystems } from '../modules/scenario/shared/product-suggestion.mjs';
+import { explainDecision } from '../modules/scenario/shared/decision-support.mjs';
+import { prepareDecision } from './decision-service.mjs';
 
 async function body(req) {
   if (!req.headers['content-type']?.startsWith('application/json')) throw Object.assign(Error('需要 JSON 输入'), {status:415});
@@ -51,7 +53,7 @@ export function createScenarioService(settings, {analyze=understand, batch=runSh
       try {const data=await fs.readFile(target);res.writeHead(200,{'Content-Type':({'.html':'text/html; charset=utf-8','.js':'text/javascript; charset=utf-8','.css':'text/css; charset=utf-8','.svg':'image/svg+xml'})[path.extname(target)]||'application/octet-stream'});res.end(data);}
       catch {reply(404,{error:'请先运行构建，再打开场景模块。'});}return true;
     }
-    if(req.method!=='POST'||!['/api/analyze','/api/confirm','/api/handoff','/api/run-scenario'].includes(route))return false;
+    if(req.method!=='POST'||!['/api/analyze','/api/confirm','/api/decision','/api/handoff','/api/run-scenario'].includes(route))return false;
     try {
       const input=await body(req);
       if(route==='/api/analyze'){
@@ -67,6 +69,12 @@ export function createScenarioService(settings, {analyze=understand, batch=runSh
       if(route==='/api/confirm'){
         const item=get(input.analysisId);item.analysis=confirmAnalysis(item.analysis,input);reply(200,item.analysis);return true;
       }
+      if(route==='/api/decision'){
+        const item=get(input.analysisId);
+        if(input.manualProduct!==undefined && (typeof input.manualProduct!=='string'||input.manualProduct.length>120))throw Error('产品名称无效。');
+        const catalog=await localCatalog(settings.knowledgeDir);
+        reply(200,await prepareDecision(item.analysis,catalog,settings,{manualProduct:input.manualProduct||''}));return true;
+      }
       const handoff=buildHandoff(get(input.analysisId).analysis,input);
       if(knowledgeMode(settings)==='local'){
         const {products}=await localCatalog(settings.knowledgeDir);
@@ -75,6 +83,10 @@ export function createScenarioService(settings, {analyze=understand, batch=runSh
         const matches=products.filter(p=>normalize(p.name)===requested||normalize(p.model)===requested);
         if(matches.length!==1)throw Error('请选择知识库中的完整型号与系统版本。');
         if(!restrictSystems(handoff.customer_context.understanding.observations,matches).length)throw Error('所选产品与客户明确的系统要求冲突，请更换型号或修订原始需求后重新理解。');
+        const decision=explainDecision(get(input.analysisId).analysis,products,{manualProduct:matches[0].name});
+        const excluded=decision.exclusions.find(item=>item.name===matches[0].name);
+        if(excluded)throw Error('所选产品不满足明确条件：'+excluded.reason);
+        handoff.customer_context.decision={limitations:decision.limitations,questions:decision.questions};
       }
       if(route==='/api/handoff'){reply(200,handoff);return true;}
       if(busy)throw Object.assign(Error('已有任务运行中，请稍后重试。'),{status:409});

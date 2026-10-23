@@ -15,6 +15,7 @@ const legacySaved=structuredClone(saved);
 await page.route('**/api/scenario-latest',r=>r.fulfill({json:legacySaved}));
 await page.route('**/api/health',r=>r.fulfill({json:{configured:true,retrievalMode:'local'}}));
 await page.route('**/api/products',r=>r.fulfill({json:{products:[{id:'test-product',name:'MateBook 14 酷睿 Ultra（Windows 系列）',model:'MateBook 14 酷睿 Ultra',system:'Windows',features:[{id:'screen',label:'屏幕资料',evidence:'合成测试屏幕说明',source_path:'测试产品/产品事实.md'}]},{id:'other-product',name:'HUAWEI MateBook 14（鸿蒙版）',model:'HUAWEI MateBook 14',system:'HarmonyOS',features:[]}]}}));
+await page.route('**/api/decision',route=>route.fulfill({json:{questions:[],exclusions:[],limitations:[],retrieval:{mode:'synthetic'}}}));
 const analysisRequests=[];let submitted;let release;const deferred=new Promise(resolve=>release=resolve);
 const selected=saved.results.find(x=>x.platform==='小红书');
 await page.route('**/api/analyze',route=>{const input=route.request().postDataJSON();analysisRequests.push(input);analysis.input.sources=input.sources;return route.fulfill({contentType:'application/json',body:JSON.stringify(analysis)});});
@@ -22,11 +23,13 @@ await page.route('**/api/confirm',route=>route.fulfill({contentType:'application
 await page.route('**/api/run-scenario',async route=>{submitted=route.request().postDataJSON();await deferred;await route.fulfill({contentType:'application/x-ndjson',body:JSON.stringify({type:'result',result:{...saved,results:[selected]}})+'\n'});});
 try {
  await page.goto((process.env.LOCAL_APP_URL||'http://127.0.0.1:8791')+'/scenario/');
+ assert.equal(await page.locator('.input-settings').evaluate(e=>e.open),false,'advanced controls are initially collapsed');
+ await page.locator('.input-settings>summary').click();
  assert.equal(await page.getByRole('tab',{name:'校园学习',exact:true}).count(),1,'campus scene must be selected via a tag');
  assert.equal(await page.getByRole('tab',{name:'按身份与任务展开',exact:true}).getAttribute('aria-selected'),'true');
  assert.equal(await page.getByRole('tab',{name:'小红书',exact:true}).getAttribute('aria-selected'),'true');
  assert.equal(await page.locator('#product').count(),0,'initial input must not require a separate product field');
- await page.getByText('需要输入示例？',{exact:true}).click();
+ await page.getByText('其他输入示例',{exact:true}).click();
  const picker=page.locator('.example-picker');
  assert.equal(await picker.getByRole('button',{name:'学生',exact:true}).getAttribute('aria-pressed'),'true');
  assert.equal(await picker.getByRole('checkbox').count(),6);
@@ -54,7 +57,7 @@ try {
  await page.setViewportSize({width:390,height:844});await picker.scrollIntoViewIfNeeded();
  assert.equal(await page.evaluate(()=>document.documentElement.scrollWidth>innerWidth),false);
  await page.screenshot({path:'output/input-examples-mobile.png'});await page.setViewportSize({width:1440,height:1000});
- await page.getByText('需要输入示例？',{exact:true}).click();
+ await page.getByText('其他输入示例',{exact:true}).click();
  // Replay saved API envelopes to test UI; update their original source to match the one complete input.
  const text=analysis.input.sources.map(x=>x.text).join('\n');analysis.input.sources=[{id:'scenario',type:'scenario',text}];confirmed.input.sources=analysis.input.sources;
  await page.locator('#scenario').fill(text);await page.getByRole('button',{name:'仅查看理解',exact:true}).click();
@@ -64,16 +67,16 @@ try {
  await page.getByRole('button',{name:'整理补充并继续生成',exact:true}).click();
  await page.waitForFunction(()=>document.querySelector('#scenario').matches(':disabled')&&document.querySelector('.focused-generation'));
  assert.equal(analysisRequests.length,2,'edits are automatically reanalyzed');assert(analysisRequests[1].sources.some(x=>x.type==='revision'));
- await page.waitForFunction(()=>document.querySelector('.focused-generation button.primary')?.textContent==='正在生成…');
+ await page.waitForFunction(()=>document.querySelector('.focused-generation button.primary')?.textContent==='正在生成图文…');
  assert.equal(await page.locator('#scenario').isDisabled(),true);release();
  await page.getByRole('heading',{name:'完整文案',exact:true}).waitFor();
- assert.deepEqual(submitted.platforms,['小红书']);assert.equal(submitted.product,'MateBook 14 酷睿 Ultra（Windows 系列）');assert.match(submitted.goal,/按身份与任务展开/);assert.match(submitted.goal,/不能覆盖输入中的身份与实际任务/);
+ assert.deepEqual(submitted.platforms,['小红书']);assert.equal(submitted.product,'MateBook 14 酷睿 Ultra（Windows 系列）');assert.match(submitted.goal,/按身份与任务展开/);assert.match(submitted.goal,/不能覆盖客户原话/);
  assert.equal(await page.getByRole('heading',{name:'完整文案',exact:true}).count(),1);
  assert.equal(await page.getByRole('heading',{name:'需求画像',exact:true}).isVisible(),false);
  assert.equal(await page.getByRole('heading',{name:'店员演示脚本',exact:true}).count(),0);assert.equal(await page.getByRole('button',{name:'复制店员脚本',exact:true}).count(),0);
- await page.getByRole('button',{name:'复制文案',exact:true}).click();const copied=(await page.evaluate(()=>navigator.clipboard.readText())).replace(/\r\n/g,'\n');assert.equal(copied,[output.content.title,output.content.body,output.content.call_to_action].join('\n\n'));assert(!copied.includes(output.sales_plan.demo_script));
+ await page.getByRole('button',{name:'复制文案',exact:true}).click();const copied=(await page.evaluate(()=>navigator.clipboard.readText())).replace(/\r\n/g,'\n');assert.equal(copied,[output.content.title,output.content.body.replace(/\[S\d+\]/g,''),output.content.call_to_action].join('\n\n'));assert(!copied.includes(output.sales_plan.demo_script));
  const download=page.waitForEvent('download');await page.getByRole('button',{name:'导出小红书文案',exact:true}).click();const file=await download;assert.equal(file.suggestedFilename(),'小红书文案.txt');await file.saveAs('output/focused-deliverables.txt');
- const content=await fs.readFile('output/focused-deliverables.txt','utf8');assert(content.includes(selected.result.output.content.body));assert(!content.includes(selected.result.output.sales_plan.demo_script));assert(!content.includes('店员演示脚本'));assert(!content.includes(output.strategy));
+ const content=await fs.readFile('output/focused-deliverables.txt','utf8');assert(content.includes(selected.result.output.content.body.replace(/\[S\d+\]/g,'')));assert(!content.includes(selected.result.output.sales_plan.demo_script));assert(!content.includes('店员演示脚本'));assert(!content.includes(output.strategy));
  await page.locator('.supporting-details>summary').click();assert.equal(await page.getByText(output.strategy,{exact:true}).count(),0);assert.equal(await page.getByText(output.sales_plan.quote,{exact:true}).count(),0);await page.locator('.supporting-details>summary').click();
  await page.screenshot({path:'output/focused-desktop.png',fullPage:true});await page.setViewportSize({width:390,height:844});assert.equal(await page.evaluate(()=>document.documentElement.scrollWidth>innerWidth),false);
  await page.screenshot({path:'output/focused-mobile.png',fullPage:true});assert.deepEqual(errors,[]);
@@ -85,22 +88,21 @@ try {
  delete output.sales_plan;delete output.follow_up;delete output.strategy;
  // An unresolved model must allow typing without auto-submitting its first character.
  analysis.understanding.product={name:'未知具体型号',status:'specified',evidence:[]};submitted=null;
- await page.goto((process.env.LOCAL_APP_URL||'http://127.0.0.1:8791')+'/scenario/');await page.locator('#scenario').fill('完整的测试需求');await page.getByRole('button',{name:'生成小红书文案',exact:true}).click();
+ await page.goto((process.env.LOCAL_APP_URL||'http://127.0.0.1:8791')+'/scenario/');await page.locator('#scenario').fill('完整的测试需求');await page.getByRole('button',{name:'生成小红书图文',exact:true}).click();
  await page.getByText(/型号或系统版本不明确/).waitFor();
  const modelInput=page.getByLabel('从资料库选择具体型号');await modelInput.fill('M');await page.waitForTimeout(150);
  assert.equal(submitted,null,'typing a partial model must never start generation');assert.equal(await modelInput.isVisible(),true);
- await modelInput.fill('MateBook 14 酷睿 Ultra（Windows 系列）');await page.getByRole('button',{name:'按当前候选生成',exact:true}).click();await page.getByRole('heading',{name:'完整文案',exact:true}).waitFor();
+ await modelInput.fill('MateBook 14 酷睿 Ultra（Windows 系列）');await page.getByRole('button',{name:'按当前信息生成图文',exact:true}).click();await page.getByRole('heading',{name:'完整文案',exact:true}).waitFor();
  assert.equal(submitted.productOrigin,'salesperson_selection');
  // A judge/operator may specify a product before generation. It overrides a candidate, not the source text.
  await page.goto((process.env.LOCAL_APP_URL||'http://127.0.0.1:8791')+'/scenario/');
- await page.getByRole('button',{name:'指定产品',exact:true}).click();
- await page.getByLabel('本轮指定产品',{exact:true}).selectOption('HUAWEI MateBook 14（鸿蒙版）');
+ await page.locator('#designated-product').selectOption('HUAWEI MateBook 14（鸿蒙版）');
  await page.locator('#scenario').fill('为准备上学的同学写一篇图文。');
- submitted=null;await page.getByRole('button',{name:'生成小红书文案',exact:true}).click();
+ submitted=null;await page.getByRole('button',{name:'生成小红书图文',exact:true}).click();
  await page.getByRole('heading',{name:'完整文案',exact:true}).waitFor();
  assert.equal(submitted.product,'HUAWEI MateBook 14（鸿蒙版）');assert.equal(submitted.productOrigin,'salesperson_selection');
  assert(!analysisRequests.at(-1).sources[0].text.includes('MateBook'),'operator choice must not masquerade as customer speech');
- await page.getByRole('button',{name:'按需求推荐',exact:true}).click();assert.equal(await page.locator('.focused-generation').count(),0,'mode change clears obsolete generation');
+ await page.locator('#designated-product').selectOption('');assert.equal(await page.locator('.focused-generation').count(),0,'mode change clears obsolete generation');
  assert.equal(await page.evaluate(()=>document.documentElement.scrollWidth>innerWidth),false);
  // Historical results retain their copy and images but never expose or export old scripts.
  await page.getByRole('button',{name:'查看上次生成方案',exact:true}).click();

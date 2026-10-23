@@ -8,7 +8,7 @@ const evidence = z.object({sourceId:str,quote:str}).strict();
 const topic = z.enum(Object.keys(categories));
 export const modelSchema = z.object({
   observations:z.array(z.object({id:z.string().regex(/^[a-z0-9_-]{1,50}$/i),category:topic,kind:z.enum(['fact','inference','unknown']),value:str.nullable(),evidence:z.array(evidence).max(5),rationale:z.string().max(1000),critical:z.boolean()}).strict()).min(1).max(40),
-  questions:z.array(z.object({id:z.string().regex(/^[a-z0-9_-]{1,50}$/i),topic,question:str,why:str,priority:z.enum(['blocking','optional']),evidence:z.array(evidence).max(5)}).strict()).max(4),
+  questions:z.array(z.object({id:z.string().regex(/^[a-z0-9_-]{1,50}$/i),topic,question:str,why:str,priority:z.enum(['blocking','optional']),evidence:z.array(evidence).max(5)}).strict()).max(2),
   conflicts:z.array(z.object({description:str,evidence:z.array(evidence).min(2).max(5),resolutionQuestion:str}).strict()).max(8),
   product:z.object({status:z.enum(['specified','unspecified','ambiguous']),name:str.nullable(),evidence:z.array(evidence).max(5)}).strict()
 }).strict();
@@ -26,7 +26,9 @@ export function validateUnderstanding(raw,sources){
   if(o.kind==='inference' && !o.rationale.trim()) throw new ValidationError('推断缺少解释');
   return {...o,evidence:o.evidence.map(locate)};
  });
- for(const category of Object.keys(categories)) if(!data.observations.some(o=>o.category===category)) data.observations.push({id:`unknown_${category}`,category,kind:'unknown',value:null,evidence:[],rationale:'输入未提供此项信息，保留未知。',critical:false});
+ const missingCategories=Object.keys(categories).filter(category=>!data.observations.some(o=>o.category===category));
+ if(data.observations.length+missingCategories.length>40)throw new ValidationError('理解条目过多，请合并同主题记录后覆盖所有维度');
+ for(const category of missingCategories)data.observations.push({id:`unknown_${category}`,category,kind:'unknown',value:null,evidence:[],rationale:'输入未提供此项信息，保留未知。',critical:false});
  data.questions=data.questions.map(q=>({...q,evidence:q.evidence.map(locate)}));
  data.conflicts=data.conflicts.map(c=>({...c,evidence:c.evidence.map(locate)}));
  data.product.evidence=data.product.evidence.map(locate);
